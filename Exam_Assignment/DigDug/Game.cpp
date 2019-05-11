@@ -46,5 +46,29 @@ void Game::Run()
 	LoadGame();
 
 	// update loop
+	{
+		auto t = std::chrono::high_resolution_clock::now();
+		auto& renderer = dae::Renderer::GetInstance();
+		auto& sceneManager = dae::SceneManager::GetInstance();
+		auto& input = dae::InputManager::GetInstance();
 
+		bool doContinue = true;
+		auto lastTime = std::chrono::high_resolution_clock::now();
+
+		while (doContinue)
+		{
+			auto currentTime = std::chrono::high_resolution_clock::now();
+			float deltaTime = std::chrono::duration<float>(currentTime - lastTime).count();
+
+			doContinue = input.ProcessInput(deltaTime);
+			sceneManager.Update(deltaTime);
+			renderer.Render();
+
+			lastTime = currentTime;
+			t += std::chrono::milliseconds(msPerFrame);
+			std::this_thread::sleep_until(t);
+		}
+	}
+
+	Cleanup();
 }

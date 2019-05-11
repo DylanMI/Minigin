@@ -14,8 +14,6 @@ dae::TextRendererComponent::TextRendererComponent(const std::string& text, std::
 	, m_Texture(nullptr)
 	, m_pParent(parent)
 {
-	
-	
 }
 dae::TextRendererComponent::~TextRendererComponent()
 {
