@@ -19,4 +19,5 @@ void dae::TextureComponent::Render() const
 void dae::TextureComponent::SetTexture(const std::string & filename)
 {
 	m_pTexture = ResourceManager::GetInstance().LoadTexture(filename);
+	
 }

@@ -34,9 +34,6 @@
     <ClInclude Include="Log.h">
       <Filter>Legacy</Filter>
     </ClInclude>
-    <ClInclude Include="Renderer.h">
-      <Filter>Legacy</Filter>
-    </ClInclude>
     <ClInclude Include="ResourceManager.h">
       <Filter>Legacy</Filter>
     </ClInclude>
@@ -100,6 +97,9 @@
     <ClInclude Include="GameAudio.h">
       <Filter>Audio</Filter>
     </ClInclude>
+    <ClInclude Include="Renderer.h">
+      <Filter>Mainfiles</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BaseComponent.cpp">
@@ -115,9 +115,6 @@
       <Filter>Legacy</Filter>
     </ClCompile>
     <ClCompile Include="Main.cpp">
-      <Filter>Legacy</Filter>
-    </ClCompile>
-    <ClCompile Include="Renderer.cpp">
       <Filter>Legacy</Filter>
     </ClCompile>
     <ClCompile Include="ResourceManager.cpp">
@@ -170,6 +167,9 @@
     </ClCompile>
     <ClCompile Include="GameAudio.cpp">
       <Filter>Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer.cpp">
+      <Filter>Mainfiles</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
