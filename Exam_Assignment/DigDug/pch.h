@@ -8,7 +8,47 @@
 
 #ifndef PCH_H
 #define PCH_H
+#include <windows.h>
+#include <vld.h>
+#include "SDL.h"
+#include "Minigin.h"
 
 // TODO: add headers that you want to pre-compile here
+
+#include <stdio.h>
+#include <iostream> // std::cout
+#include <sstream> // stringstream
+#include <tchar.h>
+#include <memory> // smart pointers
+#include <vector>
+#include <chrono>
+#include <thread>
+#include "Structs.h"
+#include "GameObject.h"
+#include "Scene.h"
+
+#include "Renderer.h"
+
+// components
+#include "BaseComponent.h"
+#include "TextRendererComponent.h"
+#include "FPSComponent.h"
+#include "TextureComponent.h"
+
+// services
+#include "ServiceLocator.h"
+
+// SDL Sound implementation
+#pragma comment(lib, "sdl2.lib")
+#pragma comment(lib, "SDL2main.lib")
+#pragma comment(lib, "SDL2_mixer.lib")  
+#include <SDL_mixer.h> 
+
+// audio
+#include "Audio.h"
+#include "NullAudio.h"
+#include "GameAudio.h"
+
+
 
 #endif //PCH_H

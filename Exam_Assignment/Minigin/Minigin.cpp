@@ -55,7 +55,7 @@ void dae::Minigin::Initialize()
  */
 void dae::Minigin::LoadGame() const
 {
-	auto& scene = SceneManager::GetInstance().CreateScene("Demo");
+	//auto& scene = SceneManager::GetInstance().CreateScene("Demo");
 
 	//Adding background
 	//auto pGameObject = new GameObject();
