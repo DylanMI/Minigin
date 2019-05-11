@@ -25,7 +25,7 @@ namespace dae
 	
 
 	private:
-		std::shared_ptr<Texture2D> mTexture;
+		std::shared_ptr<Texture2D> m_pTexture;
 		GameObject* m_pParent;
 	};
 }

@@ -13,10 +13,10 @@ void dae::TextureComponent::Update(const float & /*deltaTime*/)
 
 void dae::TextureComponent::Render() const
 {
-	Renderer::GetInstance().RenderTexture(*mTexture, m_pParent->GetTransform().GetPosition().x, m_pParent->GetTransform().GetPosition().y);
+	Renderer::GetInstance().RenderTexture(*m_pTexture, m_pParent->GetTransform().GetPosition().x, m_pParent->GetTransform().GetPosition().y);
 }
 
 void dae::TextureComponent::SetTexture(const std::string & filename)
 {
-	mTexture = ResourceManager::GetInstance().LoadTexture(filename);
+	m_pTexture = ResourceManager::GetInstance().LoadTexture(filename);
 }
