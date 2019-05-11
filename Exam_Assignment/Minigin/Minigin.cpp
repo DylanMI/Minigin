@@ -79,10 +79,10 @@ void dae::Minigin::LoadGame() const
 	ServiceLocator::GetInstance().GetAudio().AddSound("../Data/laser.ogg");
 
 	// inputs
-	InputManager::GetInstance().ChangeCommand(ControllerButton::DpadL, 0, new MoveLeftCommand(pGameObject));
-	InputManager::GetInstance().ChangeCommand(ControllerButton::DpadR, 0, new MoveRightCommand(pGameObject));
-	InputManager::GetInstance().ChangeCommand(ControllerButton::DpadU, 0, new MoveUpCommand(pGameObject));
-	InputManager::GetInstance().ChangeCommand(ControllerButton::DpadD, 0, new MoveDownCommand(pGameObject));
+	//InputManager::GetInstance().ChangeCommand(ControllerButton::DpadL, 0, new MoveLeftCommand(pGameObject));
+	//InputManager::GetInstance().ChangeCommand(ControllerButton::DpadR, 0, new MoveRightCommand(pGameObject));
+	//InputManager::GetInstance().ChangeCommand(ControllerButton::DpadU, 0, new MoveUpCommand(pGameObject));
+	//InputManager::GetInstance().ChangeCommand(ControllerButton::DpadD, 0, new MoveDownCommand(pGameObject));
 }
 
 void dae::Minigin::Cleanup()

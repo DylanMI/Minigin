@@ -12,7 +12,7 @@ namespace dae
 		~Command() = default;
 		virtual void Execute(float deltatime);
 	};
-
+/*
 	class MoveLeftCommand : public Command
 	{
 	public:
@@ -56,5 +56,5 @@ namespace dae
 		void Execute(float deltatime) override;
 	private:
 		GameObject* m_object;
-	};
+	};*/
 }
