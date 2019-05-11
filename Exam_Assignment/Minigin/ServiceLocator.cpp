@@ -5,6 +5,12 @@ namespace dae
 {
 	Audio* ServiceLocator::audioService = nullptr;
 
+	ServiceLocator::~ServiceLocator()
+	{
+		audioService = nullptr;
+		delete audioService;
+	}
+
 	void dae::ServiceLocator::Init()
 	{
 		audioService = nullptr;

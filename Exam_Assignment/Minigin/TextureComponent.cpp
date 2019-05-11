@@ -6,6 +6,12 @@ dae::TextureComponent::TextureComponent(GameObject * parent)
 {
 }
 
+dae::TextureComponent::~TextureComponent()
+{
+	m_pParent = nullptr;
+	delete m_pParent;
+}
+
 void dae::TextureComponent::Update(const float & /*deltaTime*/)
 {
 	

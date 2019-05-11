@@ -8,7 +8,7 @@ namespace dae
 	{
 	public:
 		ServiceLocator() = default;
-		~ServiceLocator() = default;
+		~ServiceLocator();
 
 		static void Init();
 		static Audio& GetAudio();

@@ -13,7 +13,7 @@ namespace dae
 	{
 	public:
 		explicit TextureComponent(GameObject* parent);
-		virtual ~TextureComponent() = default;
+		~TextureComponent();
 		TextureComponent(const TextureComponent& other) = delete;
 		TextureComponent(TextureComponent&& other) = delete;
 		TextureComponent& operator=(const TextureComponent& other) = delete;
