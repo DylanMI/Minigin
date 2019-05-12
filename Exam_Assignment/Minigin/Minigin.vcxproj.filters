@@ -40,9 +40,6 @@
     <ClInclude Include="SceneManager.h">
       <Filter>Legacy</Filter>
     </ClInclude>
-    <ClInclude Include="SceneObject.h">
-      <Filter>Legacy</Filter>
-    </ClInclude>
     <ClInclude Include="Singleton.h">
       <Filter>Legacy</Filter>
     </ClInclude>
@@ -99,6 +96,15 @@
     </ClInclude>
     <ClInclude Include="Renderer.h">
       <Filter>Mainfiles</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseCharacter.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneObject.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimatorComponent.h">
+      <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -170,6 +176,15 @@
     </ClCompile>
     <ClCompile Include="Renderer.cpp">
       <Filter>Mainfiles</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseCharacter.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneObject.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimatorComponent.cpp">
+      <Filter>Components</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

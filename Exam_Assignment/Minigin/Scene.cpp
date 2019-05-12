@@ -5,7 +5,6 @@
 unsigned int dae::Scene::idCounter = 0;
 
 dae::Scene::Scene(const std::string& name) : mName(name) {}
-dae::Scene::~Scene() = default;
 
 void dae::Scene::Add(SceneObject* object)
 {
@@ -25,6 +24,14 @@ void dae::Scene::Render() const
 	for (const auto gameObject : mObjects)
 	{
 		gameObject->Render();
+	}
+}
+
+dae::Scene::~Scene()
+{
+	for (auto gameObject : mObjects)
+	{
+		delete gameObject;
 	}
 }
 

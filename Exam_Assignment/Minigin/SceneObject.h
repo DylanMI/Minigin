@@ -8,7 +8,7 @@ namespace dae
 		virtual void Render() const = 0;
 
 		SceneObject() = default;
-		virtual ~SceneObject() = default;
+		~SceneObject();
 		SceneObject(const SceneObject& other) = delete;
 		SceneObject(SceneObject&& other) = delete;
 		SceneObject& operator=(const SceneObject& other) = delete;

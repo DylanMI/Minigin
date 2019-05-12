@@ -17,6 +17,8 @@ dae::TextRendererComponent::TextRendererComponent(const std::string& text, std::
 }
 dae::TextRendererComponent::~TextRendererComponent()
 {
+	m_pParent = nullptr;
+	delete m_pParent;
 }
 
 

@@ -14,10 +14,10 @@ namespace dae
 	class GameObject : public SceneObject
 	{
 	public:
-		void Update(const float& deltaTime) override;
-		void Render() const override;
-		void SetPosition(Point2f pos);
-		Transform GetTransform();
+		virtual void Update(const float& deltaTime) override;
+		virtual void Render() const override;
+		virtual void SetPosition(Point2f pos);
+		virtual Transform GetTransform();
 
 		// adding a component
 		void AddComponent(BaseComponent* component);
@@ -27,15 +27,17 @@ namespace dae
 		Component* GetComponent() 
 		{
 			for (size_t i{}, s = m_pComponents.size(); i < s; i++)
-			{
-				Component* placeholder = dynamic_cast<Component*>(m_pComponents[i]);
-				if (placeholder != nullptr) return placeholder;
+			{			
+				if (dynamic_cast<Component*>(m_pComponents[i]))
+				{
+					return (Component*)(m_pComponents[i]);
+				}
 			}
 			return nullptr;
 		}
 
 		GameObject() = default;
-		virtual ~GameObject();
+		~GameObject();
 		GameObject(const GameObject& other) = delete;
 		GameObject(GameObject&& other) = delete;
 		GameObject& operator=(const GameObject& other) = delete;

@@ -3,7 +3,13 @@
 #include "ResourceManager.h"
 #include "Renderer.h"
 
-dae::GameObject::~GameObject() = default;
+dae::GameObject::~GameObject()
+{
+	for (size_t i{}, s = m_pComponents.size(); i < s; i++)
+	{
+		delete m_pComponents[i];
+	}
+}
 
 void dae::GameObject::Update(const float& deltaTime)
 {

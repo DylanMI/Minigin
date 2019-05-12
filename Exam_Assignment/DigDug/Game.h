@@ -10,5 +10,10 @@ public:
 	void LoadGame() const;
 	void Cleanup();
 	void Run();
+
+	// objects
+	dae::GameObject* mp_FPSObj;
+	dae::BaseCharacter* mp_Character;
+
 };
 

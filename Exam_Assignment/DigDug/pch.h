@@ -10,20 +10,28 @@
 // TODO: add headers that you want to pre-compile here
 #include <stdio.h>
 #include <memory> // smart pointers
+#include <map>
 #include <vector>
 #include <chrono>
 #include <thread>
 #include "Structs.h"
 
+#include "Scene.h"
+
 // XInput
 #pragma comment(lib, "XInput.lib") 
 #include <XInput.h>
 
-// components
+// components and objects
+#include "GameObject.h"
 #include "BaseComponent.h"
+#include "BaseCharacter.h"
 #include "TextRendererComponent.h"
 #include "FPSComponent.h"
 #include "TextureComponent.h"
+#include "Texture2D.h"
+#include "AnimatorComponent.h"
+
 
 // services
 #include "ServiceLocator.h"
@@ -38,6 +46,7 @@
 #pragma comment(lib, "SDL2_mixer.lib")  
 #pragma comment(lib, "SDL2_image.lib")
 #pragma comment(lib, "SDL2_ttf.lib")
+
 #include <SDL_image.h>
 #include <SDL_ttf.h>
 #include <SDL_mixer.h> 
@@ -46,5 +55,6 @@
 #include "Audio.h"
 #include "NullAudio.h"
 #include "GameAudio.h"
+
 
 #endif //PCH_H

@@ -7,8 +7,11 @@ namespace dae
 	{
 	public:
 		SDL_Texture* GetSDLTexture() const;
+		void SetSDLTexture(SDL_Texture* newTex);
 		explicit Texture2D(SDL_Texture* texture);
+		
 		~Texture2D();
+		Texture2D() = default;
 
 		Texture2D(const Texture2D &) = delete;
 		Texture2D(Texture2D &&) = delete;
