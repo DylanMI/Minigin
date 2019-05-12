@@ -42,10 +42,17 @@ void Game::LoadGame() const
 		// Adding the character
 		auto mp_Character = new dae::BaseCharacter();
 		mp_Character->AddComponent(new TextureComponent(mp_Character));
-		//mp_Character->GetComponent<TextureComponent>()->SetTexture("DigDugRunLeft.png");
 		mp_Character->AddComponent(new AnimatorComponent(mp_Character));
 		mp_Character->GetComponent<AnimatorComponent>()->SetSpeed(1.0f);
 		mp_Character->GetComponent<AnimatorComponent>()->AddAnimation(State::IDLE, dae::ResourceManager::GetInstance().LoadTexture("DigDugRunLeft.png"), 16, 16, 2);
+		mp_Character->GetComponent<AnimatorComponent>()->AddAnimation(State::LEFT, dae::ResourceManager::GetInstance().LoadTexture("DigDugRunRight.png"), 16, 16, 2);
+		mp_Character->AddComponent(new AiComponent(mp_Character));
+		
+		// setting the states
+		mp_Character->GetComponent<AiComponent>()->AddTransition(mp_Character, State::IDLE, State::LEFT, new std::vector<bool>{true,true});
+		mp_Character->GetComponent<AiComponent>()->AddTransition(mp_Character, State::LEFT, State::IDLE, new std::vector<bool>{true,true});
+		
+
 		mp_Character->SetPosition({ 50,50 });
 		m_scene.Add(mp_Character);
 
@@ -102,6 +109,7 @@ void Game::Run()
 			lastTime = currentTime;
 			t += std::chrono::milliseconds(msPerFrame);
 			std::this_thread::sleep_until(t);
+			
 		}
 	}
 

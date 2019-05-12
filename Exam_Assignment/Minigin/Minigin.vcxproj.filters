@@ -106,6 +106,9 @@
     <ClInclude Include="Texture2D.h">
       <Filter>Mainfiles</Filter>
     </ClInclude>
+    <ClInclude Include="AiComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BaseComponent.cpp">
@@ -185,6 +188,9 @@
     </ClCompile>
     <ClCompile Include="Texture2D.cpp">
       <Filter>Mainfiles</Filter>
+    </ClCompile>
+    <ClCompile Include="AiComponent.cpp">
+      <Filter>Components</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
