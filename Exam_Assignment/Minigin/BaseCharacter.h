@@ -1,5 +1,14 @@
 #pragma once
+#include <memory>
+
 #include "GameObject.h"
+#include "BaseComponent.h"
+#include "FPSComponent.h"
+#include "TextRendererComponent.h"
+
+#include "Transform.h"
+#include "Texture2D.h"
+#include "SceneObject.h"
 namespace dae
 {
 	enum State
@@ -14,11 +23,6 @@ namespace dae
 	class BaseCharacter : public GameObject
 	{
 	public:
-		void Update(const float& deltaTime) override;
-		void Render() const override;
-		void SetPosition(Point2f pos) override;
-		Transform GetTransform() override;
-	
 		State GetState();
 		void SetState(State newState);
 
@@ -34,7 +38,7 @@ namespace dae
 		Transform mTransform;
 		// legacy var end
 
-		State m_CurrentState;
+		State m_CurrentState = State::IDLE;
 		std::vector<BaseComponent*> m_pComponents;
 
 	};

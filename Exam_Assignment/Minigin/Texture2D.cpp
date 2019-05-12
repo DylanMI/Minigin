@@ -12,6 +12,12 @@ SDL_Texture* dae::Texture2D::GetSDLTexture() const
 	return mTexture;
 }
 
+void dae::Texture2D::SetSDLTexture(SDL_Texture * newTex)
+{
+	mTexture = newTex;
+}
+
+
 dae::Texture2D::Texture2D(SDL_Texture* texture)
 {
 	mTexture = texture;

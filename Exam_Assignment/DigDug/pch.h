@@ -11,6 +11,8 @@
 #include <stdio.h>
 #include <memory> // smart pointers
 #include <map>
+#include <iostream>
+#include <sstream>
 #include <vector>
 #include <chrono>
 #include <thread>
@@ -24,6 +26,7 @@
 
 // components and objects
 #include "GameObject.h"
+#include "SceneObject.h"
 #include "BaseComponent.h"
 #include "BaseCharacter.h"
 #include "TextRendererComponent.h"
@@ -36,9 +39,12 @@
 // services
 #include "ServiceLocator.h"
 
+
 // managers
 #include "InputManager.h"
 #include "SceneManager.h"
+#include "ResourceManager.h"
+
 
 // SDL 
 #pragma comment(lib, "sdl2.lib")

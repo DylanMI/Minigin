@@ -35,7 +35,7 @@ void dae::AnimatorComponent::Update(const float & deltaTime)
 		m_frameCount++;
 	}
 	// if the framecount is over the max
-	if (m_frameCount > m_StateFrameCount[m_previousState])
+	if (m_frameCount >= m_StateFrameCount[m_previousState])
 	{
 		m_frameCount = 0;
 	}
@@ -59,10 +59,12 @@ void dae::AnimatorComponent::Render() const
 
 void dae::AnimatorComponent::AddAnimation(State CharacterState, std::shared_ptr<Texture2D> tex, int height, int width, int frameCount)
 {
-	m_StateTextureMap[CharacterState]->SetSDLTexture(tex->GetSDLTexture());
+	m_StateTextureMap[CharacterState] = std::make_shared<Texture2D>();
+	m_StateTextureMap[CharacterState] = tex;
+	m_StateFrameCount[CharacterState] = frameCount;
 	m_StateFrameHeight[CharacterState] = height;
 	m_StateFrameWidth[CharacterState] = width;
-	m_StateFrameCount[CharacterState] = frameCount;
+
 }
 
 void dae::AnimatorComponent::SetSpeed(float newSpeed)

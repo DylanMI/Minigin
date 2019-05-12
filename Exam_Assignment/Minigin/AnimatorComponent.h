@@ -1,4 +1,5 @@
 #pragma once
+#include "GameObject.h"
 #include "BaseComponent.h"
 #include "BaseCharacter.h"
 #include <map>

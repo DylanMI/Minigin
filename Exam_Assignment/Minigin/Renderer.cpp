@@ -15,6 +15,8 @@ void dae::Renderer::Init(SDL_Window * window)
 
 void dae::Renderer::Render()
 {
+	SDL_SetRenderDrawColor(mRenderer, 255, 0x00, 255, 0xFF);
+
 	SDL_RenderClear(mRenderer);
 
 	SceneManager::GetInstance().Render();
@@ -36,8 +38,16 @@ void dae::Renderer::RenderTexture(const Texture2D& texture, const float x, const
 	SDL_Rect dst;
 	dst.x = static_cast<int>(x);
 	dst.y = static_cast<int>(y);
+
+	// test
+	SDL_Rect src;
+	src.x = 0;
+	src.y = 0;
+	src.w = 16;
+	src.h = 16;
+
 	SDL_QueryTexture(texture.GetSDLTexture(), nullptr, nullptr, &dst.w, &dst.h);
-	SDL_RenderCopy(GetSDLRenderer(), texture.GetSDLTexture(), nullptr, &dst);
+	SDL_RenderCopy(GetSDLRenderer(), texture.GetSDLTexture(), &src, &dst);
 }
 
 void dae::Renderer::RenderTexture(const Texture2D& texture, const float x, const float y, const float width, const float height) const
@@ -50,7 +60,10 @@ void dae::Renderer::RenderTexture(const Texture2D& texture, const float x, const
 	SDL_RenderCopy(GetSDLRenderer(), texture.GetSDLTexture(), nullptr, &dst);
 }
 
-void dae::Renderer::RenderTexture(const Texture2D & texture, const SDL_Rect sourceRect, const SDL_Rect destRect) const
+void dae::Renderer::RenderTexture(const Texture2D & texture, const SDL_Rect sourceRect, SDL_Rect destRect) const
 {
+
+	SDL_QueryTexture(texture.GetSDLTexture(), nullptr, nullptr, &destRect.w, &destRect.h);
 	SDL_RenderCopy(GetSDLRenderer(), texture.GetSDLTexture(), &sourceRect, &destRect);
+
 }

@@ -49,9 +49,6 @@
     <ClInclude Include="TextObject.h">
       <Filter>Legacy</Filter>
     </ClInclude>
-    <ClInclude Include="Texture2D.h">
-      <Filter>Legacy</Filter>
-    </ClInclude>
     <ClInclude Include="Transform.h">
       <Filter>Legacy</Filter>
     </ClInclude>
@@ -106,6 +103,9 @@
     <ClInclude Include="AnimatorComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
+    <ClInclude Include="Texture2D.h">
+      <Filter>Mainfiles</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BaseComponent.cpp">
@@ -130,9 +130,6 @@
       <Filter>Legacy</Filter>
     </ClCompile>
     <ClCompile Include="TextObject.cpp">
-      <Filter>Legacy</Filter>
-    </ClCompile>
-    <ClCompile Include="Texture2D.cpp">
       <Filter>Legacy</Filter>
     </ClCompile>
     <ClCompile Include="Transform.cpp">
@@ -185,6 +182,9 @@
     </ClCompile>
     <ClCompile Include="AnimatorComponent.cpp">
       <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture2D.cpp">
+      <Filter>Mainfiles</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

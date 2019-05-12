@@ -25,7 +25,8 @@ void dae::TextureComponent::Render() const
 		SDL_Rect dst;
 		dst.x = static_cast<int>(m_pParent->GetTransform().GetPosition().x);
 		dst.y = static_cast<int>(m_pParent->GetTransform().GetPosition().y);
-
+		dst.w = 50;
+		dst.h = 50;
 		Renderer::GetInstance().RenderTexture(*m_pTexture, m_SourceRect, dst);
 
 	}

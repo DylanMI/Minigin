@@ -33,20 +33,34 @@ void Game::LoadGame() const
 		// making the scene
 		auto& m_scene = SceneManager::GetInstance().CreateScene("Demo");
 
-		 //adding FPS counter
-		auto font = ResourceManager::GetInstance().LoadFont("Lingua.otf", 36);
-		auto mp_FPSObj = new dae::GameObject();
-		mp_FPSObj->AddComponent(new TextRendererComponent("xxx", font, mp_FPSObj));
-		mp_FPSObj->AddComponent(new FPSComponent(mp_FPSObj));
-		m_scene.Add(mp_FPSObj);
+		//Adding background
+		//auto pGameObject = new dae::GameObject();
+		//pGameObject->AddComponent(new TextureComponent(pGameObject));
+		//pGameObject->GetComponent<TextureComponent>()->SetTexture("background.jpg");
+		//m_scene.Add(pGameObject);
 
 		// Adding the character
 		auto mp_Character = new dae::BaseCharacter();
 		mp_Character->AddComponent(new TextureComponent(mp_Character));
+		//mp_Character->GetComponent<TextureComponent>()->SetTexture("DigDugRunLeft.png");
 		mp_Character->AddComponent(new AnimatorComponent(mp_Character));
 		mp_Character->GetComponent<AnimatorComponent>()->SetSpeed(1.0f);
-		mp_Character->GetComponent<AnimatorComponent>()->AddAnimation(State::LEFT,dae::ResourceManager::GetInstance().LoadTexture("digdugresources\DigDugRunLeft.png"), 16, 16, 2);
+		mp_Character->GetComponent<AnimatorComponent>()->AddAnimation(State::IDLE, dae::ResourceManager::GetInstance().LoadTexture("DigDugRunLeft.png"), 16, 16, 2);
+		mp_Character->SetPosition({ 50,50 });
 		m_scene.Add(mp_Character);
+
+		// //adding FPS counter
+		//auto font = ResourceManager::GetInstance().LoadFont("Lingua.otf", 36);
+		//auto mp_FPSObj = new dae::GameObject();
+		//mp_FPSObj->AddComponent(new TextRendererComponent("xxx", font, mp_FPSObj));
+		//mp_FPSObj->AddComponent(new FPSComponent(mp_FPSObj));
+		//m_scene.Add(mp_FPSObj);
+
+
+
+
+
+
 	}
 }
 
