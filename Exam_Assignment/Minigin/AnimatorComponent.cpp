@@ -8,6 +8,12 @@ dae::AnimatorComponent::AnimatorComponent(GameObject * parent)
 	m_previousState = State::IDLE;
 }
 
+dae::AnimatorComponent::~AnimatorComponent()
+{
+	m_pParent = nullptr;
+	delete m_pParent;
+}
+
 void dae::AnimatorComponent::Update(const float & deltaTime)
 {
 	// get the current state from the parent
@@ -59,7 +65,6 @@ void dae::AnimatorComponent::Render() const
 
 void dae::AnimatorComponent::AddAnimation(State CharacterState, std::shared_ptr<Texture2D> tex, int height, int width, int frameCount)
 {
-	m_StateTextureMap[CharacterState] = std::make_shared<Texture2D>();
 	m_StateTextureMap[CharacterState] = tex;
 	m_StateFrameCount[CharacterState] = frameCount;
 	m_StateFrameHeight[CharacterState] = height;

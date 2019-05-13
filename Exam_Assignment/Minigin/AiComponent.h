@@ -31,7 +31,7 @@ namespace dae
 	{
 	public:
 		explicit AiComponent(GameObject* parent);
-		virtual ~AiComponent();
+		virtual ~AiComponent() override;
 		AiComponent(const AiComponent& other) = delete;
 		AiComponent(AiComponent&& other) = delete;
 		AiComponent& operator=(const AiComponent& other) = delete;

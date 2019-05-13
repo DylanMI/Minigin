@@ -10,6 +10,7 @@ dae::AiComponent::AiComponent(GameObject * parent)
 dae::AiComponent::~AiComponent()
 {
 	m_pParent = nullptr;
+	delete m_pParent;
 }
 void dae::AiComponent::Update(const float & )
 {

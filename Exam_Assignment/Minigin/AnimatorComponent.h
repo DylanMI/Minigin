@@ -17,7 +17,7 @@ namespace dae
 	{
 	public:
 		explicit AnimatorComponent(GameObject* parent);
-		virtual ~AnimatorComponent() = default;
+		virtual ~AnimatorComponent() override;
 		AnimatorComponent(const AnimatorComponent& other) = delete;
 		AnimatorComponent(AnimatorComponent&& other) = delete;
 		AnimatorComponent& operator=(const AnimatorComponent& other) = delete;

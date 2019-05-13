@@ -37,7 +37,7 @@ namespace dae
 		}
 
 		GameObject() = default;
-		~GameObject();
+		virtual ~GameObject() override;
 		GameObject(const GameObject& other) = delete;
 		GameObject(GameObject&& other) = delete;
 		GameObject& operator=(const GameObject& other) = delete;

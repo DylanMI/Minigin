@@ -27,7 +27,7 @@ namespace dae
 		void SetState(State newState);
 
 		BaseCharacter() = default;
-		~BaseCharacter();
+		virtual ~BaseCharacter() override;
 		BaseCharacter(const BaseCharacter& other) = delete;
 		BaseCharacter(BaseCharacter&& other) = delete;
 		BaseCharacter& operator=(const BaseCharacter& other) = delete;

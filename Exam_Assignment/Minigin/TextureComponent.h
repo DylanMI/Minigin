@@ -17,7 +17,7 @@ namespace dae
 	{
 	public:
 		explicit TextureComponent(GameObject* parent);
-		~TextureComponent();
+		virtual ~TextureComponent() override;
 		TextureComponent(const TextureComponent& other) = delete;
 		TextureComponent(TextureComponent&& other) = delete;
 		TextureComponent& operator=(const TextureComponent& other) = delete;

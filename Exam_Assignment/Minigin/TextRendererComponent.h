@@ -13,7 +13,7 @@ namespace dae
 	public:
 
 		TextRendererComponent(const std::string& text, std::shared_ptr<Font> font, GameObject* parent);
-		virtual ~TextRendererComponent();
+		virtual ~TextRendererComponent() override;
 
 		TextRendererComponent(const TextRendererComponent& other) = delete;
 		TextRendererComponent(TextRendererComponent&& other) = delete;
