@@ -11,7 +11,7 @@ namespace dae
 	class Command
 	{
 	public:
-		~Command() = default;
+		virtual ~Command();
 		virtual void Execute(float deltatime);
 	};
 
@@ -19,6 +19,7 @@ namespace dae
 	{
 	public:
 		MoveLeftCommandPlayer(GameObject* object);
+		virtual ~MoveLeftCommandPlayer() override;
 		void Execute(float deltatime) override;
 	private:
 		GameObject* m_object;
@@ -28,6 +29,7 @@ namespace dae
 	{
 	public:
 		MoveRightCommandPlayer(GameObject* object);
+		virtual ~MoveRightCommandPlayer() override;
 		void Execute(float deltatime) override;
 	private:
 		GameObject* m_object;
@@ -37,6 +39,7 @@ namespace dae
 	{
 	public:
 		MoveUpCommandPlayer(GameObject* object);
+		virtual ~MoveUpCommandPlayer() override;
 		void Execute(float deltatime) override;
 	private:
 		GameObject* m_object;
@@ -46,6 +49,7 @@ namespace dae
 	{
 	public:
 		MoveDownCommandPlayer(GameObject* object);
+		virtual ~MoveDownCommandPlayer() override;
 		void Execute(float deltatime) override;
 	private:
 		GameObject* m_object;

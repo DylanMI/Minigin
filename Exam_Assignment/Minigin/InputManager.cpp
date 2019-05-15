@@ -8,21 +8,13 @@ dae::InputManager::~InputManager()
 	// nullptr the pointers and delete the pointer aftwards
 	for (int i{}, s = m_MAXammControllers; i < s; i++)
 	{
-		aBtnCommand[i] = nullptr;
 		delete aBtnCommand[i];
-		bBtnCommand[i] = nullptr;
 		delete bBtnCommand[i];
-		xBtnCommand[i] = nullptr;
 		delete xBtnCommand[i];
-		yBtnCommand[i] = nullptr;
 		delete yBtnCommand[i];
-		padlBtnCommand[i] = nullptr;
 		delete padlBtnCommand[i];
-		padrBtnCommand[i] = nullptr;
 		delete padrBtnCommand[i];
-		paduBtnCommand[i] = nullptr;
 		delete paduBtnCommand[i];
-		paddBtnCommand[i] = nullptr;
 		delete paddBtnCommand[i];
 	}
 }
