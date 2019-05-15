@@ -15,14 +15,14 @@ namespace dae
 	class Transition
 	{
 	public:
-		Transition(GameObject* parent, State goToState, State StartState, std::vector<bool>* prerequisites);
+		Transition(GameObject* parent, State goToState, State StartState, std::vector<bool*> prerequisites);
 		~Transition();
 		bool Check();
 	private:
 		GameObject* m_pParent;
 		State m_gotoState;	
 		State m_StartState;
-		std::vector<bool>* m_prerequisites;
+		std::vector<bool*> m_prerequisites;
 	};
 #pragma endregion transition
 
@@ -39,7 +39,7 @@ namespace dae
 
 		void Update(const float& deltaTime) override;
 		void Render() const override;
-		void AddTransition(GameObject* parent, State goToState, State endState, std::vector<bool>* prerequisites);
+		void AddTransition(GameObject* parent, State goToState, State endState, std::vector<bool*> prerequisites);
 	private:
 		GameObject* m_pParent;
 		std::vector<Transition> m_transitions;

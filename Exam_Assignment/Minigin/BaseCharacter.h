@@ -18,13 +18,19 @@ namespace dae
 		UP,
 		DOWN,
 		IDLE,
+		SHOOTING,
+		DEAD,
+		ANY
 	};
 
 	class BaseCharacter : public GameObject
 	{
 	public:
-		State GetState();
-		void SetState(State newState);
+		virtual State GetState();
+		virtual void SetState(State newState);
+		virtual void SetPosition(Point2f pos) override;
+		virtual Transform GetTransform() override;
+
 
 		BaseCharacter() = default;
 		virtual ~BaseCharacter() override;

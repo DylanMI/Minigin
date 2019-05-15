@@ -25,7 +25,7 @@ void dae::AiComponent::Render() const
 {
 	// do anothing
 }
-void dae::AiComponent::AddTransition(GameObject * parent, State goToState, State StartState, std::vector<bool>* prerequisites)
+void dae::AiComponent::AddTransition(GameObject * parent, State goToState, State StartState, std::vector<bool*> prerequisites)
 {
 	m_transitions.push_back(Transition(parent, goToState, StartState, prerequisites));
 }
@@ -33,7 +33,7 @@ void dae::AiComponent::AddTransition(GameObject * parent, State goToState, State
 
 #pragma region Transition
 
-dae::Transition::Transition(GameObject * parent, State goToState, State StartState, std::vector<bool>* prerequisites)
+dae::Transition::Transition(GameObject * parent, State goToState, State StartState, std::vector<bool*> prerequisites)
 	:m_pParent(parent)
 	,m_gotoState(goToState)
 	,m_StartState(StartState)
@@ -44,7 +44,7 @@ dae::Transition::Transition(GameObject * parent, State goToState, State StartSta
 dae::Transition::~Transition()
 {
 	m_pParent = nullptr;
-	m_prerequisites = nullptr;
+	/*m_prerequisites = nullptr;*/
 }
 
 bool dae::Transition::Check()
@@ -55,11 +55,9 @@ bool dae::Transition::Check()
 	{	
 		// run trough all the prerequisites, and put the owner to the state it wants to go(goToState)
         // but only if all the prerequisites are met
-		for (size_t i{}, s = m_prerequisites->size(); i < s; i++)
+		for (size_t i{}, s = m_prerequisites.size(); i < s; i++)
 		{
-			// if there is lag, its due to the ->at() probably
-			// and if there is something wrong, it is again due to the -> at() ... never used it before
-			if (!m_prerequisites->at(i))
+			if (!m_prerequisites[i])
 			{
 				checker = false;
 			}

@@ -1,6 +1,8 @@
 #pragma once
 #include "GameObject.h"
 #include "ServiceLocator.h"
+#include "PlayerCharacter.h"
+
 
 class ServiceLocator;
 class GameObject;
@@ -12,49 +14,40 @@ namespace dae
 		~Command() = default;
 		virtual void Execute(float deltatime);
 	};
-/*
-	class MoveLeftCommand : public Command
+
+	class MoveLeftCommandPlayer : public Command
 	{
 	public:
-		MoveLeftCommand(GameObject* object);
+		MoveLeftCommandPlayer(GameObject* object);
 		void Execute(float deltatime) override;
 	private:
 		GameObject* m_object;
 	};
 
-	class MoveRightCommand : public Command
+	class MoveRightCommandPlayer : public Command
 	{
 	public:
-		MoveRightCommand(GameObject* object);
+		MoveRightCommandPlayer(GameObject* object);
 		void Execute(float deltatime) override;
 	private:
 		GameObject* m_object;
 	};
 
-	class MoveUpCommand : public Command
+	class MoveUpCommandPlayer : public Command
 	{
 	public:
-		MoveUpCommand(GameObject* object);
+		MoveUpCommandPlayer(GameObject* object);
 		void Execute(float deltatime) override;
 	private:
 		GameObject* m_object;
 	};
 
-	class MoveDownCommand : public Command
+	class MoveDownCommandPlayer : public Command
 	{
 	public:
-		MoveDownCommand(GameObject* object);
+		MoveDownCommandPlayer(GameObject* object);
 		void Execute(float deltatime) override;
 	private:
 		GameObject* m_object;
 	};
-
-	class FireCommand : public Command
-	{
-	public:
-		FireCommand(GameObject* object);
-		void Execute(float deltatime) override;
-	private:
-		GameObject* m_object;
-	};*/
 }

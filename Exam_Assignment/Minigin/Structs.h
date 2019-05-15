@@ -8,5 +8,13 @@ namespace dae
 		float y;
 	};
 
+	struct Rectf
+	{
+		float x;
+		float y;
+		float w;
+		float h;
+
+	};
 
 }
