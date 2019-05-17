@@ -6,7 +6,6 @@ class Game
 public:
 	Game() = default;
 	~Game() = default;
-
 	
 	void Initialize();
 	void LoadGame() const;

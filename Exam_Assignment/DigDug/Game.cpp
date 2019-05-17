@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "Game.h"
 
+
 void Game::Initialize()
 {
 	if (SDL_Init(SDL_INIT_VIDEO) != 0)
@@ -22,7 +23,7 @@ void Game::Initialize()
 	}
 
 	dae::Renderer::GetInstance().Init(window);
-
+	
 
 }
 
@@ -32,6 +33,18 @@ void Game::LoadGame() const
 	{
 		// making the scene
 		auto& m_scene = SceneManager::GetInstance().CreateScene("Demo");
+		
+		// making the grid
+		const int rows{ 5 };
+		const int collumns{ 5 };
+		const int startLeftX{ 0 };
+		const int startLeftY{ 0 };
+
+		const int width{ 5 };
+		const int height{ 5 };
+
+		std::vector<dae::GameObject*>{};
+
 
 		// Adding the character
 		auto mp_Character = new dae::PlayerCharacter();

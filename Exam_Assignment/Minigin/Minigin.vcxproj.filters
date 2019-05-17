@@ -112,6 +112,9 @@
     <ClInclude Include="PlayerCharacter.h">
       <Filter>Objects</Filter>
     </ClInclude>
+    <ClInclude Include="Utils.h">
+      <Filter>Mainfiles</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BaseComponent.cpp">

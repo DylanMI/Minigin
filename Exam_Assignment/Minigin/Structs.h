@@ -14,7 +14,6 @@ namespace dae
 		float y;
 		float w;
 		float h;
-
 	};
 
 }
