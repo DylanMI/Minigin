@@ -10,7 +10,7 @@ dae::CollisionComponent::~CollisionComponent()
 {
 }
 
-void dae::CollisionComponent::Update(const float & deltaTime)
+void dae::CollisionComponent::Update(const float & )
 {
 }
 

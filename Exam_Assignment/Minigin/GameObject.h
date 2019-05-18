@@ -5,10 +5,12 @@
 #include "FPSComponent.h"
 #include "TextRendererComponent.h"
 
+#include "Scene.h"
 #include "Transform.h"
 #include "Texture2D.h"
 #include "SceneObject.h"
 
+class Scene;
 namespace dae
 {
 	class GameObject : public SceneObject
@@ -18,6 +20,8 @@ namespace dae
 		virtual void Render() const override;
 		virtual void SetPosition(Point2f pos);
 		virtual Transform GetTransform();
+
+		Scene* getParentScene();
 
 		// adding a component
 		void AddComponent(BaseComponent* component);
@@ -36,12 +40,13 @@ namespace dae
 			return nullptr;
 		}
 
-		GameObject() = default;
+		GameObject(Scene* parentScene);
 		virtual ~GameObject() override;
 		GameObject(const GameObject& other) = delete;
 		GameObject(GameObject&& other) = delete;
 		GameObject& operator=(const GameObject& other) = delete;
 		GameObject& operator=(GameObject&& other) = delete;
+
 
 	private:
 		// legacy var start
@@ -49,6 +54,6 @@ namespace dae
 		// legacy var end
 
 		std::vector<BaseComponent*> m_pComponents;
-
+		Scene* m_parentScene;
 	};
 }
