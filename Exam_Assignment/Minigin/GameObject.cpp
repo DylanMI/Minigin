@@ -3,11 +3,6 @@
 #include "ResourceManager.h"
 #include "Renderer.h"
 
-dae::GameObject::GameObject(Scene * parentScene)
-	:m_parentScene(parentScene)
-{
-}
-
 dae::GameObject::~GameObject()
 {
 	for (size_t i{}, s = m_pComponents.size(); i < s; i++)
@@ -48,10 +43,6 @@ dae::Transform dae::GameObject::GetTransform()
 	return mTransform;
 }
 
-dae::Scene* dae::GameObject::getParentScene()
-{
-	return m_parentScene;
-}
 
 void dae::GameObject::AddComponent(BaseComponent * component)
 {

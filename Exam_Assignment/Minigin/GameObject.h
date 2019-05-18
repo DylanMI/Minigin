@@ -21,8 +21,6 @@ namespace dae
 		virtual void SetPosition(Point2f pos);
 		virtual Transform GetTransform();
 
-		Scene* getParentScene();
-
 		// adding a component
 		void AddComponent(BaseComponent* component);
 
@@ -40,7 +38,7 @@ namespace dae
 			return nullptr;
 		}
 
-		GameObject(Scene* parentScene);
+		GameObject() = default;
 		virtual ~GameObject() override;
 		GameObject(const GameObject& other) = delete;
 		GameObject(GameObject&& other) = delete;
@@ -54,6 +52,5 @@ namespace dae
 		// legacy var end
 
 		std::vector<BaseComponent*> m_pComponents;
-		Scene* m_parentScene;
 	};
 }

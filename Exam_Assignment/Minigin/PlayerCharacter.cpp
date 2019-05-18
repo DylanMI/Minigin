@@ -1,6 +1,7 @@
 #include "MiniginPCH.h"
 #include "PlayerCharacter.h"
 
+
 dae::State dae::PlayerCharacter::GetState()
 {
 	return m_CurrentState;

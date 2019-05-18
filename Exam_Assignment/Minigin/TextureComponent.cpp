@@ -19,6 +19,7 @@ void dae::TextureComponent::Update(const float & /*deltaTime*/)
 
 void dae::TextureComponent::Render() const
 {
+	if (m_pTexture == nullptr) return;
 	if (m_isAnimated)
 	{
 		
@@ -28,7 +29,6 @@ void dae::TextureComponent::Render() const
 		dst.w = 50;
 		dst.h = 50;
 		Renderer::GetInstance().RenderTexture(*m_pTexture, m_SourceRect, dst);
-
 	}
 	else
 	{

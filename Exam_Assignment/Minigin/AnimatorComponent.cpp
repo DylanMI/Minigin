@@ -47,7 +47,6 @@ void dae::AnimatorComponent::Update(const float & deltaTime)
 	}
 
 	// send the information to the TextureComponent
-	m_pParent->GetComponent<dae::TextureComponent>()->SetIsAnimated(true);
 	
 	SDL_Rect srcrect;
 	srcrect.x = m_frameCount * m_StateFrameWidth[m_previousState];

@@ -2,9 +2,11 @@
 #include "BaseCharacter.h"
 namespace dae
 {
+	class Scene;
 	class PlayerCharacter : public BaseCharacter
 	{
 	public:
+
 		State GetState() override;
 		void SetState(State newState) override;
 		float GetSpeed();
@@ -36,7 +38,6 @@ namespace dae
 
 		const int m_charWidth = 16;
 		const int m_CharHeight = 16;
-
 	};
 }
 

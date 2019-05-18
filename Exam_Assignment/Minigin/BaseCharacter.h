@@ -22,10 +22,11 @@ namespace dae
 		DEAD,
 		ANY
 	};
-
+	class Scene;
 	class BaseCharacter : public GameObject
 	{
 	public:
+
 		virtual State GetState();
 		virtual void SetState(State newState);
 		virtual void SetPosition(Point2f pos) override;
@@ -46,7 +47,6 @@ namespace dae
 
 		State m_CurrentState = State::IDLE;
 		std::vector<BaseComponent*> m_pComponents;
-
 	};
 
 }

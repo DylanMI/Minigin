@@ -36,7 +36,7 @@ void Game::LoadGame() const
 		
 		// making the grid
 		const int rows{ 25 };
-		const int collumns{ 40 };
+		const int collumns{ 42 };
 		const int startLeftX{ 0 };
 		const int startLeftY{ 480 };
 		
@@ -59,8 +59,6 @@ void Game::LoadGame() const
 
 				// give it a texture component
 				gridObject->AddComponent(new TextureComponent{ gridObject });
-				SDL_Log(std::string("Loading tile:" + std::to_string(i * rows + k )).c_str() );
-				
 
 				// set it to the right texture
 				if (i < (rows / 4) * 1)
@@ -114,6 +112,7 @@ void Game::LoadGame() const
 		mp_Character->SetSpeed(100.0f);
 
 		mp_Character->AddComponent(new TextureComponent(mp_Character));
+		mp_Character->GetComponent<TextureComponent>()->SetIsAnimated(true);
 		//mp_Character->GetComponent<TextureComponent>()->SetTexture(dae::ResourceManager::GetInstance().LoadTexture("DigDugRunLeft.png"));
 		mp_Character->AddComponent(new AnimatorComponent(mp_Character));
 		mp_Character->GetComponent<AnimatorComponent>()->SetSpeed(0.5f);
