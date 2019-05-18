@@ -90,10 +90,18 @@ void Game::LoadGame() const
 				}
 
 
-				// give it a collider component [and set the tag to destructable]
+				// give it a collider component [and set the tag to destructable, and give it a dimension]
+				gridObject->AddComponent(new CollisionComponent(gridObject));
+				gridObject->GetComponent<CollisionComponent>()->SetTag(collisionTag::Destructable);
 				
-			
+				Rectf Body{
+					float(startLeftX + width * k),
+					float(startLeftY - height * i),
+					width,
+					height
+						  };
 
+				gridObject->GetComponent<CollisionComponent>()->SetBody(Body);
 				m_scene.Add(gridObject);
 
 			}
