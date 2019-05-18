@@ -213,9 +213,11 @@
     <ClCompile Include="CollisionComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
-    <ClCompile Include="CollisionCheckerComponent.cpp" />
     <ClCompile Include="CollisionManager.cpp">
       <Filter>Mainfiles</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionCheckerComponent.cpp">
+      <Filter>Components</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -55,4 +55,5 @@ void dae::GameObject::ClearComponents()
 	{
 		delete m_pComponents[i];
 	}
+	m_pComponents.resize(0);
 }

@@ -3,7 +3,7 @@
 #include "Singleton.h"
 #include <vector>
 #include "GameObject.h"
-
+#include <algorithm>
 class GameObject;
 namespace dae
 {
@@ -17,6 +17,11 @@ namespace dae
 		{
 			m_collisionObjects.push_back(object);
 		}
+		void RemoveCollisionObject(GameObject* object)
+		{
+			m_collisionObjects.erase(std::remove(m_collisionObjects.begin(), m_collisionObjects.end(), object), m_collisionObjects.end());
+		}
+
 		std::vector<GameObject*> GetCollisionObjects()
 		{
 			return m_collisionObjects;

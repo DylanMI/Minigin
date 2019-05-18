@@ -25,7 +25,11 @@ void dae::CollisionCheckerComponent::Update(const float & deltaTime)
 			// if they collide and the tag is "DestructableTerrain" destroy to collided
 			if (placeholder[i]->GetComponent<CollisionComponent>()->GetTag() == collisionTag::Destructable)
 			{
+				// clear its components so its empty
 				placeholder[i]->ClearComponents();
+				// remove it aswell from the collisionManagers vector, so it won't cause nlpters
+				CollisionManager::GetInstance().RemoveCollisionObject(placeholder[i]);
+
 			}
 			// else if they collide, check their tag and execute the command connected
 			else

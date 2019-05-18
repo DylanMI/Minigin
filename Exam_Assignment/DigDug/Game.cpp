@@ -1,7 +1,6 @@
 #include "pch.h"
 #include "Game.h"
 
-
 void Game::Initialize()
 {
 	if (SDL_Init(SDL_INIT_VIDEO) != 0)
@@ -33,7 +32,7 @@ void Game::LoadGame() const
 	{
 		// making the scene
 		auto& m_scene = SceneManager::GetInstance().CreateScene("Demo");
-		
+
 		// making the grid
 		const int rows{ 25 };
 		const int collumns{ 42 };
@@ -90,8 +89,6 @@ void Game::LoadGame() const
 
 				// give it a collider component [and set the tag to destructable, and give it a dimension]
 				gridObject->AddComponent(new CollisionComponent(gridObject));
-				gridObject->GetComponent<CollisionComponent>()->SetTag(collisionTag::Destructable);
-				
 				Rectf Body{
 					float(startLeftX + width * k),
 					float(startLeftY - height * i),
