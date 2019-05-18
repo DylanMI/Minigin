@@ -13,7 +13,7 @@
     <Filter Include="Audio">
       <UniqueIdentifier>{1dd207e8-6fdf-4403-b887-24ee2d7c0321}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Components\Mainfiles">
+    <Filter Include="Mainfiles">
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
@@ -53,34 +53,34 @@
       <Filter>Legacy</Filter>
     </ClInclude>
     <ClInclude Include="Minigin.h">
-      <Filter>Components\Mainfiles</Filter>
+      <Filter>Mainfiles</Filter>
     </ClInclude>
     <ClInclude Include="MiniginPCH.h">
-      <Filter>Components\Mainfiles</Filter>
+      <Filter>Mainfiles</Filter>
     </ClInclude>
     <ClInclude Include="FPSComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="Structs.h">
-      <Filter>Components\Mainfiles</Filter>
+      <Filter>Mainfiles</Filter>
     </ClInclude>
     <ClInclude Include="GameObject.h">
       <Filter>Objects</Filter>
     </ClInclude>
     <ClInclude Include="Scene.h">
-      <Filter>Components\Mainfiles</Filter>
+      <Filter>Mainfiles</Filter>
     </ClInclude>
     <ClInclude Include="TextureComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="InputManager.h">
-      <Filter>Components\Mainfiles</Filter>
+      <Filter>Mainfiles</Filter>
     </ClInclude>
     <ClInclude Include="Command.h">
-      <Filter>Components\Mainfiles</Filter>
+      <Filter>Mainfiles</Filter>
     </ClInclude>
     <ClInclude Include="ServiceLocator.h">
-      <Filter>Components\Mainfiles</Filter>
+      <Filter>Mainfiles</Filter>
     </ClInclude>
     <ClInclude Include="Audio.h">
       <Filter>Audio</Filter>
@@ -92,7 +92,7 @@
       <Filter>Audio</Filter>
     </ClInclude>
     <ClInclude Include="Renderer.h">
-      <Filter>Components\Mainfiles</Filter>
+      <Filter>Mainfiles</Filter>
     </ClInclude>
     <ClInclude Include="BaseCharacter.h">
       <Filter>Objects</Filter>
@@ -104,7 +104,7 @@
       <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="Texture2D.h">
-      <Filter>Components\Mainfiles</Filter>
+      <Filter>Mainfiles</Filter>
     </ClInclude>
     <ClInclude Include="AiComponent.h">
       <Filter>Components</Filter>
@@ -113,13 +113,16 @@
       <Filter>Objects</Filter>
     </ClInclude>
     <ClInclude Include="Utils.h">
-      <Filter>Components\Mainfiles</Filter>
-    </ClInclude>
-    <ClInclude Include="CollisionComponent.h">
-      <Filter>Components\Mainfiles</Filter>
+      <Filter>Mainfiles</Filter>
     </ClInclude>
     <ClInclude Include="CollisionManager.h">
-      <Filter>Components\Mainfiles</Filter>
+      <Filter>Mainfiles</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionCheckerComponent.h">
+      <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -151,10 +154,10 @@
       <Filter>Legacy</Filter>
     </ClCompile>
     <ClCompile Include="Minigin.cpp">
-      <Filter>Components\Mainfiles</Filter>
+      <Filter>Mainfiles</Filter>
     </ClCompile>
     <ClCompile Include="MiniginPCH.cpp">
-      <Filter>Components\Mainfiles</Filter>
+      <Filter>Mainfiles</Filter>
     </ClCompile>
     <ClCompile Include="FPSComponent.cpp">
       <Filter>Components</Filter>
@@ -163,19 +166,19 @@
       <Filter>Objects</Filter>
     </ClCompile>
     <ClCompile Include="Scene.cpp">
-      <Filter>Components\Mainfiles</Filter>
+      <Filter>Mainfiles</Filter>
     </ClCompile>
     <ClCompile Include="TextureComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="InputManager.cpp">
-      <Filter>Components\Mainfiles</Filter>
+      <Filter>Mainfiles</Filter>
     </ClCompile>
     <ClCompile Include="Command.cpp">
-      <Filter>Components\Mainfiles</Filter>
+      <Filter>Mainfiles</Filter>
     </ClCompile>
     <ClCompile Include="ServiceLocator.cpp">
-      <Filter>Components\Mainfiles</Filter>
+      <Filter>Mainfiles</Filter>
     </ClCompile>
     <ClCompile Include="Audio.cpp">
       <Filter>Audio</Filter>
@@ -187,7 +190,7 @@
       <Filter>Audio</Filter>
     </ClCompile>
     <ClCompile Include="Renderer.cpp">
-      <Filter>Components\Mainfiles</Filter>
+      <Filter>Mainfiles</Filter>
     </ClCompile>
     <ClCompile Include="BaseCharacter.cpp">
       <Filter>Objects</Filter>
@@ -199,7 +202,7 @@
       <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="Texture2D.cpp">
-      <Filter>Components\Mainfiles</Filter>
+      <Filter>Mainfiles</Filter>
     </ClCompile>
     <ClCompile Include="AiComponent.cpp">
       <Filter>Components</Filter>
@@ -207,11 +210,12 @@
     <ClCompile Include="PlayerCharacter.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
-    <ClCompile Include="CollisionManager.cpp">
-      <Filter>Components\Mainfiles</Filter>
-    </ClCompile>
     <ClCompile Include="CollisionComponent.cpp">
       <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionCheckerComponent.cpp" />
+    <ClCompile Include="CollisionManager.cpp">
+      <Filter>Mainfiles</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

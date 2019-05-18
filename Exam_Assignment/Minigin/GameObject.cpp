@@ -48,3 +48,11 @@ void dae::GameObject::AddComponent(BaseComponent * component)
 {
 	m_pComponents.push_back(component);
 }
+
+void dae::GameObject::ClearComponents()
+{
+	for (size_t i{}, s = m_pComponents.size(); i < s; i++)
+	{
+		delete m_pComponents[i];
+	}
+}

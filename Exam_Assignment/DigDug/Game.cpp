@@ -100,6 +100,7 @@ void Game::LoadGame() const
 						  };
 
 				gridObject->GetComponent<CollisionComponent>()->SetBody(Body);
+				gridObject->GetComponent<CollisionComponent>()->SetTag(collisionTag::Destructable);
 				m_scene.Add(gridObject);
 				CollisionManager::GetInstance().RegisterCollisionObject(gridObject);
 			}
@@ -111,9 +112,12 @@ void Game::LoadGame() const
 		auto mp_Character = new dae::PlayerCharacter();
 		mp_Character->SetSpeed(100.0f);
 
+		// texture
 		mp_Character->AddComponent(new TextureComponent(mp_Character));
 		mp_Character->GetComponent<TextureComponent>()->SetIsAnimated(true);
 		//mp_Character->GetComponent<TextureComponent>()->SetTexture(dae::ResourceManager::GetInstance().LoadTexture("DigDugRunLeft.png"));
+		
+		// animator
 		mp_Character->AddComponent(new AnimatorComponent(mp_Character));
 		mp_Character->GetComponent<AnimatorComponent>()->SetSpeed(0.5f);
 		mp_Character->GetComponent<AnimatorComponent>()->AddAnimation(State::IDLE, dae::ResourceManager::GetInstance().LoadTexture("DigDugRunLeft.png"), 16, 16, 2);
@@ -122,6 +126,9 @@ void Game::LoadGame() const
 		mp_Character->GetComponent<AnimatorComponent>()->AddAnimation(State::UP, dae::ResourceManager::GetInstance().LoadTexture("DigDugRunUp.png"), 16, 16, 2);
 		mp_Character->GetComponent<AnimatorComponent>()->AddAnimation(State::DOWN, dae::ResourceManager::GetInstance().LoadTexture("DigDugRunDown.png"), 16, 16, 2);
 
+		// collision checker
+		mp_Character->AddComponent(new CollisionCheckerComponent(mp_Character));
+		mp_Character->GetComponent<CollisionCheckerComponent>()->SetWidthAndHeightBody({ 16,16 });
 		m_scene.Add(mp_Character);
 
 		// fixing the inputs 

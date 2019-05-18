@@ -23,7 +23,7 @@ namespace dae
 
 		// adding a component
 		void AddComponent(BaseComponent* component);
-
+		void ClearComponents();
 		// retreiving a component
 		template <class Component>
 		Component* GetComponent() 

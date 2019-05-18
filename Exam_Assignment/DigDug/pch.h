@@ -6,7 +6,6 @@
 #include <vld.h>
 #include "SDL.h"
 #include "Minigin.h"
-#include "Utils.h"
 
 // TODO: add headers that you want to pre-compile here
 #include <stdio.h>
@@ -37,6 +36,7 @@
 #include "AnimatorComponent.h"
 #include "AiComponent.h"
 #include "CollisionComponent.h"
+#include "CollisionCheckerComponent.h"
 
 // services
 #include "ServiceLocator.h"
