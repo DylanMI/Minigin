@@ -35,16 +35,71 @@ void Game::LoadGame() const
 		auto& m_scene = SceneManager::GetInstance().CreateScene("Demo");
 		
 		// making the grid
-		const int rows{ 5 };
-		const int collumns{ 5 };
+		const int rows{ 25 };
+		const int collumns{ 40 };
 		const int startLeftX{ 0 };
-		const int startLeftY{ 0 };
+		const int startLeftY{ 480 };
+		
+		const int width{ 16 };
+		const int height{ 16 };
 
-		const int width{ 5 };
-		const int height{ 5 };
+		const int ScreenWidth{ 640 };
+		const int screenHeight{ 480 };
 
-		std::vector<dae::GameObject*>{};
+		// for each row
+		for (int i{}; i < rows ; i++)
+		{
+			// every collumn
+			for (int k{}; k < collumns; k++)
+			{
+				// game a gameobject
+				dae::GameObject* gridObject = new dae::GameObject{};
+				// give it the right position
+				gridObject->SetPosition({ float(startLeftX + width * k),float(startLeftY - height * i) });
 
+				// give it a texture component
+				gridObject->AddComponent(new TextureComponent{ gridObject });
+				SDL_Log(std::string("Loading tile:" + std::to_string(i * rows + k )).c_str() );
+				
+
+				// set it to the right texture
+				if (i < (rows / 4) * 1)
+				{
+					// Red
+					gridObject->GetComponent<TextureComponent>()->SetIsAnimated(false);
+					gridObject->GetComponent<TextureComponent>()->SetTexture(dae::ResourceManager::GetInstance().LoadTexture("RedLayer.png"));
+
+				}
+				else if (i < (rows / 4) * 2)
+				{
+					// Brown
+					gridObject->GetComponent<TextureComponent>()->SetIsAnimated(false);
+					gridObject->GetComponent<TextureComponent>()->SetTexture(dae::ResourceManager::GetInstance().LoadTexture("BrownLayer.png"));
+				}
+				else if (i < (rows / 4) * 3)
+				{
+					// Orange 
+					gridObject->GetComponent<TextureComponent>()->SetIsAnimated(false);
+					gridObject->GetComponent<TextureComponent>()->SetTexture(dae::ResourceManager::GetInstance().LoadTexture("OrangeLayer.png"));
+				}
+				else
+				{
+					// Yellow
+					gridObject->GetComponent<TextureComponent>()->SetIsAnimated(false);
+					gridObject->GetComponent<TextureComponent>()->SetTexture(dae::ResourceManager::GetInstance().LoadTexture("YellowLayer.png"));
+				}
+
+
+				// give it a collider component [and set the tag to destructable]
+				
+			
+
+				m_scene.Add(gridObject);
+
+			}
+		}
+
+		
 
 		// Adding the character
 		auto mp_Character = new dae::PlayerCharacter();

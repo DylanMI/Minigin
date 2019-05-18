@@ -36,6 +36,7 @@
 #include "Texture2D.h"
 #include "AnimatorComponent.h"
 #include "AiComponent.h"
+#include "CollisionComponent.h"
 
 // services
 #include "ServiceLocator.h"

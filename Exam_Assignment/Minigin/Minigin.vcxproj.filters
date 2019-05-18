@@ -115,6 +115,9 @@
     <ClInclude Include="Utils.h">
       <Filter>Mainfiles</Filter>
     </ClInclude>
+    <ClInclude Include="CollisionComponent.h">
+      <Filter>Mainfiles</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BaseComponent.cpp">
@@ -201,5 +204,6 @@
     <ClCompile Include="PlayerCharacter.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
+    <ClCompile Include="CollisionComponent.cpp" />
   </ItemGroup>
 </Project>
