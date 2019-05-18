@@ -101,7 +101,7 @@ void Game::LoadGame() const
 
 				gridObject->GetComponent<CollisionComponent>()->SetBody(Body);
 				m_scene.Add(gridObject);
-
+				CollisionManager::GetInstance().RegisterCollisionObject(gridObject);
 			}
 		}
 

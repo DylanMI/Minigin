@@ -46,6 +46,7 @@
 #include "InputManager.h"
 #include "SceneManager.h"
 #include "ResourceManager.h"
+#include "CollisionManager.h"
 
 
 // SDL 
