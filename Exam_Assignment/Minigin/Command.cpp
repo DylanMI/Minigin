@@ -92,7 +92,7 @@ dae::FallCommandRock::~FallCommandRock()
 }
 
 // executed when the collision doesn't collide with anyting
-void dae::FallCommandRock::Execute(float deltatime, GameObject* /*other*/)
+void dae::FallCommandRock::Execute(float , GameObject* /*other*/)
 {
 	// check if the rock is already falling, if not make it falling
 	if (!m_object->GetComponent<RockComponent>()->GetIsFalling())
@@ -115,9 +115,13 @@ dae::BreakCommandRock::~BreakCommandRock()
 }
 
 // exectuted after the collision detects terrain and is falling
-void dae::BreakCommandRock::Execute(float deltatime, GameObject* /*other*/)
+void dae::BreakCommandRock::Execute(float , GameObject* /*other*/)
 {
 	// check if the rock is falling, if yes then set it to breaking
+	if (m_object->GetComponent<RockComponent>()->GetIsFalling())
+	{
+		m_object->GetComponent<RockComponent>()->SetIsBreaking(true);
+	}
 }
 
 dae::TakeEnemyCommandRock::TakeEnemyCommandRock(GameObject * object)
@@ -130,7 +134,7 @@ dae::TakeEnemyCommandRock::~TakeEnemyCommandRock()
 }
 
 // exectuted when the collision detects an enemy and is falling
-void dae::TakeEnemyCommandRock::Execute(float deltatime, GameObject* other)
+void dae::TakeEnemyCommandRock::Execute(float , GameObject* )
 {
 	// add Enemy to the rock if the rock isfalling is true
 }

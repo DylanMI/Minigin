@@ -23,7 +23,7 @@ void dae::CollisionCheckerComponent::Update(const float & deltaTime)
 		if (IsRectOverlapping(m_collisionBody, placeholder[i]->GetComponent<CollisionComponent>()->getBody()))
 		{
 			// if they collide and the tag is "DestructableTerrain" destroy to collided
-			if (placeholder[i]->GetComponent<CollisionComponent>()->GetTag() == collisionTag::Destructable)
+			if (placeholder[i]->GetComponent<CollisionComponent>()->GetTag() == collisionTag::Terrain)
 			{
 				// clear its components so its empty
 				placeholder[i]->ClearComponents();
@@ -34,7 +34,14 @@ void dae::CollisionCheckerComponent::Update(const float & deltaTime)
 			// else if they collide, check their tag and execute the command connected
 			else
 			{
-				collisionEventMap[placeholder[i]->GetComponent<CollisionComponent>()->GetTag()]->Execute(deltaTime);
+				collisionEventMap[placeholder[i]->GetComponent<CollisionComponent>()->GetTag()]->Execute(deltaTime, placeholder[i]);
+			}
+		}
+		else
+		{
+			if (collisionEventMap[collisionTag::Nothing])
+			{
+				collisionEventMap[collisionTag::Nothing]->Execute(deltaTime, nullptr);
 			}
 		}
 
@@ -53,6 +60,7 @@ void dae::CollisionCheckerComponent::SetWidthAndHeightBody(Point2f newWidthAndHe
 	m_widthAndHeight = newWidthAndHeigh;
 }
 
-void dae::CollisionCheckerComponent::addCollisionEvent(Command * , collisionTag )
+void dae::CollisionCheckerComponent::addCollisionEvent(CollisionCommand *EventExecution, collisionTag tag)
 {
+	collisionEventMap[tag] = EventExecution;
 }

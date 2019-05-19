@@ -97,13 +97,27 @@ void Game::LoadGame() const
 						  };
 
 				gridObject->GetComponent<CollisionComponent>()->SetBody(Body);
-				gridObject->GetComponent<CollisionComponent>()->SetTag(collisionTag::Destructable);
+				gridObject->GetComponent<CollisionComponent>()->SetTag(collisionTag::Terrain);
 				m_scene.Add(gridObject);
 				CollisionManager::GetInstance().RegisterCollisionObject(gridObject);
 			}
 		}
 
+		// the rocks
+		auto mp_rock = new dae::GameObject();
 		
+		mp_rock->AddComponent(new TextureComponent(mp_rock));
+		mp_rock->GetComponent<TextureComponent>()->SetTexture(dae::ResourceManager::GetInstance().LoadTexture("Rock.png"));
+		
+		mp_rock->AddComponent(new CollisionCheckerComponent(mp_rock));
+		mp_rock->GetComponent<CollisionCheckerComponent>()->addCollisionEvent(new FallCommandRock(mp_rock), collisionTag::Nothing);
+		mp_rock->GetComponent<CollisionCheckerComponent>()->SetWidthAndHeightBody({ 16,16 });
+
+		mp_rock->AddComponent(new RockComponent(mp_rock));
+		mp_rock->GetComponent<RockComponent>()->SetFallSpeed(10.0f);
+
+		mp_rock->SetPosition({ 50, 200 });
+		m_scene.Add(mp_rock);
 
 		// Adding the character
 		auto mp_Character = new dae::PlayerCharacter();

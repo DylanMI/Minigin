@@ -7,10 +7,12 @@ namespace dae
 {
 	enum collisionTag
 	{
-		Trigger,
-		Block,
-		Destructable,
-		Death
+		Terrain,
+		Pooka,
+		Fugar,
+		Player,
+		Rock,
+		Nothing
 	};
 
 	class BaseComponent;
