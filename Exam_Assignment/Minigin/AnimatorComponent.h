@@ -5,7 +5,7 @@
 #include <map>
 #include "Texture2D.h"
 #include "TextureComponent.h"
-
+#include "StateComponent.h"
 class BaseComponent;
 class GameObject;
 class Texture2D;

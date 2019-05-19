@@ -45,6 +45,7 @@ void Game::LoadGame() const
 		const int ScreenWidth{ 640 };
 		const int screenHeight{ 480 };
 
+		// making the grid
 		// for each row
 		for (int i{}; i < rows ; i++)
 		{
@@ -52,7 +53,7 @@ void Game::LoadGame() const
 			for (int k{}; k < collumns; k++)
 			{
 				// game a gameobject
-				dae::GameObject* gridObject = new dae::GameObject{};
+				dae::GameObject* gridObject = new dae::GameObject();
 				// give it the right position
 				gridObject->SetPosition({ float(startLeftX + width * k),float(startLeftY - height * i) });
 
@@ -103,31 +104,33 @@ void Game::LoadGame() const
 			}
 		}
 
-		// the rocks
+		// the rock
 		auto mp_rock = new dae::GameObject();
 		
 		mp_rock->AddComponent(new TextureComponent(mp_rock));
-		mp_rock->GetComponent<TextureComponent>()->SetTexture(dae::ResourceManager::GetInstance().LoadTexture("Rock.png"));
+		mp_rock->GetComponent<TextureComponent>()->SetTexture(dae::ResourceManager::GetInstance().LoadTexture("FygarInflate4.png"));
 		
 		mp_rock->AddComponent(new CollisionCheckerComponent(mp_rock));
 		mp_rock->GetComponent<CollisionCheckerComponent>()->addCollisionEvent(new FallCommandRock(mp_rock), collisionTag::Nothing);
+		mp_rock->GetComponent<CollisionCheckerComponent>()->addCollisionEvent(new BreakCommandRock(mp_rock), collisionTag::Terrain);
 		mp_rock->GetComponent<CollisionCheckerComponent>()->SetWidthAndHeightBody({ 16,16 });
+		mp_rock->GetComponent<CollisionCheckerComponent>()->SetOffset({ 0,16 });
 
 		mp_rock->AddComponent(new RockComponent(mp_rock));
-		mp_rock->GetComponent<RockComponent>()->SetFallSpeed(10.0f);
+		mp_rock->GetComponent<RockComponent>()->SetFallSpeed(-50.0f);
 
-		mp_rock->SetPosition({ 50, 200 });
+		mp_rock->SetPosition({ 6*16, 10*16 });
 		m_scene.Add(mp_rock);
 
 		// Adding the character
-		auto mp_Character = new dae::PlayerCharacter();
+		auto mp_Character = new dae::GameObject();
 		mp_Character->SetSpeed(100.0f);
+		mp_Character->AddComponent(new StateComponent(mp_Character));
 
 		// texture
 		mp_Character->AddComponent(new TextureComponent(mp_Character));
 		mp_Character->GetComponent<TextureComponent>()->SetIsAnimated(true);
-		//mp_Character->GetComponent<TextureComponent>()->SetTexture(dae::ResourceManager::GetInstance().LoadTexture("DigDugRunLeft.png"));
-		
+
 		// animator
 		mp_Character->AddComponent(new AnimatorComponent(mp_Character));
 		mp_Character->GetComponent<AnimatorComponent>()->SetSpeed(0.5f);

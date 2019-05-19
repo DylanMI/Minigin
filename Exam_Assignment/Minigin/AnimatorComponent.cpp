@@ -17,7 +17,7 @@ dae::AnimatorComponent::~AnimatorComponent()
 void dae::AnimatorComponent::Update(const float & deltaTime)
 {
 	// get the current state from the parent
-	State placeholderState = dynamic_cast<BaseCharacter*>(m_pParent)->GetState();
+	State placeholderState = m_pParent->GetComponent<StateComponent>()->GetState();
 
 	// if the state is different from the previous one, reset the timer and the counter
 	// else just continue

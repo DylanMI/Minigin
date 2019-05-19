@@ -31,6 +31,9 @@ namespace dae
 
 		bool m_isFalling;
 		bool m_isBreaking;
+
+		float m_breakTimer;
+
 	};
 
 }

@@ -3,6 +3,7 @@
 #include "BaseComponent.h"
 #include "BaseCharacter.h" // will need to add an AI character
 #include <map>
+#include "StateComponent.h"
 
 class GameObject;
 

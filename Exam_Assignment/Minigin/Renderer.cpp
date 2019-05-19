@@ -15,7 +15,7 @@ void dae::Renderer::Init(SDL_Window * window)
 
 void dae::Renderer::Render()
 {
-	SDL_SetRenderDrawColor(mRenderer, 255, 0x00, 255, 0xFF);
+	SDL_SetRenderDrawColor(mRenderer, 0, 0, 0, 0xFF);
 
 	SDL_RenderClear(mRenderer);
 

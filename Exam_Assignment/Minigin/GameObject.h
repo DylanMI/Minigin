@@ -4,6 +4,7 @@
 #include "BaseComponent.h"
 #include "FPSComponent.h"
 #include "TextRendererComponent.h"
+#include "StateComponent.h"
 
 #include "Scene.h"
 #include "Transform.h"
@@ -13,13 +14,18 @@
 class Scene;
 namespace dae
 {
-	class GameObject : public SceneObject
+	class GameObject final : public SceneObject
 	{
 	public:
 		virtual void Update(const float& deltaTime) override;
 		virtual void Render() const override;
 		virtual void SetPosition(Point2f pos);
 		virtual Transform GetTransform();
+
+		void Move(Point2f direction, float deltaTime);
+
+		void SetSpeed(float newSpeed);
+		float GetSpeed();
 
 		// adding a component
 		void AddComponent(BaseComponent* component);
@@ -51,6 +57,7 @@ namespace dae
 		Transform mTransform;
 		// legacy var end
 
+		float m_speed;
 		std::vector<BaseComponent*> m_pComponents;
 	};
 }

@@ -31,7 +31,7 @@ dae::MoveLeftCommandPlayer::~MoveLeftCommandPlayer()
 
 void dae::MoveLeftCommandPlayer::Execute(float deltatime)
 {
-	dynamic_cast<PlayerCharacter*>(m_object)->Move(Point2f{ -1,0 }, deltatime);
+	m_object->Move(Point2f{ -1,0 }, deltatime);
 }
 
 dae::MoveRightCommandPlayer::MoveRightCommandPlayer(GameObject * object)
@@ -46,7 +46,7 @@ dae::MoveRightCommandPlayer::~MoveRightCommandPlayer()
 
 void dae::MoveRightCommandPlayer::Execute(float deltatime)
 {
-	dynamic_cast<PlayerCharacter*>(m_object)->Move(Point2f{ 1,0 }, deltatime);
+	m_object->Move(Point2f{ 1,0 }, deltatime);
 }
 
 dae::MoveUpCommandPlayer::MoveUpCommandPlayer(GameObject * object)
@@ -61,7 +61,7 @@ dae::MoveUpCommandPlayer::~MoveUpCommandPlayer()
 
 void dae::MoveUpCommandPlayer::Execute(float deltatime)
 {
-	dynamic_cast<PlayerCharacter*>(m_object)->Move(Point2f{ 0,1 }, deltatime);
+	m_object->Move(Point2f{ 0,1 }, deltatime);
 }
 
 dae::MoveDownCommandPlayer::MoveDownCommandPlayer(GameObject * object)
@@ -76,7 +76,7 @@ dae::MoveDownCommandPlayer::~MoveDownCommandPlayer()
 
 void dae::MoveDownCommandPlayer::Execute(float deltatime)
 {
-	dynamic_cast<PlayerCharacter*>(m_object)->Move(Point2f{ 0,-1 }, deltatime);
+	m_object->Move(Point2f{ 0,-1 }, deltatime);
 }
 #pragma endregion
 

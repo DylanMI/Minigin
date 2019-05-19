@@ -51,7 +51,7 @@ bool dae::Transition::Check()
 {
 	bool checker = true;
 	// first check if the state you have to check is actually in play now (StartState)
-	if (m_StartState == dynamic_cast<BaseCharacter*>(m_pParent)->GetState())
+	if (m_StartState == m_pParent->GetComponent<StateComponent>()->GetState())
 	{	
 		// run trough all the prerequisites, and put the owner to the state it wants to go(goToState)
         // but only if all the prerequisites are met
@@ -66,7 +66,7 @@ bool dae::Transition::Check()
 	else checker = false;
 	if (checker)
 	{
-		dynamic_cast<BaseCharacter*>(m_pParent)->SetState(m_gotoState);
+		m_pParent->GetComponent<StateComponent>()->SetState(m_gotoState);
 		return true;
 	}
 	return false;

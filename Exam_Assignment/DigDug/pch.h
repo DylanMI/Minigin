@@ -38,6 +38,7 @@
 #include "CollisionComponent.h"
 #include "CollisionCheckerComponent.h"
 #include "RockComponent.h"
+#include "StateComponent.h"
 
 // services
 #include "ServiceLocator.h"

@@ -25,13 +25,16 @@ namespace dae
 		void Render() const override;
 
 		void SetWidthAndHeightBody(Point2f newWidthAndHeigh);
+		void SetOffset(Point2f newOffset);
 		void addCollisionEvent(CollisionCommand* EventExecution, collisionTag tag);
 
 	private:
 		GameObject* m_pParent;
 		std::map<collisionTag, CollisionCommand* > collisionEventMap;
 		Rectf m_collisionBody{};
-		Point2f m_widthAndHeight{};
+		
+		Point2f m_widthAndHeight;
+		Point2f m_offset;
 	};
 
 }

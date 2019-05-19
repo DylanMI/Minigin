@@ -94,9 +94,6 @@
     <ClInclude Include="Renderer.h">
       <Filter>Mainfiles</Filter>
     </ClInclude>
-    <ClInclude Include="BaseCharacter.h">
-      <Filter>Objects</Filter>
-    </ClInclude>
     <ClInclude Include="SceneObject.h">
       <Filter>Objects</Filter>
     </ClInclude>
@@ -108,9 +105,6 @@
     </ClInclude>
     <ClInclude Include="AiComponent.h">
       <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerCharacter.h">
-      <Filter>Objects</Filter>
     </ClInclude>
     <ClInclude Include="Utils.h">
       <Filter>Mainfiles</Filter>
@@ -126,6 +120,9 @@
     </ClInclude>
     <ClInclude Include="RockComponent.h">
       <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="StateComponent.h">
+      <Filter>Mainfiles</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -195,9 +192,6 @@
     <ClCompile Include="Renderer.cpp">
       <Filter>Mainfiles</Filter>
     </ClCompile>
-    <ClCompile Include="BaseCharacter.cpp">
-      <Filter>Objects</Filter>
-    </ClCompile>
     <ClCompile Include="SceneObject.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
@@ -209,9 +203,6 @@
     </ClCompile>
     <ClCompile Include="AiComponent.cpp">
       <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerCharacter.cpp">
-      <Filter>Objects</Filter>
     </ClCompile>
     <ClCompile Include="CollisionComponent.cpp">
       <Filter>Components</Filter>
@@ -225,5 +216,6 @@
     <ClCompile Include="RockComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
+    <ClCompile Include="StateComponent.cpp" />
   </ItemGroup>
 </Project>
