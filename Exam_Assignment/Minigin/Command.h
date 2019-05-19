@@ -2,6 +2,7 @@
 #include "GameObject.h"
 #include "ServiceLocator.h"
 #include "PlayerCharacter.h"
+#include "RockComponent.h"
 
 
 class ServiceLocator;
@@ -15,6 +16,15 @@ namespace dae
 		virtual void Execute(float deltatime);
 	};
 
+
+	class CollisionCommand
+	{
+	public:
+		virtual ~CollisionCommand();
+		virtual void Execute(float deltatime, GameObject* other);
+	};
+
+#pragma region movementcommands
 	class MoveLeftCommandPlayer : public Command
 	{
 	public:
@@ -54,4 +64,39 @@ namespace dae
 	private:
 		GameObject* m_object;
 	};
+#pragma endregion
+
+#pragma region RockCommands
+	class FallCommandRock : public CollisionCommand
+	{
+	public:
+		FallCommandRock(GameObject* object);
+		virtual ~FallCommandRock() override;
+		void Execute(float deltatime, GameObject* other) override;
+	private:
+		GameObject* m_object;
+	};
+
+	class BreakCommandRock : public CollisionCommand
+	{
+	public:
+		BreakCommandRock(GameObject* object);
+		virtual ~BreakCommandRock() override;
+		void Execute(float deltatime, GameObject* other) override;
+	private:
+		GameObject* m_object;
+	};
+
+	class TakeEnemyCommandRock : public CollisionCommand
+	{
+	public:
+		TakeEnemyCommandRock(GameObject* object);
+		virtual ~TakeEnemyCommandRock() override;
+		void Execute(float deltatime, GameObject* other) override;
+	private:
+		GameObject* m_object;
+	};
+
+#pragma endregion
+
 }

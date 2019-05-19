@@ -29,7 +29,7 @@ namespace dae
 
 	private:
 		GameObject* m_pParent;
-		std::map<collisionTag, Command* > collisionEventMap{};
+		std::map<collisionTag, CollisionCommand* > collisionEventMap{};
 		Rectf m_collisionBody{};
 		Point2f m_widthAndHeight{};
 	};

@@ -19,8 +19,11 @@ namespace dae
 		void Render() const override;
 
 		void SetFallSpeed(float newSpeed);
-		void SetIsFalling();
-		void Break();
+		void SetIsFalling(bool isFalling);
+		void SetIsBreaking(bool isBreaking);
+		bool GetIsFalling();
+		bool GetIsBreaking();
+
 
 	private:
 		GameObject* m_pParent;

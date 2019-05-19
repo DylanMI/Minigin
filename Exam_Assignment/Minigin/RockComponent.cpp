@@ -15,6 +15,8 @@ void dae::RockComponent::Update(const float & deltaTime)
 	if (m_isFalling)
 	{
 		Point2f currPos = { m_pParent->GetTransform().GetPosition().x, m_pParent->GetTransform().GetPosition().y };
+		Point2f newPos = { currPos.x, currPos.y - (deltaTime * m_fallSpeed) };
+		m_pParent->SetPosition(newPos);
 
 	}
 
@@ -22,6 +24,10 @@ void dae::RockComponent::Update(const float & deltaTime)
 	if (m_isBreaking)
 	{
 		m_isFalling = false;
+
+		// further the state timer
+
+		// and change the state of the parent accordingly
 
 	}
 
@@ -33,12 +39,26 @@ void dae::RockComponent::Render() const
 
 void dae::RockComponent::SetFallSpeed(float newSpeed)
 {
+	m_fallSpeed = newSpeed;
 }
 
-void dae::RockComponent::SetIsFalling()
+void dae::RockComponent::SetIsFalling(bool isFalling)
 {
+	m_isFalling = isFalling;
 }
 
-void dae::RockComponent::Break()
+void dae::RockComponent::SetIsBreaking(bool isBreaking)
 {
+	m_isBreaking = isBreaking;
 }
+
+bool dae::RockComponent::GetIsFalling()
+{
+	return m_isFalling;
+}
+
+bool dae::RockComponent::GetIsBreaking()
+{
+	return m_isBreaking;
+}
+
