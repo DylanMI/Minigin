@@ -124,6 +124,9 @@
     <ClInclude Include="CollisionCheckerComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
+    <ClInclude Include="RockComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BaseComponent.cpp">
@@ -217,6 +220,9 @@
       <Filter>Mainfiles</Filter>
     </ClCompile>
     <ClCompile Include="CollisionCheckerComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="RockComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
   </ItemGroup>
