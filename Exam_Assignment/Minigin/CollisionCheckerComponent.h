@@ -8,6 +8,7 @@
 #include <map>
 #include "Structs.h"
 
+class CollisionCommand;
 class GameObject;
 namespace dae
 {
@@ -23,6 +24,8 @@ namespace dae
 
 		void Update(const float& deltaTime) override;
 		void Render() const override;
+
+		collisionTag Peek(Point2f Offset, Point2f widthAndHeight);
 
 		void SetWidthAndHeightBody(Point2f newWidthAndHeigh);
 		void SetOffset(Point2f newOffset);

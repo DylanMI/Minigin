@@ -40,6 +40,8 @@
 #include "RockComponent.h"
 #include "StateComponent.h"
 #include "PookaComponent.h"
+#include "GunComponent.h"
+#include "DeleteSelfComponent.h"
 
 
 // services

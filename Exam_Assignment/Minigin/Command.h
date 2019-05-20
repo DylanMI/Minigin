@@ -4,7 +4,7 @@
 
 #include "RockComponent.h"
 #include "PookaComponent.h"
-
+#include "GunComponent.h"
 
 
 class ServiceLocator;
@@ -66,6 +66,17 @@ namespace dae
 	private:
 		GameObject* m_object;
 	};
+
+	class ShootCommandPlayer : public Command
+	{
+	public:
+		ShootCommandPlayer(GameObject* object);
+		virtual ~ShootCommandPlayer() override;
+		void Execute(float deltatime) override;
+	private:
+		GameObject* m_object;
+	};
+
 #pragma endregion
 
 #pragma region RockCommands

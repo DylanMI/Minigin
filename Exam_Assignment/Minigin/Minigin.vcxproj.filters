@@ -127,6 +127,12 @@
     <ClInclude Include="PookaComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
+    <ClInclude Include="GunComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="DeleteSelfComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BaseComponent.cpp">
@@ -223,6 +229,12 @@
       <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="PookaComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="GunComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="DeleteSelfComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
   </ItemGroup>

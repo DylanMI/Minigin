@@ -72,6 +72,27 @@ void dae::CollisionCheckerComponent::Render() const
 {
 }
 
+dae::collisionTag dae::CollisionCheckerComponent::Peek(Point2f Offset, Point2f widthAndHeight)
+{
+	Rectf body{};
+	body.x = m_pParent->GetTransform().GetPosition().x + Offset.x;
+	body.y = m_pParent->GetTransform().GetPosition().y + Offset.y;
+	body.w = widthAndHeight.x;
+	body.h = widthAndHeight.y;
+	// get objects from singleton
+	std::vector<GameObject*> placeholder = CollisionManager::GetInstance().GetCollisionObjects();
+	for (int i{}; i < placeholder.size(); i++)
+	{
+		if (IsRectOverlapping(body, placeholder[i]->GetComponent<CollisionComponent>()->getBody()))
+		{
+			return placeholder[i]->GetComponent<CollisionComponent>()->GetTag();
+		}
+
+	}
+	return collisionTag::Nothing;
+
+}
+
 void dae::CollisionCheckerComponent::SetWidthAndHeightBody(Point2f newWidthAndHeigh)
 {
 	m_widthAndHeight = newWidthAndHeigh;

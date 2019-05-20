@@ -137,14 +137,13 @@ void Game::LoadGame() const
 
 		// texture
 		mp_Pooka->AddComponent(new TextureComponent(mp_Pooka));
-		mp_Pooka->GetComponent<TextureComponent>()->SetTexture(dae::ResourceManager::GetInstance().LoadTexture("FygarInflate4.png"));
-		
-		//mp_Pooka->GetComponent<TextureComponent>()->SetIsAnimated(true);
+		mp_Pooka->GetComponent<TextureComponent>()->SetIsAnimated(true);
 
 		// animator
-		//mp_Pooka->AddComponent(new AnimatorComponent(mp_Pooka));
-		//mp_Pooka->GetComponent<AnimatorComponent>()->SetSpeed(0.5f);
+		mp_Pooka->AddComponent(new AnimatorComponent(mp_Pooka));
+		mp_Pooka->GetComponent<AnimatorComponent>()->SetSpeed(0.5f);
 
+		// pooka AI
 		mp_Pooka->AddComponent(new PookaComponent(mp_Pooka));
 
 		// collision checker
@@ -152,13 +151,21 @@ void Game::LoadGame() const
 		mp_Pooka->GetComponent<CollisionCheckerComponent>()->SetWidthAndHeightBody({ 16,16 });
 		mp_Pooka->GetComponent<CollisionCheckerComponent>()->addCollisionEvent(new RandomizeDirectionCommandEnemy(mp_Pooka), collisionTag::Terrain);
 		
-		
+		mp_Pooka->GetComponent<AnimatorComponent>()->AddAnimation(State::LEFT, dae::ResourceManager::GetInstance().LoadTexture("PookaRunLeft.png"), 16, 16, 2);
+		mp_Pooka->GetComponent<AnimatorComponent>()->AddAnimation(State::RIGHT, dae::ResourceManager::GetInstance().LoadTexture("PookaRunRight.png"), 16, 16, 2);
+		mp_Pooka->GetComponent<AnimatorComponent>()->AddAnimation(State::UP, dae::ResourceManager::GetInstance().LoadTexture("PookaRunUp.png"), 16, 16, 2);
+		mp_Pooka->GetComponent<AnimatorComponent>()->AddAnimation(State::DOWN, dae::ResourceManager::GetInstance().LoadTexture("PookaRunDown.png"), 16, 16, 2);
+
 		mp_Pooka->SetPosition({ 8 * 16, 26 * 16 });
 		m_scene.Add(mp_Pooka);
 
-
 		// the clearing of the pooka
-
+		auto mp_Clearer2 = new dae::GameObject();
+		mp_Clearer2->AddComponent(new CollisionCheckerComponent(mp_Clearer2));
+		mp_Clearer2->AddComponent(new StateComponent(mp_Clearer2, true));
+		mp_Clearer2->GetComponent<CollisionCheckerComponent>()->SetWidthAndHeightBody({ 16*5,16*3 });
+		mp_Clearer2->SetPosition({ 8 * 16, 26 * 16 });
+		m_scene.Add(mp_Clearer2);
 
 		// Adding the character
 		auto mp_Character = new dae::GameObject();
@@ -183,13 +190,17 @@ void Game::LoadGame() const
 		mp_Character->GetComponent<CollisionCheckerComponent>()->SetWidthAndHeightBody({ 16,16 });
 		m_scene.Add(mp_Character);
 
+		// shooter
+		mp_Character->AddComponent(new GunComponent(mp_Character, m_scene));
+
 		// fixing the inputs 
 		InputManager::GetInstance().ChangeCommand(dae::ControllerButton::DpadU, 1, new MoveUpCommandPlayer(mp_Character));
 		InputManager::GetInstance().ChangeCommand(dae::ControllerButton::DpadL, 1, new MoveLeftCommandPlayer(mp_Character));
 		InputManager::GetInstance().ChangeCommand(dae::ControllerButton::DpadR, 1, new MoveRightCommandPlayer(mp_Character));
 		InputManager::GetInstance().ChangeCommand(dae::ControllerButton::DpadD, 1, new MoveDownCommandPlayer(mp_Character));
-
-		// //adding FPS counter
+		InputManager::GetInstance().ChangeCommand(dae::ControllerButton::ButtonA, 1, new ShootCommandPlayer(mp_Character));
+		
+		//adding FPS counter
 		auto font = ResourceManager::GetInstance().LoadFont("Lingua.otf", 36);
 		auto mp_FPSObj = new dae::GameObject();
 		mp_FPSObj->AddComponent(new TextRendererComponent("xxx", font, mp_FPSObj));

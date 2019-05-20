@@ -18,8 +18,34 @@ void dae::PookaComponent::Update(const float & deltaTime)
 		m_GhostTimer -= deltaTime;
 		// move 
 		m_pParent->Move(m_direction,deltaTime);
+		
+		
+		if (m_direction.x == 0.0f && m_direction.y == 0.0f) ShiftDirection();
 		break;
 
+
+	}
+
+	// change the gameboject state for the animation
+	// up
+	if (m_direction.x == Point2f{ 0,1 }.x && m_direction.y == Point2f{ 0,1 }.y)
+	{
+		m_pParent->GetComponent<StateComponent>()->SetState(State::UP);
+	}
+	// down
+	if (m_direction.x == Point2f{ 0,-1 }.x && m_direction.y == Point2f{ 0,-1 }.y)
+	{
+		m_pParent->GetComponent<StateComponent>()->SetState(State::DOWN);
+	}
+	// left
+	if (m_direction.x == Point2f{ -1,0 }.x && m_direction.y == Point2f{ -1,0 }.y)
+	{
+		m_pParent->GetComponent<StateComponent>()->SetState(State::LEFT);
+	}
+	// right
+	if (m_direction.x == Point2f{ 1,0 }.x && m_direction.y == Point2f{ 1,0 }.y)
+	{
+		m_pParent->GetComponent<StateComponent>()->SetState(State::RIGHT);
 	}
 
 }
@@ -30,32 +56,43 @@ void dae::PookaComponent::Render() const
 
 void dae::PookaComponent::ShiftDirection()
 {
-	Point2f prevDirection = m_direction;
 
-	
-	do
+	std::vector<Point2f> possibleDirections{};
+
+	// peek all four sides
+
+	// up
+	if (m_pParent->GetComponent<CollisionCheckerComponent>()->Peek(Point2f{ 0,-16 }, Point2f{16,16}) == collisionTag::Nothing)
 	{
-		int randomizer = rand() % 4;
-		switch (randomizer)
-		{
-		case 0:
-			m_direction = { 1,0 };
-			break;
-		case 1:
-			m_direction = { -1,0 };
-			break;
-		case 2:
-			m_direction = { 0,1 };
-			break;
-		case 3:
-			m_direction = { 0,-1 };
-			break;
-		default:
-			break;
-		}
-	} while (prevDirection.x == m_direction.x && prevDirection.y == m_direction.y);
-	
+		possibleDirections.push_back(Point2f{ 0,1 });
+	}
+	// down
+	if (m_pParent->GetComponent<CollisionCheckerComponent>()->Peek(Point2f{ 0,16 }, Point2f{ 16,16 }) == collisionTag::Nothing)
+	{
+		possibleDirections.push_back(Point2f{ 0,-1 });
+	}
+	// left
+	if (m_pParent->GetComponent<CollisionCheckerComponent>()->Peek(Point2f{ -16,0 }, Point2f{ 16,16 }) == collisionTag::Nothing)
+	{
+		possibleDirections.push_back(Point2f{ -1,0 });
+	}
+	// right
+	if (m_pParent->GetComponent<CollisionCheckerComponent>()->Peek(Point2f{ 16,0 }, Point2f{ 16,16 }) == collisionTag::Nothing)
+	{
+		possibleDirections.push_back(Point2f{ 1,0 });
+	}
 
+	if (possibleDirections.size() == 0)
+	{
+		m_direction = Point2f{ 0,0 };
+		return;
+	}
+
+	int randomnr = rand() % possibleDirections.size();
+	m_direction = possibleDirections[randomnr];
+
+
+	
 }
 
 void dae::PookaComponent::PutBackAFrame(float deltatime)

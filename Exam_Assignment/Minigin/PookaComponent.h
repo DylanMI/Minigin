@@ -2,6 +2,8 @@
 #include "BaseComponent.h"
 #include "GameObject.h"
 
+#include "CollisionCheckerComponent.h"
+
 namespace dae
 {
 	class GameObject;

@@ -77,6 +77,26 @@ void dae::MoveDownCommandPlayer::Execute(float deltatime)
 {
 	m_object->Move(Point2f{ 0,-1 }, deltatime);
 }
+
+
+dae::ShootCommandPlayer::ShootCommandPlayer(GameObject * object)
+	:m_object(object)
+{}
+
+dae::ShootCommandPlayer::~ShootCommandPlayer()
+{
+	m_object = nullptr;
+}
+
+void dae::ShootCommandPlayer::Execute(float)
+{
+	if (m_object->GetComponent<GunComponent>()->GetCanShoot())
+	{
+		m_object->GetComponent<GunComponent>()->Shoot();
+	}
+}
+
+
 #pragma endregion
 
 #pragma region RockCommands
@@ -156,4 +176,3 @@ void dae::RandomizeDirectionCommandEnemy::Execute(float deltatime, GameObject * 
 	m_object->GetComponent<PookaComponent>()->ShiftDirection();
 }
 #pragma endregion
-
