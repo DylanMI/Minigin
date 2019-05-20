@@ -23,6 +23,13 @@ void dae::PookaComponent::Update(const float & deltaTime)
 		if (m_direction.x == 0.0f && m_direction.y == 0.0f) ShiftDirection();
 		break;
 
+	case State::GHOSTING:
+		// move towards player
+		// the ghosting will automaticly stop when i goes over something walkable
+
+
+		break;
+
 
 	}
 
