@@ -150,8 +150,10 @@ void Game::LoadGame() const
 		// collision checker
 		mp_Pooka->AddComponent(new CollisionCheckerComponent(mp_Pooka));
 		mp_Pooka->GetComponent<CollisionCheckerComponent>()->SetWidthAndHeightBody({ 16,16 });
-		//mp_Pooka->GetComponent<CollisionCheckerComponent>()->addCollisionEvent(nullptr /*RandomizeDirection*/, collisionTag::Terrain);
+		mp_Pooka->GetComponent<CollisionCheckerComponent>()->addCollisionEvent(new RandomizeDirectionCommandEnemy(mp_Pooka), collisionTag::Terrain);
 		
+		
+		mp_Pooka->SetPosition({ 8 * 16, 26 * 16 });
 		m_scene.Add(mp_Pooka);
 
 

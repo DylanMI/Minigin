@@ -18,8 +18,8 @@ namespace dae
 		void Update(const float& deltaTime) override;
 		void Render() const override;
 	
-		void RandomizeDirection();
-		void PutBackAFrame();
+		void ShiftDirection();
+		void PutBackAFrame(float deltatime);
 		
 
 	private:
@@ -27,7 +27,6 @@ namespace dae
 		State m_currentState;
 		
 		Point2f m_direction;
-		Point2f m_previousLocation;
 
 		const float m_GhostTime = 5.0f;
 		float m_GhostTimer;

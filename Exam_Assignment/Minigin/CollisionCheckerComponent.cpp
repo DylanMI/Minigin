@@ -25,7 +25,7 @@ void dae::CollisionCheckerComponent::Update(const float & deltaTime)
 	{	
 		if (IsRectOverlapping(m_collisionBody, placeholder[i]->GetComponent<CollisionComponent>()->getBody()))
 		{
-			// if they collide and the tag is "DestructableTerrain" destroy to collided, but only if the parent is a player
+			// if they collide and the tag is "Terrain" destroy to collided, but only if the parent is a player
 			if (placeholder[i]->GetComponent<CollisionComponent>()->GetTag() == collisionTag::Terrain)
 				if (m_pParent->GetComponent<StateComponent>())
 				{
@@ -36,6 +36,16 @@ void dae::CollisionCheckerComponent::Update(const float & deltaTime)
 						// remove it aswell from the collisionManagers vector, so it won't cause nlpters
 						CollisionManager::GetInstance().RemoveCollisionObject(placeholder[i]);
 					}
+					else if (collisionEventMap[placeholder[i]->GetComponent<CollisionComponent>()->GetTag()])
+					{
+						collisionEventMap[placeholder[i]->GetComponent<CollisionComponent>()->GetTag()]->Execute(deltaTime, placeholder[i]);
+
+					}
+				}
+				else if (collisionEventMap[placeholder[i]->GetComponent<CollisionComponent>()->GetTag()])
+				{
+					collisionEventMap[placeholder[i]->GetComponent<CollisionComponent>()->GetTag()]->Execute(deltaTime, placeholder[i]);
+
 				}
 			// else if they collide, check their tag and execute the command connected
 			else

@@ -150,9 +150,10 @@ dae::RandomizeDirectionCommandEnemy::~RandomizeDirectionCommandEnemy()
 	m_object = nullptr;
 }
 
-void dae::RandomizeDirectionCommandEnemy::Execute(float deltatime, GameObject * other)
+void dae::RandomizeDirectionCommandEnemy::Execute(float deltatime, GameObject * )
 {
-	m_object->GetComponent<PookaComponent>()
+	m_object->GetComponent<PookaComponent>()->PutBackAFrame(deltatime);
+	m_object->GetComponent<PookaComponent>()->ShiftDirection();
 }
 #pragma endregion
 
