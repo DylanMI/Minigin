@@ -1,5 +1,6 @@
 #include "MiniginPCH.h"
 #include "Command.h"
+#include "CollisionCheckerComponent.h"
 
 
 dae::Command::~Command()
@@ -15,8 +16,6 @@ dae::CollisionCommand::~CollisionCommand()
 
 void dae::CollisionCommand::Execute(float /*deltatime*/, GameObject * /*other*/)
 {}
-
-
 
 #pragma region movementcommands
 dae::MoveLeftCommandPlayer::MoveLeftCommandPlayer(GameObject * object)
@@ -100,7 +99,7 @@ void dae::FallCommandRock::Execute(float , GameObject* /*other*/)
 		m_object->GetComponent<RockComponent>()->SetIsFalling(true);
 
 		// also change the body to fit the rock itself (AKA: no offset)
-
+		m_object->GetComponent<CollisionCheckerComponent>()->SetOffset({ 0,0 });
 
 	}
 }
@@ -139,5 +138,21 @@ void dae::TakeEnemyCommandRock::Execute(float , GameObject* )
 	// add Enemy to the rock if the rock isfalling is true
 }
 
+#pragma endregion
+
+#pragma region EnemyCommands
+dae::RandomizeDirectionCommandEnemy::RandomizeDirectionCommandEnemy(GameObject * object)
+	:m_object(object)
+{}
+
+dae::RandomizeDirectionCommandEnemy::~RandomizeDirectionCommandEnemy()
+{
+	m_object = nullptr;
+}
+
+void dae::RandomizeDirectionCommandEnemy::Execute(float deltatime, GameObject * other)
+{
+	m_object->GetComponent<PookaComponent>()
+}
 #pragma endregion
 

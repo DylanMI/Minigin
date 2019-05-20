@@ -1,8 +1,10 @@
 #pragma once
 #include "GameObject.h"
 #include "ServiceLocator.h"
-#include "PlayerCharacter.h"
+
 #include "RockComponent.h"
+#include "PookaComponent.h"
+
 
 
 class ServiceLocator;
@@ -96,6 +98,21 @@ namespace dae
 	private:
 		GameObject* m_object;
 	};
+
+#pragma endregion
+
+#pragma region EnemyCommands
+	class RandomizeDirectionCommandEnemy : public CollisionCommand
+	{
+	public:
+		RandomizeDirectionCommandEnemy(GameObject* object);
+		virtual ~RandomizeDirectionCommandEnemy() override;
+		void Execute(float deltatime, GameObject* other) override;
+
+	private:
+		GameObject* m_object;
+	};
+
 
 #pragma endregion
 

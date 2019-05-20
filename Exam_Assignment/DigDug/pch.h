@@ -39,6 +39,8 @@
 #include "CollisionCheckerComponent.h"
 #include "RockComponent.h"
 #include "StateComponent.h"
+#include "PookaComponent.h"
+
 
 // services
 #include "ServiceLocator.h"

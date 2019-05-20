@@ -31,19 +31,21 @@ void dae::RockComponent::Update(const float & deltaTime)
 		// and change the state of the parent accordingly
 		if (m_breakTimer < 0.6f)
 		{
+			m_pParent->GetComponent<TextureComponent>()->SetTexture(dae::ResourceManager::GetInstance().LoadTexture("Rock_Two.png"));
+		}
+		if (m_breakTimer < 0.3f)
+		{
+			m_pParent->GetComponent<TextureComponent>()->SetTexture(dae::ResourceManager::GetInstance().LoadTexture("Rock_Three.png"));
 
 		}
-		else if (m_breakTimer < 0.3f)
+		if (m_breakTimer < 0.1f)
 		{
+			m_pParent->GetComponent<TextureComponent>()->SetTexture(dae::ResourceManager::GetInstance().LoadTexture("Rock_Four.png"));
 
 		}
-		else if (m_breakTimer < 0.1f)
+		if (m_breakTimer <= 0.0f)
 		{
-
-		}
-		else if (m_breakTimer <= 0.0f)
-		{
-
+			m_pParent->ClearComponents();
 		}
 
 

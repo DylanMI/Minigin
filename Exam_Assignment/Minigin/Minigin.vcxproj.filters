@@ -122,7 +122,10 @@
       <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="StateComponent.h">
-      <Filter>Mainfiles</Filter>
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="PookaComponent.h">
+      <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -216,6 +219,11 @@
     <ClCompile Include="RockComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
-    <ClCompile Include="StateComponent.cpp" />
+    <ClCompile Include="StateComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="PookaComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

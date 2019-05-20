@@ -11,16 +11,24 @@ namespace dae
 		UP,
 		DOWN,
 		IDLE,
+		WANDERING,
+		GHOSTING,
 		SHOOTING,
 		DEAD,
-		ANY
+		BREAK,
+		BREAK_1,
+		BREAK_2,
+		BLOW_,
+		BLOW_1,
+		BLOW_2,
+		ANY,
 	};
 
 	class GameObject;
 	class StateComponent : public BaseComponent
 	{
 	public:
-		explicit StateComponent(GameObject* parent);
+		explicit StateComponent(GameObject* parent, bool isDigDug);
 		virtual ~StateComponent() = default;
 		StateComponent(const StateComponent& other) = delete;
 		StateComponent(StateComponent&& other) = delete;
@@ -32,10 +40,14 @@ namespace dae
 
 		State GetState();
 		void SetState(State newState);
+		bool GetIsDigDug();
+
 
 	private:
 		GameObject* m_pParent;
 		State m_CurrentState = State::IDLE;
+
+		bool m_isDigDug;
 	};
 
 }

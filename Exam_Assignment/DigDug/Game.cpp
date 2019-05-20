@@ -53,7 +53,7 @@ void Game::LoadGame() const
 			for (int k{}; k < collumns; k++)
 			{
 				// game a gameobject
-				dae::GameObject* gridObject = new dae::GameObject();
+				dae::GameObject* gridObject = new dae::GameObject;
 				// give it the right position
 				gridObject->SetPosition({ float(startLeftX + width * k),float(startLeftY - height * i) });
 
@@ -108,7 +108,7 @@ void Game::LoadGame() const
 		auto mp_rock = new dae::GameObject();
 		
 		mp_rock->AddComponent(new TextureComponent(mp_rock));
-		mp_rock->GetComponent<TextureComponent>()->SetTexture(dae::ResourceManager::GetInstance().LoadTexture("FygarInflate4.png"));
+		mp_rock->GetComponent<TextureComponent>()->SetTexture(dae::ResourceManager::GetInstance().LoadTexture("Rock_One.png"));
 		
 		mp_rock->AddComponent(new CollisionCheckerComponent(mp_rock));
 		mp_rock->GetComponent<CollisionCheckerComponent>()->addCollisionEvent(new FallCommandRock(mp_rock), collisionTag::Nothing);
@@ -122,10 +122,46 @@ void Game::LoadGame() const
 		mp_rock->SetPosition({ 6*16, 10*16 });
 		m_scene.Add(mp_rock);
 
+		// the clearing of the rock
+		auto mp_Clearer = new dae::GameObject();
+		mp_Clearer->AddComponent(new CollisionCheckerComponent(mp_Clearer));
+		mp_Clearer->AddComponent(new StateComponent(mp_Clearer, true));
+		mp_Clearer->GetComponent<CollisionCheckerComponent>()->SetWidthAndHeightBody({ 16,16 });
+		mp_Clearer->SetPosition({ 6 * 16, 10 * 16 });
+		m_scene.Add(mp_Clearer);
+
+		// pooka
+		auto mp_Pooka = new dae::GameObject();
+		mp_Pooka->SetSpeed(50.0f);
+		mp_Pooka->AddComponent(new StateComponent(mp_Pooka, false));
+
+		// texture
+		mp_Pooka->AddComponent(new TextureComponent(mp_Pooka));
+		mp_Pooka->GetComponent<TextureComponent>()->SetTexture(dae::ResourceManager::GetInstance().LoadTexture("FygarInflate4.png"));
+		
+		//mp_Pooka->GetComponent<TextureComponent>()->SetIsAnimated(true);
+
+		// animator
+		//mp_Pooka->AddComponent(new AnimatorComponent(mp_Pooka));
+		//mp_Pooka->GetComponent<AnimatorComponent>()->SetSpeed(0.5f);
+
+		mp_Pooka->AddComponent(new PookaComponent(mp_Pooka));
+
+		// collision checker
+		mp_Pooka->AddComponent(new CollisionCheckerComponent(mp_Pooka));
+		mp_Pooka->GetComponent<CollisionCheckerComponent>()->SetWidthAndHeightBody({ 16,16 });
+		//mp_Pooka->GetComponent<CollisionCheckerComponent>()->addCollisionEvent(nullptr /*RandomizeDirection*/, collisionTag::Terrain);
+		
+		m_scene.Add(mp_Pooka);
+
+
+		// the clearing of the pooka
+
+
 		// Adding the character
 		auto mp_Character = new dae::GameObject();
 		mp_Character->SetSpeed(100.0f);
-		mp_Character->AddComponent(new StateComponent(mp_Character));
+		mp_Character->AddComponent(new StateComponent(mp_Character, true));
 
 		// texture
 		mp_Character->AddComponent(new TextureComponent(mp_Character));

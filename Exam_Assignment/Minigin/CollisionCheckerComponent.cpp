@@ -22,18 +22,21 @@ void dae::CollisionCheckerComponent::Update(const float & deltaTime)
 	std::vector<GameObject*> placeholder = CollisionManager::GetInstance().GetCollisionObjects();
 	// check their bodies with your own
 	for (int i{}; i < placeholder.size(); i++)
-	{
-		
+	{	
 		if (IsRectOverlapping(m_collisionBody, placeholder[i]->GetComponent<CollisionComponent>()->getBody()))
 		{
 			// if they collide and the tag is "DestructableTerrain" destroy to collided, but only if the parent is a player
-			if (placeholder[i]->GetComponent<CollisionComponent>()->GetTag() == collisionTag::Terrain /*&& dynamic_cast<PlayerCharacter*>(m_pParent) != nullptr*/)
-			{
-				// clear its components so its empty
-				placeholder[i]->ClearComponents();
-				// remove it aswell from the collisionManagers vector, so it won't cause nlpters
-				CollisionManager::GetInstance().RemoveCollisionObject(placeholder[i]);
-			}
+			if (placeholder[i]->GetComponent<CollisionComponent>()->GetTag() == collisionTag::Terrain)
+				if (m_pParent->GetComponent<StateComponent>())
+				{
+					if (m_pParent->GetComponent<StateComponent>()->GetIsDigDug())
+					{
+						// clear its components so its empty
+						placeholder[i]->ClearComponents();
+						// remove it aswell from the collisionManagers vector, so it won't cause nlpters
+						CollisionManager::GetInstance().RemoveCollisionObject(placeholder[i]);
+					}
+				}
 			// else if they collide, check their tag and execute the command connected
 			else
 			{
