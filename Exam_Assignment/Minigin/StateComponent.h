@@ -18,9 +18,10 @@ namespace dae
 		BREAK,
 		BREAK_1,
 		BREAK_2,
-		BLOW_,
 		BLOW_1,
 		BLOW_2,
+		BLOW_3,
+		BLOW_4,
 		ANY,
 	};
 

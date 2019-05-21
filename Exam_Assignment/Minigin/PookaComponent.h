@@ -33,6 +33,7 @@ namespace dae
 		bool* GetToGhostState();
 		bool* GetToWanderingState();
 
+		void AddblowCount(int amm);
 
 	private:
 		GameObject* m_pParent;
@@ -48,8 +49,14 @@ namespace dae
 		const float m_TimeBeforeCheck = 2.0f;
 		float m_CheckTimer;
 
+		const float m_DeflateTime = 1.0f;
+		float m_DeflateTimer;
+
 		bool* m_ToGhostState;
 		bool* m_ToWandering;
+		bool* m_HasDeflated;
+
+		int m_blowCounter;
 	};
 
 

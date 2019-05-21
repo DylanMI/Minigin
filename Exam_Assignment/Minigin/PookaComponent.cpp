@@ -5,6 +5,8 @@ dae::PookaComponent::PookaComponent(GameObject * parent)
 	,m_currentState(State::WANDERING)
 	,m_direction({1,0})
 	,m_GhostTimer(m_GhostTime)
+	,m_DeflateTimer(m_DeflateTime)
+	,m_blowCounter(0)
 {
 	m_ToGhostState = new bool(false);
 	m_ToWandering = new bool(false);
@@ -23,8 +25,8 @@ void dae::PookaComponent::Update(const float & deltaTime)
 	{
 	case State::WANDERING:
 		*m_ToWandering = false;
-		SDL_log(m_GhostTimer);
 		m_CheckTimer = m_TimeBeforeCheck;
+		*m_HasDeflated = false;
 
 		//  Enable collision checker
 		m_pParent->GetComponent<CollisionCheckerComponent>()->SetDisabled(false);
@@ -67,6 +69,8 @@ void dae::PookaComponent::Update(const float & deltaTime)
 	case State::GHOSTING:
 		*m_ToGhostState = false;
 		m_GhostTimer = m_GhostTime;
+		*m_HasDeflated = false;
+
 		// disable collision checker
 		m_pParent->GetComponent<CollisionCheckerComponent>()->SetDisabled(true);
 
@@ -88,9 +92,35 @@ void dae::PookaComponent::Update(const float & deltaTime)
 		m_pParent->GetComponent<StateComponent>()->SetState(State::GHOSTING);
 
 		break;
+
+	case State::BLOW_1:
+	case State::BLOW_2:
+	case State::BLOW_3:
+	case State::BLOW_4:
+		m_DeflateTimer -= deltaTime;
+
+		// handling deflating
+		if (m_DeflateTimer < 0)
+		{
+			m_DeflateTimer = m_DeflateTime;
+			m_blowCounter--;
+		}
+
+		// telling state machine to go back to wandering
+		if (m_blowCounter <= 0)
+		{
+			*m_HasDeflated = true;
+		}
+
+		// internally handling the state of the blows
+		if (m_blowCounter == 1) m_pParent->GetComponent<StateComponent>()->SetState(State::BLOW_1);
+		if (m_blowCounter == 2) m_pParent->GetComponent<StateComponent>()->SetState(State::BLOW_2);
+		if (m_blowCounter == 3) m_pParent->GetComponent<StateComponent>()->SetState(State::BLOW_3);
+		if (m_blowCounter == 4) m_pParent->GetComponent<StateComponent>()->SetState(State::BLOW_4);
+
+		break;
+
 	}
-
-
 
 }
 
@@ -164,4 +194,9 @@ bool* dae::PookaComponent::GetToGhostState()
 bool* dae::PookaComponent::GetToWanderingState()
 {
 	return m_ToWandering;
+}
+
+void dae::PookaComponent::AddblowCount(int amm)
+{
+	m_blowCounter += amm;
 }

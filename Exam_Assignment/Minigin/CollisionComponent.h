@@ -12,6 +12,8 @@ namespace dae
 		Fugar,
 		Player,
 		Rock,
+		Blowgun,
+		Fire,
 		Nothing
 	};
 

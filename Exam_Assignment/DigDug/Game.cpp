@@ -146,7 +146,6 @@ void Game::LoadGame() const
 		// pooka AI
 		mp_Pooka->AddComponent(new PookaComponent(mp_Pooka));
 
-
 		// collision checker
 		mp_Pooka->AddComponent(new CollisionCheckerComponent(mp_Pooka));
 		mp_Pooka->GetComponent<CollisionCheckerComponent>()->SetWidthAndHeightBody({ 16,16 });
@@ -167,8 +166,6 @@ void Game::LoadGame() const
 			{ mp_Pooka->GetComponent<PookaComponent>()->GetToWanderingState() }
 		);
 		
-
-
 		mp_Pooka->SetPosition({ 8 * 16, 26 * 16 });
 		m_scene.Add(mp_Pooka);
 
