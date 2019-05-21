@@ -1,6 +1,6 @@
 
-#ifndef PCH_H
-#define PCH_H
+#pragma once
+
 #include "targetver.h"
 #include <windows.h>
 #include <vld.h>
@@ -16,7 +16,9 @@
 #include <vector>
 #include <chrono>
 #include <thread>
+
 #include "Structs.h"
+#include "Utils.h"
 
 #include "Scene.h"
 
@@ -71,5 +73,3 @@
 #include "NullAudio.h"
 #include "GameAudio.h"
 
-
-#endif //PCH_H

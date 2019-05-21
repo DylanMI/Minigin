@@ -146,6 +146,7 @@ void Game::LoadGame() const
 		// pooka AI
 		mp_Pooka->AddComponent(new PookaComponent(mp_Pooka));
 
+
 		// collision checker
 		mp_Pooka->AddComponent(new CollisionCheckerComponent(mp_Pooka));
 		mp_Pooka->GetComponent<CollisionCheckerComponent>()->SetWidthAndHeightBody({ 16,16 });
@@ -155,6 +156,18 @@ void Game::LoadGame() const
 		mp_Pooka->GetComponent<AnimatorComponent>()->AddAnimation(State::RIGHT, dae::ResourceManager::GetInstance().LoadTexture("PookaRunRight.png"), 16, 16, 2);
 		mp_Pooka->GetComponent<AnimatorComponent>()->AddAnimation(State::UP, dae::ResourceManager::GetInstance().LoadTexture("PookaRunUp.png"), 16, 16, 2);
 		mp_Pooka->GetComponent<AnimatorComponent>()->AddAnimation(State::DOWN, dae::ResourceManager::GetInstance().LoadTexture("PookaRunDown.png"), 16, 16, 2);
+		mp_Pooka->GetComponent<AnimatorComponent>()->AddAnimation(State::GHOSTING, dae::ResourceManager::GetInstance().LoadTexture("PookaGhost.png"), 8, 12, 2);
+
+		// finite state machine
+		mp_Pooka->AddComponent(new AiComponent(mp_Pooka));
+		mp_Pooka->GetComponent<AiComponent>()->AddTransition(mp_Pooka, State::GHOSTING, State::WANDERING, 
+			{mp_Pooka->GetComponent<PookaComponent>()->GetToGhostState()}
+		);
+		mp_Pooka->GetComponent<AiComponent>()->AddTransition(mp_Pooka, State::WANDERING, State::GHOSTING,
+			{ mp_Pooka->GetComponent<PookaComponent>()->GetToWanderingState() }
+		);
+		
+
 
 		mp_Pooka->SetPosition({ 8 * 16, 26 * 16 });
 		m_scene.Add(mp_Pooka);
@@ -192,6 +205,9 @@ void Game::LoadGame() const
 
 		// shooter
 		mp_Character->AddComponent(new GunComponent(mp_Character, m_scene));
+
+		// adding the character as a target
+		mp_Pooka->GetComponent<PookaComponent>()->SetTarget(mp_Character);
 
 		// fixing the inputs 
 		InputManager::GetInstance().ChangeCommand(dae::ControllerButton::DpadU, 1, new MoveUpCommandPlayer(mp_Character));

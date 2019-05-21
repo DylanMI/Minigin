@@ -4,6 +4,7 @@
 #include "Transform.h"
 #include "TextRendererComponent.h"
 #include "BaseComponent.h"
+#include "Structs.h"
 
 class Font;
 class BaseComponent;

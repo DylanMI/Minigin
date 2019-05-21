@@ -1,8 +1,11 @@
 #pragma once
 #include "BaseComponent.h"
 #include "GameObject.h"
-
 #include "CollisionCheckerComponent.h"
+
+#include "Structs.h"
+#include "Utils.h"
+
 
 namespace dae
 {
@@ -11,7 +14,7 @@ namespace dae
 	{
 	public:
 		explicit PookaComponent(GameObject* parent);
-		virtual ~PookaComponent() = default;
+		virtual ~PookaComponent();
 		PookaComponent(const PookaComponent& other) = delete;
 		PookaComponent(PookaComponent&& other) = delete;
 		PookaComponent& operator=(const PookaComponent& other) = delete;
@@ -22,16 +25,31 @@ namespace dae
 	
 		void ShiftDirection();
 		void PutBackAFrame(float deltatime);
+		void SetTarget(GameObject* newTarget);
 		
+		void SetState(State newState);
+		State GetState();
+
+		bool* GetToGhostState();
+		bool* GetToWanderingState();
+
 
 	private:
 		GameObject* m_pParent;
+		GameObject* m_Target;
+
 		State m_currentState;
 		
 		Point2f m_direction;
 
 		const float m_GhostTime = 5.0f;
 		float m_GhostTimer;
+
+		const float m_TimeBeforeCheck = 2.0f;
+		float m_CheckTimer;
+
+		bool* m_ToGhostState;
+		bool* m_ToWandering;
 	};
 
 

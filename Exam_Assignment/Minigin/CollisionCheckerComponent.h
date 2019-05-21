@@ -7,6 +7,7 @@
 #include "Command.h"
 #include <map>
 #include "Structs.h"
+#include "Utils.h"
 
 class CollisionCommand;
 class GameObject;
@@ -31,6 +32,8 @@ namespace dae
 		void SetOffset(Point2f newOffset);
 		void addCollisionEvent(CollisionCommand* EventExecution, collisionTag tag);
 
+		void SetDisabled(bool isDisabled);
+
 	private:
 		GameObject* m_pParent;
 		std::map<collisionTag, CollisionCommand* > collisionEventMap;
@@ -38,6 +41,8 @@ namespace dae
 		
 		Point2f m_widthAndHeight;
 		Point2f m_offset;
+
+		bool m_isDisabled;
 	};
 
 }

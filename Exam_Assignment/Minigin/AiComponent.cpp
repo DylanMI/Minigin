@@ -49,26 +49,57 @@ dae::Transition::~Transition()
 
 bool dae::Transition::Check()
 {
-	bool checker = true;
-	// first check if the state you have to check is actually in play now (StartState)
-	if (m_StartState == m_pParent->GetComponent<StateComponent>()->GetState())
-	{	
-		// run trough all the prerequisites, and put the owner to the state it wants to go(goToState)
-        // but only if all the prerequisites are met
-		for (size_t i{}, s = m_prerequisites.size(); i < s; i++)
+	// check if the parent is a pooka
+	if (m_pParent->GetComponent<PookaComponent>() != nullptr)
+	{
+		bool checker = true;
+		// first check if the state you have to check is actually in play now (StartState)
+		if (m_StartState == m_pParent->GetComponent<PookaComponent>()->GetState())
 		{
-			if (!m_prerequisites[i])
+			// run trough all the prerequisites, and put the owner to the state it wants to go(goToState)
+			// but only if all the prerequisites are met
+			for (size_t i{}, s = m_prerequisites.size(); i < s; i++)
 			{
-				checker = false;
+				if (!*m_prerequisites[i])
+				{
+					checker = false;
+				}
 			}
 		}
+		else checker = false;
+		if (checker)
+		{
+			m_pParent->GetComponent<PookaComponent>()->SetState(m_gotoState);
+			return true;
+		}
+		return false;
 	}
-	else checker = false;
-	if (checker)
+
+	//else just do the normal one
+	else
 	{
-		m_pParent->GetComponent<StateComponent>()->SetState(m_gotoState);
-		return true;
+		bool checker = true;
+		// first check if the state you have to check is actually in play now (StartState)
+		if (m_StartState == m_pParent->GetComponent<StateComponent>()->GetState())
+		{
+			// run trough all the prerequisites, and put the owner to the state it wants to go(goToState)
+			// but only if all the prerequisites are met
+			for (size_t i{}, s = m_prerequisites.size(); i < s; i++)
+			{
+				if (!*m_prerequisites[i])
+				{
+					checker = false;
+				}
+			}
+		}
+		else checker = false;
+		if (checker)
+		{
+			m_pParent->GetComponent<StateComponent>()->SetState(m_gotoState);
+			return true;
+		}
+		return false;
 	}
-	return false;
+	
 }
 #pragma endregion Transition

@@ -4,6 +4,7 @@
 #include "BaseCharacter.h" // will need to add an AI character
 #include <map>
 #include "StateComponent.h"
+#include "PookaComponent.h"
 
 class GameObject;
 
@@ -40,7 +41,7 @@ namespace dae
 
 		void Update(const float& deltaTime) override;
 		void Render() const override;
-		void AddTransition(GameObject* parent, State goToState, State endState, std::vector<bool*> prerequisites);
+		void AddTransition(GameObject* parent, State goToState, State startState, std::vector<bool*> prerequisites);
 	private:
 		GameObject* m_pParent;
 		std::vector<Transition> m_transitions;

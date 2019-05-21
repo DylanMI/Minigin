@@ -35,58 +35,32 @@ void dae::GameObject::Render() const
 
 void dae::GameObject::Move(Point2f direction, float deltaTime)
 {
-	// make it 4 axis instead of ... ehm, more? (preventing diagonal)
-	Point2f correctedDirection{};
-	if (direction.x == 1)
-	{
-		correctedDirection.x = 1;
-		correctedDirection.y = 0;
-	}
-	else if (direction.x == -1)
-	{
-		correctedDirection.x = -1;
-		correctedDirection.y = 0;
-	}
-	else if (direction.y == 1)
-	{
-		correctedDirection.x = 0;
-		correctedDirection.y = 1;
-	}
-	else if (direction.y == -1)
-	{
-		correctedDirection.x = 0;
-		correctedDirection.y = -1;
-	}
 
 	// right
-	if (correctedDirection.x == 1)
+	if (direction.x == 1)
 	{
 		if(GetComponent<StateComponent>() != nullptr)GetComponent<StateComponent>()->SetState(State::RIGHT);
 	}
 	// left
-	if (correctedDirection.x == -1)
+	if (direction.x == -1)
 	{
 		if (GetComponent<StateComponent>() != nullptr)GetComponent<StateComponent>()->SetState(State::LEFT);
 	}
 	// up
-	if (correctedDirection.y == 1)
+	if (direction.y == 1)
 	{
 		if (GetComponent<StateComponent>() != nullptr)GetComponent<StateComponent>()->SetState(State::UP);
 	}
 	//down
-	if (correctedDirection.y == -1)
+	if (direction.y == -1)
 	{
 		if (GetComponent<StateComponent>() != nullptr)GetComponent<StateComponent>()->SetState(State::DOWN);
 	}
 	Point2f newpos;
 	// the moving
 	newpos = { mTransform.GetPosition().x , mTransform.GetPosition().y };
-	newpos.x += (correctedDirection.x * m_speed) * deltaTime;
-	newpos.y += (-correctedDirection.y * m_speed) * deltaTime;
-	SDL_log(correctedDirection.x);
-	SDL_log(correctedDirection.y);
-	// the collision checking
-
+	newpos.x += (direction.x * m_speed) * deltaTime;
+	newpos.y += (-direction.y * m_speed) * deltaTime;
 
 	// pushing the change
 	SetPosition(newpos);
