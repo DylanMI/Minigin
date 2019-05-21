@@ -26,13 +26,13 @@ void dae::TextureComponent::Render() const
 		SDL_Rect dst;
 		dst.x = static_cast<int>(m_pParent->GetTransform().GetPosition().x);
 		dst.y = static_cast<int>(m_pParent->GetTransform().GetPosition().y);
-		dst.w = 50;
-		dst.h = 50;
+		dst.w = 32;
+		dst.h = 32;
 		Renderer::GetInstance().RenderTexture(*m_pTexture, m_SourceRect, dst);
 	}
 	else
 	{
-		Renderer::GetInstance().RenderTexture(*m_pTexture, m_pParent->GetTransform().GetPosition().x, m_pParent->GetTransform().GetPosition().y);
+		Renderer::GetInstance().RenderTexture(*m_pTexture, m_pParent->GetTransform().GetPosition().x, m_pParent->GetTransform().GetPosition().y,m_width,m_height);
 	}
 
 }
@@ -55,4 +55,10 @@ void dae::TextureComponent::SetIsAnimated(bool IsAnimated)
 void dae::TextureComponent::SetAnimatedSourceRect(SDL_Rect srcrect)
 {
 	m_SourceRect = srcrect;
+}
+
+void dae::TextureComponent::SetWidthAndHeight(int width, int height)
+{
+	m_width = width;
+	m_height = height;
 }

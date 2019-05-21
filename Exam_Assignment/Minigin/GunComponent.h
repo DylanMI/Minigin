@@ -6,6 +6,8 @@
 #include "CollisionComponent.h"
 #include "DeleteSelfComponent.h"
 
+#include "CollisionManager.h"
+
 namespace dae
 {
 	class GameObject;

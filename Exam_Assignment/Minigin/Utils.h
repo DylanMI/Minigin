@@ -4,9 +4,9 @@
 namespace dae
 {
 	inline bool IsRectOverlapping(Rectf ObjOne, Rectf ObjTwo)
-	{
+	{	
 		return (ObjOne.x < ObjTwo.x + ObjTwo.w  && ObjOne.x + ObjOne.w > ObjTwo.x &&
-			ObjOne.y > ObjTwo.y - ObjTwo.h  && ObjOne.y - ObjOne.h < ObjTwo.y);
+		ObjOne.y > ObjTwo.y - ObjTwo.h  && ObjOne.y - ObjOne.h < ObjTwo.y);
 	}
 	inline Point2f GetDirectionToTarget(Point2f self, Point2f target)
 	{

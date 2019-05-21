@@ -31,12 +31,17 @@ namespace dae
 		void SetIsAnimated(bool IsAnimated);
 		void SetAnimatedSourceRect(SDL_Rect srcrect);
 
+		void SetWidthAndHeight(int width, int height);
+
 	private:
 		std::shared_ptr<Texture2D> m_pTexture;
 		GameObject* m_pParent;
 
 		bool m_isAnimated = false;
 		SDL_Rect m_SourceRect;
+
+		int m_width;
+		int m_height;
 	};
 }
 

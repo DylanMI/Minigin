@@ -31,34 +31,45 @@ void dae::GunComponent::Shoot()
 	// make a gun object, direction, time etc...
 	auto bullet = new GameObject();
 	bullet->AddComponent(new TextureComponent(bullet));
+	bullet->AddComponent(new CollisionComponent(bullet));
+
+	bullet->GetComponent<CollisionComponent>()->SetTag(collisionTag::Blowgun);
+
 	// set texture according to Object orientation state
 	if (m_pParent->GetComponent<StateComponent>()->GetState() == State::LEFT)
 	{
 		bullet->GetComponent<TextureComponent>()->SetTexture(dae::ResourceManager::GetInstance().LoadTexture("DigDugWireLeft.png"));
-		bullet->SetPosition(Point2f{ m_pParent->GetTransform().GetPosition().x - 32, m_pParent->GetTransform().GetPosition().y });
+		bullet->SetPosition(Point2f{ m_pParent->GetTransform().GetPosition().x - 32, m_pParent->GetTransform().GetPosition().y + 16 });
+		bullet->GetComponent<CollisionComponent>()->SetBody(Rectf{ m_pParent->GetTransform().GetPosition().x - 32,m_pParent->GetTransform().GetPosition().y + 16,32,16});
+	
 	}
 	if (m_pParent->GetComponent<StateComponent>()->GetState() == State::RIGHT)
 	{
 		bullet->GetComponent<TextureComponent>()->SetTexture(dae::ResourceManager::GetInstance().LoadTexture("DigDugWireRight.png"));
-		bullet->SetPosition(Point2f{ m_pParent->GetTransform().GetPosition().x + 16, m_pParent->GetTransform().GetPosition().y });
+		bullet->SetPosition(Point2f{ m_pParent->GetTransform().GetPosition().x + 32, m_pParent->GetTransform().GetPosition().y + 16 });
+		bullet->GetComponent<CollisionComponent>()->SetBody(Rectf{ m_pParent->GetTransform().GetPosition().x + 32,m_pParent->GetTransform().GetPosition().y + 16,32,16 });
+
 	}
 	if (m_pParent->GetComponent<StateComponent>()->GetState() == State::UP)
 	{
 		bullet->GetComponent<TextureComponent>()->SetTexture(dae::ResourceManager::GetInstance().LoadTexture("DigDugWireUp.png"));
-		bullet->SetPosition(Point2f{ m_pParent->GetTransform().GetPosition().x , m_pParent->GetTransform().GetPosition().y - 16});
+		bullet->SetPosition(Point2f{ m_pParent->GetTransform().GetPosition().x + 16 , m_pParent->GetTransform().GetPosition().y  - 32});
+		bullet->GetComponent<CollisionComponent>()->SetBody(Rectf{ m_pParent->GetTransform().GetPosition().x + 16,m_pParent->GetTransform().GetPosition().y - 32,16,32 });
+
 	}
 	if (m_pParent->GetComponent<StateComponent>()->GetState() == State::DOWN)
 	{
 		bullet->GetComponent<TextureComponent>()->SetTexture(dae::ResourceManager::GetInstance().LoadTexture("DigDugWireDown.png"));
 		bullet->SetPosition(Point2f{ m_pParent->GetTransform().GetPosition().x + 16, m_pParent->GetTransform().GetPosition().y + 32 });
+		bullet->GetComponent<CollisionComponent>()->SetBody(Rectf{ m_pParent->GetTransform().GetPosition().x + 16,m_pParent->GetTransform().GetPosition().y + 32,16,32 });
 	}
-
 	// make it kill itslef after a certain time
 	bullet->AddComponent(new DeleteSelfComponent(bullet, m_scene));
 	bullet->GetComponent<DeleteSelfComponent>()->StartSelfDestruct(0.5f);
 
 	// add it to the scene
 	m_scene.Add(bullet);
+	CollisionManager::GetInstance().RegisterCollisionObject(bullet);
 
 	m_canShoot = false;
 }

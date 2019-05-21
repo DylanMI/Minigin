@@ -7,10 +7,12 @@ dae::PookaComponent::PookaComponent(GameObject * parent)
 	,m_GhostTimer(m_GhostTime)
 	,m_DeflateTimer(m_DeflateTime)
 	,m_blowCounter(0)
+	
 {
 	m_ToGhostState = new bool(false);
 	m_ToWandering = new bool(false);
-
+	m_IsInflated = new bool(false);
+	m_IsNotInflated = new bool(false);
 }
 
 dae::PookaComponent::~PookaComponent()
@@ -21,12 +23,14 @@ dae::PookaComponent::~PookaComponent()
 
 void dae::PookaComponent::Update(const float & deltaTime)
 {
+	*m_IsNotInflated = !*m_IsInflated;
+
 	switch (m_currentState)
 	{
 	case State::WANDERING:
 		*m_ToWandering = false;
 		m_CheckTimer = m_TimeBeforeCheck;
-		*m_HasDeflated = false;
+		*m_IsInflated = false;
 
 		//  Enable collision checker
 		m_pParent->GetComponent<CollisionCheckerComponent>()->SetDisabled(false);
@@ -69,7 +73,7 @@ void dae::PookaComponent::Update(const float & deltaTime)
 	case State::GHOSTING:
 		*m_ToGhostState = false;
 		m_GhostTimer = m_GhostTime;
-		*m_HasDeflated = false;
+		*m_IsInflated = false;
 
 		// disable collision checker
 		m_pParent->GetComponent<CollisionCheckerComponent>()->SetDisabled(true);
@@ -109,7 +113,7 @@ void dae::PookaComponent::Update(const float & deltaTime)
 		// telling state machine to go back to wandering
 		if (m_blowCounter <= 0)
 		{
-			*m_HasDeflated = true;
+			*m_IsInflated = false;
 		}
 
 		// internally handling the state of the blows
@@ -194,6 +198,26 @@ bool* dae::PookaComponent::GetToGhostState()
 bool* dae::PookaComponent::GetToWanderingState()
 {
 	return m_ToWandering;
+}
+
+bool * dae::PookaComponent::GetIsInflated()
+{
+	return m_IsInflated;
+}
+
+bool * dae::PookaComponent::GetIsNotInflated()
+{
+	return m_IsNotInflated;
+}
+
+void dae::PookaComponent::SetIsInflated(bool newBool)
+{
+	*m_IsInflated = newBool;
+}
+
+bool * dae::PookaComponent::GetIsDead()
+{
+	return m_IsDead;
 }
 
 void dae::PookaComponent::AddblowCount(int amm)

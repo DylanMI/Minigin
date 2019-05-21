@@ -2,6 +2,9 @@
 #include "BaseComponent.h"
 #include "GameObject.h"
 
+#include "CollisionComponent.h"
+#include "CollisionManager.h"
+
 namespace dae
 {
 	class GameObject;
@@ -18,7 +21,7 @@ namespace dae
 		void Update(const float& deltaTime) override;
 		void Render() const override;
 		void StartSelfDestruct(float time);
-
+		void KillNow();
 	private:
 		GameObject* m_pParent;
 		Scene& m_scene;

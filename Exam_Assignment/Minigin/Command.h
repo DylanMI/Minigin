@@ -5,7 +5,7 @@
 #include "RockComponent.h"
 #include "PookaComponent.h"
 #include "GunComponent.h"
-
+#include "DeleteSelfComponent.h"
 
 class ServiceLocator;
 class GameObject;
@@ -124,6 +124,15 @@ namespace dae
 		GameObject* m_object;
 	};
 
+	class HitByBlowerPooka : public CollisionCommand
+	{
+	public:
+		HitByBlowerPooka(GameObject* object);
+		virtual ~HitByBlowerPooka() override;
+		void Execute(float deltatime, GameObject* other) override;
+	private:
+		GameObject* m_object;
+	};
 
 #pragma endregion
 

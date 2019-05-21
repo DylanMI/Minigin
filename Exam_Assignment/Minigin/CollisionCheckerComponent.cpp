@@ -30,6 +30,7 @@ void dae::CollisionCheckerComponent::Update(const float & deltaTime)
 			{
 				// if they collide and the tag is "Terrain" destroy to collided, but only if the parent is a player
 				if (placeholder[i]->GetComponent<CollisionComponent>()->GetTag() == collisionTag::Terrain)
+				{
 					if (m_pParent->GetComponent<StateComponent>())
 					{
 						if (m_pParent->GetComponent<StateComponent>()->GetIsDigDug())
@@ -50,15 +51,15 @@ void dae::CollisionCheckerComponent::Update(const float & deltaTime)
 						collisionEventMap[placeholder[i]->GetComponent<CollisionComponent>()->GetTag()]->Execute(deltaTime, placeholder[i]);
 
 					}
+				}
 				// else if they collide, check their tag and execute the command connected
-					else
+				else
+				{
+					if (collisionEventMap[placeholder[i]->GetComponent<CollisionComponent>()->GetTag()])
 					{
-						if (collisionEventMap[placeholder[i]->GetComponent<CollisionComponent>()->GetTag()])
-						{
-							collisionEventMap[placeholder[i]->GetComponent<CollisionComponent>()->GetTag()]->Execute(deltaTime, placeholder[i]);
-
-						}
+						collisionEventMap[placeholder[i]->GetComponent<CollisionComponent>()->GetTag()]->Execute(deltaTime, placeholder[i]);
 					}
+				}
 
 				hitSomething = true;
 			}

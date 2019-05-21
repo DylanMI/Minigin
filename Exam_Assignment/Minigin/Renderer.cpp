@@ -56,7 +56,6 @@ void dae::Renderer::RenderTexture(const Texture2D& texture, const float x, const
 void dae::Renderer::RenderTexture(const Texture2D & texture, const SDL_Rect sourceRect, SDL_Rect destRect) const
 {
 
-	SDL_QueryTexture(texture.GetSDLTexture(), nullptr, nullptr, &destRect.w, &destRect.h);
 	SDL_RenderCopy(GetSDLRenderer(), texture.GetSDLTexture(), &sourceRect, &destRect);
 
 }

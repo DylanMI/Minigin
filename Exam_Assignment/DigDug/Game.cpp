@@ -53,7 +53,7 @@ void Game::LoadGame() const
 			for (int k{}; k < collumns; k++)
 			{
 				// game a gameobject
-				dae::GameObject* gridObject = new dae::GameObject;
+				dae::GameObject* gridObject = new dae::GameObject();
 				// give it the right position
 				gridObject->SetPosition({ float(startLeftX + width * k),float(startLeftY - height * i) });
 
@@ -150,12 +150,18 @@ void Game::LoadGame() const
 		mp_Pooka->AddComponent(new CollisionCheckerComponent(mp_Pooka));
 		mp_Pooka->GetComponent<CollisionCheckerComponent>()->SetWidthAndHeightBody({ 16,16 });
 		mp_Pooka->GetComponent<CollisionCheckerComponent>()->addCollisionEvent(new RandomizeDirectionCommandEnemy(mp_Pooka), collisionTag::Terrain);
-		
+		mp_Pooka->GetComponent<CollisionCheckerComponent>()->addCollisionEvent(new HitByBlowerPooka(mp_Pooka), collisionTag::Blowgun);
+
+
 		mp_Pooka->GetComponent<AnimatorComponent>()->AddAnimation(State::LEFT, dae::ResourceManager::GetInstance().LoadTexture("PookaRunLeft.png"), 16, 16, 2);
 		mp_Pooka->GetComponent<AnimatorComponent>()->AddAnimation(State::RIGHT, dae::ResourceManager::GetInstance().LoadTexture("PookaRunRight.png"), 16, 16, 2);
 		mp_Pooka->GetComponent<AnimatorComponent>()->AddAnimation(State::UP, dae::ResourceManager::GetInstance().LoadTexture("PookaRunUp.png"), 16, 16, 2);
 		mp_Pooka->GetComponent<AnimatorComponent>()->AddAnimation(State::DOWN, dae::ResourceManager::GetInstance().LoadTexture("PookaRunDown.png"), 16, 16, 2);
 		mp_Pooka->GetComponent<AnimatorComponent>()->AddAnimation(State::GHOSTING, dae::ResourceManager::GetInstance().LoadTexture("PookaGhost.png"), 8, 12, 2);
+		mp_Pooka->GetComponent<AnimatorComponent>()->AddAnimation(State::BLOW_1, dae::ResourceManager::GetInstance().LoadTexture("PookahInflate1.png"), 16, 16, 1);
+		mp_Pooka->GetComponent<AnimatorComponent>()->AddAnimation(State::BLOW_2, dae::ResourceManager::GetInstance().LoadTexture("PookaInflate2.png"), 16, 16, 1);
+		mp_Pooka->GetComponent<AnimatorComponent>()->AddAnimation(State::BLOW_3, dae::ResourceManager::GetInstance().LoadTexture("PookaInflate3.png"), 20, 21, 1);
+		mp_Pooka->GetComponent<AnimatorComponent>()->AddAnimation(State::BLOW_4, dae::ResourceManager::GetInstance().LoadTexture("PookaInflate4.png"), 20, 25, 1);
 
 		// finite state machine
 		mp_Pooka->AddComponent(new AiComponent(mp_Pooka));
@@ -164,6 +170,12 @@ void Game::LoadGame() const
 		);
 		mp_Pooka->GetComponent<AiComponent>()->AddTransition(mp_Pooka, State::WANDERING, State::GHOSTING,
 			{ mp_Pooka->GetComponent<PookaComponent>()->GetToWanderingState() }
+		);
+		mp_Pooka->GetComponent<AiComponent>()->AddTransition(mp_Pooka, State::WANDERING, State::BLOW_1,
+			{ (mp_Pooka->GetComponent<PookaComponent>()->GetIsNotInflated()) }
+		);
+		mp_Pooka->GetComponent<AiComponent>()->AddTransition(mp_Pooka, State::BLOW_1, State::WANDERING,
+			{ (mp_Pooka->GetComponent<PookaComponent>()->GetIsInflated()) }
 		);
 		
 		mp_Pooka->SetPosition({ 8 * 16, 26 * 16 });

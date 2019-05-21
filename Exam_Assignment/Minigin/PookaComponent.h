@@ -32,6 +32,11 @@ namespace dae
 
 		bool* GetToGhostState();
 		bool* GetToWanderingState();
+		bool* GetIsInflated();
+		bool* GetIsNotInflated();
+		void SetIsInflated(bool newBool);
+		bool* GetIsDead();
+
 
 		void AddblowCount(int amm);
 
@@ -54,7 +59,10 @@ namespace dae
 
 		bool* m_ToGhostState;
 		bool* m_ToWandering;
-		bool* m_HasDeflated;
+		bool* m_IsInflated;
+		bool* m_IsNotInflated;
+
+		bool* m_IsDead;
 
 		int m_blowCounter;
 	};

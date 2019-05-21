@@ -175,4 +175,23 @@ void dae::RandomizeDirectionCommandEnemy::Execute(float deltatime, GameObject * 
 	m_object->GetComponent<PookaComponent>()->PutBackAFrame(deltatime);
 	m_object->GetComponent<PookaComponent>()->ShiftDirection();
 }
+
+dae::HitByBlowerPooka::HitByBlowerPooka(GameObject * object)
+	:m_object(object)
+{}
+
+dae::HitByBlowerPooka::~HitByBlowerPooka()
+{
+	m_object = nullptr;
+}
+
+void dae::HitByBlowerPooka::Execute(float, GameObject *other)
+{
+	m_object->GetComponent<PookaComponent>()->AddblowCount(1);
+	m_object->GetComponent<PookaComponent>()->SetIsInflated(true);
+	other->GetComponent<DeleteSelfComponent>()->KillNow();
+}
+
+
 #pragma endregion
+
