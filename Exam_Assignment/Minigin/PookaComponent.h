@@ -54,7 +54,7 @@ namespace dae
 		const float m_TimeBeforeCheck = 2.0f;
 		float m_CheckTimer;
 
-		const float m_DeflateTime = 1.0f;
+		const float m_DeflateTime = 1.5f;
 		float m_DeflateTimer;
 
 		bool* m_ToGhostState;

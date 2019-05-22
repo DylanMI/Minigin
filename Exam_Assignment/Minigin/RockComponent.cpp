@@ -45,11 +45,29 @@ void dae::RockComponent::Update(const float & deltaTime)
 		}
 		if (m_breakTimer <= 0.0f)
 		{
+			// kill all the victims
+			for (int i{}; i < m_victims.size(); i++)
+			{
+				m_victims[i]->GetComponent<DeleteSelfComponent>()->KillNow();
+
+			}
+			CollisionManager::GetInstance().RemoveCollisionObject(m_pParent);
 			m_pParent->ClearComponents();
 		}
 
 
 	}
+
+	// take the victims with you
+	if (!m_victims.empty())
+	{
+		for (int i{}; i < m_victims.size(); i++)
+		{
+			m_victims[i]->SetPosition(Point2f{ m_pParent->GetTransform().GetPosition().x,m_pParent->GetTransform().GetPosition().y });
+		}
+
+	}
+
 
 }
 
@@ -70,6 +88,20 @@ void dae::RockComponent::SetIsFalling(bool isFalling)
 void dae::RockComponent::SetIsBreaking(bool isBreaking)
 {
 	m_isBreaking = isBreaking;
+}
+
+void dae::RockComponent::AddVictim(GameObject * newVictim)
+{
+	m_victims.push_back(newVictim);
+}
+
+bool dae::RockComponent::IsVictimAlreadyRegistered(GameObject * Victim)
+{
+	if (std::find(m_victims.begin(), m_victims.end(), Victim) != m_victims.end()) 
+	{
+		return true;
+	}
+	else return false;
 }
 
 bool dae::RockComponent::GetIsFalling()

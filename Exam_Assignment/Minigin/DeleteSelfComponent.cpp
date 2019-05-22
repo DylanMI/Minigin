@@ -13,22 +13,20 @@ void dae::DeleteSelfComponent::Update(const float & deltaTime)
 	if (m_isTicking)
 	{
 		m_deleteTimer -= deltaTime;
-	}
-
-	if (m_deleteTimer <= 0.0f)
-	{
-		if (m_pParent->GetComponent<CollisionComponent>() != nullptr)
+		if (m_deleteTimer <= 0.0f)
 		{
-			// de register yourself
-			CollisionManager::GetInstance().RemoveCollisionObject(m_pParent);
+			if (m_pParent->GetComponent<CollisionComponent>() != nullptr)
+			{
+				// de register yourself
+				CollisionManager::GetInstance().RemoveCollisionObject(m_pParent);
+			}
 
+			m_pParent->ClearComponents();
+			// delete yourself
 		}
-
-		m_pParent->ClearComponents();
-		// delete yourself
-		
-
 	}
+
+
 }
 
 void dae::DeleteSelfComponent::Render() const

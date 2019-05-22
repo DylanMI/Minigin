@@ -42,13 +42,13 @@ void dae::CollisionCheckerComponent::Update(const float & deltaTime)
 						}
 						else if (collisionEventMap[placeholder[i]->GetComponent<CollisionComponent>()->GetTag()])
 						{
-							collisionEventMap[placeholder[i]->GetComponent<CollisionComponent>()->GetTag()]->Execute(deltaTime, placeholder[i]);
+							collisionEventMap[placeholder[i]->GetComponent<CollisionComponent>()->GetTag()]->Execute(deltaTime,m_pParent, placeholder[i]);
 
 						}
 					}
 					else if (collisionEventMap[placeholder[i]->GetComponent<CollisionComponent>()->GetTag()])
 					{
-						collisionEventMap[placeholder[i]->GetComponent<CollisionComponent>()->GetTag()]->Execute(deltaTime, placeholder[i]);
+						collisionEventMap[placeholder[i]->GetComponent<CollisionComponent>()->GetTag()]->Execute(deltaTime, m_pParent, placeholder[i]);
 
 					}
 				}
@@ -57,7 +57,7 @@ void dae::CollisionCheckerComponent::Update(const float & deltaTime)
 				{
 					if (collisionEventMap[placeholder[i]->GetComponent<CollisionComponent>()->GetTag()])
 					{
-						collisionEventMap[placeholder[i]->GetComponent<CollisionComponent>()->GetTag()]->Execute(deltaTime, placeholder[i]);
+						collisionEventMap[placeholder[i]->GetComponent<CollisionComponent>()->GetTag()]->Execute(deltaTime, m_pParent, placeholder[i]);
 					}
 				}
 
@@ -68,7 +68,7 @@ void dae::CollisionCheckerComponent::Update(const float & deltaTime)
 
 		if (collisionEventMap[collisionTag::Nothing] && hitSomething == false)
 		{
-			collisionEventMap[collisionTag::Nothing]->Execute(deltaTime, nullptr);
+			collisionEventMap[collisionTag::Nothing]->Execute(deltaTime, m_pParent, nullptr);
 		}
 	}
 

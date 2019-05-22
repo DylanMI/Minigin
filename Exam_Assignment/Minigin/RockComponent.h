@@ -4,6 +4,8 @@
 
 #include "GameObject.h"
 
+#include "DeleteSelfComponent.h"
+
 namespace dae
 {
 	class GameObject;
@@ -23,12 +25,19 @@ namespace dae
 		void SetFallSpeed(float newSpeed);
 		void SetIsFalling(bool isFalling);
 		void SetIsBreaking(bool isBreaking);
+
+		void AddVictim(GameObject* newVictim);
+		bool IsVictimAlreadyRegistered(GameObject* Victim);
+
 		bool GetIsFalling();
 		bool GetIsBreaking();
 
 
 	private:
 		GameObject* m_pParent;
+
+		std::vector<GameObject*> m_victims;
+
 		float m_fallSpeed;
 
 		bool m_isFalling;

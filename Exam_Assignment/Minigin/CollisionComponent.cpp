@@ -12,6 +12,9 @@ dae::CollisionComponent::~CollisionComponent()
 
 void dae::CollisionComponent::Update(const float & )
 {
+	// update the collisionBody
+	m_collisionBody = Rectf{ m_pParent->GetTransform().GetPosition().x,m_pParent->GetTransform().GetPosition().y ,m_WidthAndHeight.x,m_WidthAndHeight.y };
+
 }
 
 void dae::CollisionComponent::Render() const
@@ -28,9 +31,9 @@ dae::collisionTag dae::CollisionComponent::GetTag()
 	return m_collTag;
 }
 
-void dae::CollisionComponent::SetBody(Rectf body)
+void dae::CollisionComponent::SetWidthAndHeight(Point2f WidthAndHeight)
 {
-	m_collisionBody = body;
+	m_WidthAndHeight = WidthAndHeight;
 }
 
 dae::Rectf dae::CollisionComponent::getBody()

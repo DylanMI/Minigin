@@ -22,6 +22,7 @@ namespace dae
 		BLOW_2,
 		BLOW_3,
 		BLOW_4,
+		CAUGHTBYROCK,
 		ANY,
 	};
 

@@ -40,28 +40,27 @@ void dae::GunComponent::Shoot()
 	{
 		bullet->GetComponent<TextureComponent>()->SetTexture(dae::ResourceManager::GetInstance().LoadTexture("DigDugWireLeft.png"));
 		bullet->SetPosition(Point2f{ m_pParent->GetTransform().GetPosition().x - 32, m_pParent->GetTransform().GetPosition().y + 16 });
-		bullet->GetComponent<CollisionComponent>()->SetBody(Rectf{ m_pParent->GetTransform().GetPosition().x - 32,m_pParent->GetTransform().GetPosition().y + 16,32,16});
+		bullet->GetComponent<CollisionComponent>()->SetWidthAndHeight(Point2f{32,16});
 	
 	}
 	if (m_pParent->GetComponent<StateComponent>()->GetState() == State::RIGHT)
 	{
 		bullet->GetComponent<TextureComponent>()->SetTexture(dae::ResourceManager::GetInstance().LoadTexture("DigDugWireRight.png"));
 		bullet->SetPosition(Point2f{ m_pParent->GetTransform().GetPosition().x + 32, m_pParent->GetTransform().GetPosition().y + 16 });
-		bullet->GetComponent<CollisionComponent>()->SetBody(Rectf{ m_pParent->GetTransform().GetPosition().x + 32,m_pParent->GetTransform().GetPosition().y + 16,32,16 });
-
+		bullet->GetComponent<CollisionComponent>()->SetWidthAndHeight(Point2f{ 32,16 });
 	}
 	if (m_pParent->GetComponent<StateComponent>()->GetState() == State::UP)
 	{
 		bullet->GetComponent<TextureComponent>()->SetTexture(dae::ResourceManager::GetInstance().LoadTexture("DigDugWireUp.png"));
 		bullet->SetPosition(Point2f{ m_pParent->GetTransform().GetPosition().x + 16 , m_pParent->GetTransform().GetPosition().y  - 32});
-		bullet->GetComponent<CollisionComponent>()->SetBody(Rectf{ m_pParent->GetTransform().GetPosition().x + 16,m_pParent->GetTransform().GetPosition().y - 32,16,32 });
+		bullet->GetComponent<CollisionComponent>()->SetWidthAndHeight(Point2f{ 16,32 });
 
 	}
 	if (m_pParent->GetComponent<StateComponent>()->GetState() == State::DOWN)
 	{
 		bullet->GetComponent<TextureComponent>()->SetTexture(dae::ResourceManager::GetInstance().LoadTexture("DigDugWireDown.png"));
 		bullet->SetPosition(Point2f{ m_pParent->GetTransform().GetPosition().x + 16, m_pParent->GetTransform().GetPosition().y + 32 });
-		bullet->GetComponent<CollisionComponent>()->SetBody(Rectf{ m_pParent->GetTransform().GetPosition().x + 16,m_pParent->GetTransform().GetPosition().y + 32,16,32 });
+		bullet->GetComponent<CollisionComponent>()->SetWidthAndHeight(Point2f{ 16,32 });
 	}
 	// make it kill itslef after a certain time
 	bullet->AddComponent(new DeleteSelfComponent(bullet, m_scene));

@@ -65,6 +65,7 @@ void Game::LoadGame() const
 				{
 					// Red
 					gridObject->GetComponent<TextureComponent>()->SetIsAnimated(false);
+					gridObject->GetComponent<TextureComponent>()->SetWidthAndHeight(16, 16);
 					gridObject->GetComponent<TextureComponent>()->SetTexture(dae::ResourceManager::GetInstance().LoadTexture("RedLayer.png"));
 
 				}
@@ -72,32 +73,28 @@ void Game::LoadGame() const
 				{
 					// Brown
 					gridObject->GetComponent<TextureComponent>()->SetIsAnimated(false);
+					gridObject->GetComponent<TextureComponent>()->SetWidthAndHeight(16, 16);
 					gridObject->GetComponent<TextureComponent>()->SetTexture(dae::ResourceManager::GetInstance().LoadTexture("BrownLayer.png"));
 				}
 				else if (i < (rows / 4) * 3)
 				{
 					// Orange 
 					gridObject->GetComponent<TextureComponent>()->SetIsAnimated(false);
+					gridObject->GetComponent<TextureComponent>()->SetWidthAndHeight(16, 16);
 					gridObject->GetComponent<TextureComponent>()->SetTexture(dae::ResourceManager::GetInstance().LoadTexture("OrangeLayer.png"));
 				}
 				else
 				{
 					// Yellow
 					gridObject->GetComponent<TextureComponent>()->SetIsAnimated(false);
+					gridObject->GetComponent<TextureComponent>()->SetWidthAndHeight(16, 16);
 					gridObject->GetComponent<TextureComponent>()->SetTexture(dae::ResourceManager::GetInstance().LoadTexture("YellowLayer.png"));
 				}
 
 
 				// give it a collider component [and set the tag to destructable, and give it a dimension]
 				gridObject->AddComponent(new CollisionComponent(gridObject));
-				Rectf Body{
-					float(startLeftX + width * k),
-					float(startLeftY - height * i),
-					width,
-					height
-						  };
-
-				gridObject->GetComponent<CollisionComponent>()->SetBody(Body);
+				gridObject->GetComponent<CollisionComponent>()->SetWidthAndHeight(Point2f{width,height});
 				gridObject->GetComponent<CollisionComponent>()->SetTag(collisionTag::Terrain);
 				m_scene.Add(gridObject);
 				CollisionManager::GetInstance().RegisterCollisionObject(gridObject);
@@ -109,25 +106,33 @@ void Game::LoadGame() const
 		
 		mp_rock->AddComponent(new TextureComponent(mp_rock));
 		mp_rock->GetComponent<TextureComponent>()->SetTexture(dae::ResourceManager::GetInstance().LoadTexture("Rock_One.png"));
+		mp_rock->GetComponent<TextureComponent>()->SetWidthAndHeight(16, 16);
 		
+		// collision Checker
 		mp_rock->AddComponent(new CollisionCheckerComponent(mp_rock));
 		mp_rock->GetComponent<CollisionCheckerComponent>()->addCollisionEvent(new FallCommandRock(mp_rock), collisionTag::Nothing);
 		mp_rock->GetComponent<CollisionCheckerComponent>()->addCollisionEvent(new BreakCommandRock(mp_rock), collisionTag::Terrain);
 		mp_rock->GetComponent<CollisionCheckerComponent>()->SetWidthAndHeightBody({ 16,16 });
 		mp_rock->GetComponent<CollisionCheckerComponent>()->SetOffset({ 0,16 });
 
+		// collision
+		mp_rock->AddComponent(new CollisionComponent(mp_rock));
+		mp_rock->GetComponent<CollisionComponent>()->SetWidthAndHeight(Point2f{16,16});
+		mp_rock->GetComponent<CollisionComponent>()->SetTag(collisionTag::Rock);
+
 		mp_rock->AddComponent(new RockComponent(mp_rock));
 		mp_rock->GetComponent<RockComponent>()->SetFallSpeed(-50.0f);
 
-		mp_rock->SetPosition({ 6*16, 10*16 });
+		mp_rock->SetPosition({ 6*16, 11*16 });
 		m_scene.Add(mp_rock);
+		CollisionManager::GetInstance().RegisterCollisionObject(mp_rock);
 
 		// the clearing of the rock
 		auto mp_Clearer = new dae::GameObject();
 		mp_Clearer->AddComponent(new CollisionCheckerComponent(mp_Clearer));
 		mp_Clearer->AddComponent(new StateComponent(mp_Clearer, true));
 		mp_Clearer->GetComponent<CollisionCheckerComponent>()->SetWidthAndHeightBody({ 16,16 });
-		mp_Clearer->SetPosition({ 6 * 16, 10 * 16 });
+		mp_Clearer->SetPosition({ 6 * 16, 11 * 16 });
 		m_scene.Add(mp_Clearer);
 
 		// pooka
@@ -151,7 +156,7 @@ void Game::LoadGame() const
 		mp_Pooka->GetComponent<CollisionCheckerComponent>()->SetWidthAndHeightBody({ 16,16 });
 		mp_Pooka->GetComponent<CollisionCheckerComponent>()->addCollisionEvent(new RandomizeDirectionCommandEnemy(mp_Pooka), collisionTag::Terrain);
 		mp_Pooka->GetComponent<CollisionCheckerComponent>()->addCollisionEvent(new HitByBlowerPooka(mp_Pooka), collisionTag::Blowgun);
-
+		mp_Pooka->GetComponent<CollisionCheckerComponent>()->addCollisionEvent(new HitByRock(mp_Pooka), collisionTag::Rock);
 
 		mp_Pooka->GetComponent<AnimatorComponent>()->AddAnimation(State::LEFT, dae::ResourceManager::GetInstance().LoadTexture("PookaRunLeft.png"), 16, 16, 2);
 		mp_Pooka->GetComponent<AnimatorComponent>()->AddAnimation(State::RIGHT, dae::ResourceManager::GetInstance().LoadTexture("PookaRunRight.png"), 16, 16, 2);
@@ -162,7 +167,7 @@ void Game::LoadGame() const
 		mp_Pooka->GetComponent<AnimatorComponent>()->AddAnimation(State::BLOW_2, dae::ResourceManager::GetInstance().LoadTexture("PookaInflate2.png"), 16, 16, 1);
 		mp_Pooka->GetComponent<AnimatorComponent>()->AddAnimation(State::BLOW_3, dae::ResourceManager::GetInstance().LoadTexture("PookaInflate3.png"), 20, 21, 1);
 		mp_Pooka->GetComponent<AnimatorComponent>()->AddAnimation(State::BLOW_4, dae::ResourceManager::GetInstance().LoadTexture("PookaInflate4.png"), 20, 25, 1);
-
+		mp_Pooka->GetComponent<AnimatorComponent>()->AddAnimation(State::CAUGHTBYROCK, dae::ResourceManager::GetInstance().LoadTexture("PookahInflate1.png"), 16, 16, 1);
 		// finite state machine
 		mp_Pooka->AddComponent(new AiComponent(mp_Pooka));
 		mp_Pooka->GetComponent<AiComponent>()->AddTransition(mp_Pooka, State::GHOSTING, State::WANDERING, 
@@ -178,7 +183,9 @@ void Game::LoadGame() const
 			{ (mp_Pooka->GetComponent<PookaComponent>()->GetIsInflated()) }
 		);
 		
-		mp_Pooka->SetPosition({ 8 * 16, 26 * 16 });
+		mp_Pooka->SetPosition({ 9 * 16, 25 * 16 });
+
+		mp_Pooka->AddComponent(new DeleteSelfComponent(mp_Pooka,m_scene));
 		m_scene.Add(mp_Pooka);
 
 		// the clearing of the pooka

@@ -23,7 +23,7 @@ namespace dae
 	{
 	public:
 		virtual ~CollisionCommand();
-		virtual void Execute(float deltatime, GameObject* other);
+		virtual void Execute(float deltatime, GameObject* self ,GameObject* other);
 	};
 
 #pragma region movementcommands
@@ -85,7 +85,7 @@ namespace dae
 	public:
 		FallCommandRock(GameObject* object);
 		virtual ~FallCommandRock() override;
-		void Execute(float deltatime, GameObject* other) override;
+		void Execute(float deltatime, GameObject* self, GameObject* other) override;
 	private:
 		GameObject* m_object;
 	};
@@ -95,7 +95,7 @@ namespace dae
 	public:
 		BreakCommandRock(GameObject* object);
 		virtual ~BreakCommandRock() override;
-		void Execute(float deltatime, GameObject* other) override;
+		void Execute(float deltatime, GameObject* self, GameObject* other) override;
 	private:
 		GameObject* m_object;
 	};
@@ -105,7 +105,7 @@ namespace dae
 	public:
 		TakeEnemyCommandRock(GameObject* object);
 		virtual ~TakeEnemyCommandRock() override;
-		void Execute(float deltatime, GameObject* other) override;
+		void Execute(float deltatime, GameObject* self, GameObject* other) override;
 	private:
 		GameObject* m_object;
 	};
@@ -118,7 +118,7 @@ namespace dae
 	public:
 		RandomizeDirectionCommandEnemy(GameObject* object);
 		virtual ~RandomizeDirectionCommandEnemy() override;
-		void Execute(float deltatime, GameObject* other) override;
+		void Execute(float deltatime, GameObject* self, GameObject* other) override;
 
 	private:
 		GameObject* m_object;
@@ -129,9 +129,20 @@ namespace dae
 	public:
 		HitByBlowerPooka(GameObject* object);
 		virtual ~HitByBlowerPooka() override;
-		void Execute(float deltatime, GameObject* other) override;
+		void Execute(float deltatime, GameObject* self, GameObject* other) override;
 	private:
 		GameObject* m_object;
+	};
+
+	class HitByRock : public CollisionCommand
+	{
+	public:
+		HitByRock(GameObject* object);
+		virtual ~HitByRock() override;
+		void Execute(float deltatime, GameObject* self, GameObject* other) override;
+	private:
+		GameObject* m_object;
+
 	};
 
 #pragma endregion

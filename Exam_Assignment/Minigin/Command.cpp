@@ -14,7 +14,7 @@ dae::CollisionCommand::~CollisionCommand()
 {
 }
 
-void dae::CollisionCommand::Execute(float /*deltatime*/, GameObject * /*other*/)
+void dae::CollisionCommand::Execute(float /*deltatime*/, GameObject* /*self*/, GameObject * /*other*/)
 {}
 
 #pragma region movementcommands
@@ -111,7 +111,7 @@ dae::FallCommandRock::~FallCommandRock()
 }
 
 // executed when the collision doesn't collide with anyting
-void dae::FallCommandRock::Execute(float , GameObject* /*other*/)
+void dae::FallCommandRock::Execute(float, GameObject* , GameObject* /*other*/)
 {
 	// check if the rock is already falling, if not make it falling
 	if (!m_object->GetComponent<RockComponent>()->GetIsFalling())
@@ -120,6 +120,7 @@ void dae::FallCommandRock::Execute(float , GameObject* /*other*/)
 
 		// also change the body to fit the rock itself (AKA: no offset)
 		m_object->GetComponent<CollisionCheckerComponent>()->SetOffset({ 0,0 });
+		m_object->GetComponent<CollisionCheckerComponent>()->SetWidthAndHeightBody({ 16,16 });
 
 	}
 }
@@ -134,7 +135,7 @@ dae::BreakCommandRock::~BreakCommandRock()
 }
 
 // exectuted after the collision detects terrain and is falling
-void dae::BreakCommandRock::Execute(float , GameObject* /*other*/)
+void dae::BreakCommandRock::Execute(float, GameObject* , GameObject* /*other*/)
 {
 	// check if the rock is falling, if yes then set it to breaking
 	if (m_object->GetComponent<RockComponent>()->GetIsFalling())
@@ -153,7 +154,7 @@ dae::TakeEnemyCommandRock::~TakeEnemyCommandRock()
 }
 
 // exectuted when the collision detects an enemy and is falling
-void dae::TakeEnemyCommandRock::Execute(float , GameObject* )
+void dae::TakeEnemyCommandRock::Execute(float, GameObject* , GameObject* )
 {
 	// add Enemy to the rock if the rock isfalling is true
 }
@@ -170,7 +171,7 @@ dae::RandomizeDirectionCommandEnemy::~RandomizeDirectionCommandEnemy()
 	m_object = nullptr;
 }
 
-void dae::RandomizeDirectionCommandEnemy::Execute(float deltatime, GameObject * )
+void dae::RandomizeDirectionCommandEnemy::Execute(float deltatime, GameObject* , GameObject * )
 {
 	m_object->GetComponent<PookaComponent>()->PutBackAFrame(deltatime);
 	m_object->GetComponent<PookaComponent>()->ShiftDirection();
@@ -185,13 +186,52 @@ dae::HitByBlowerPooka::~HitByBlowerPooka()
 	m_object = nullptr;
 }
 
-void dae::HitByBlowerPooka::Execute(float, GameObject *other)
+void dae::HitByBlowerPooka::Execute(float, GameObject* , GameObject *other)
 {
 	m_object->GetComponent<PookaComponent>()->AddblowCount(1);
 	m_object->GetComponent<PookaComponent>()->SetIsInflated(true);
 	other->GetComponent<DeleteSelfComponent>()->KillNow();
 }
 
+
+dae::HitByRock::HitByRock(GameObject* object)
+	:m_object(object)
+{}
+
+dae::HitByRock::~HitByRock()
+{
+	m_object = nullptr;
+}
+
+void dae::HitByRock::Execute(float, GameObject* self, GameObject * other)
+{
+	// check if the rock is falling
+	if (other->GetComponent<RockComponent>()->GetIsFalling())
+	{
+		// if it is, then add yourself to its victim vector, and set state to falling, whilst falling it will follow the rock object it has downwards
+		// once the rock breaks, the rock will call the death function to handle the points and to kill the enemy
+		
+		// also check if the victim is already there
+		if (!other->GetComponent<RockComponent>()->IsVictimAlreadyRegistered(self))
+		{
+			other->GetComponent<RockComponent>()->AddVictim(self);
+			// then also set the state of self, towards CAUGHTBYROCK
+			
+			// check if its a pooka
+			if (self->GetComponent<PookaComponent>())
+			{
+				self->GetComponent<PookaComponent>()->SetState(State::CAUGHTBYROCK);
+			}
+
+			// check if its a fygar
+
+			// cehck if its a player
+
+
+		}
+		
+	}
+}
 
 #pragma endregion
 

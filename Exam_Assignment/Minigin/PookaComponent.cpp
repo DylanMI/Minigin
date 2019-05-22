@@ -120,8 +120,18 @@ void dae::PookaComponent::Update(const float & deltaTime)
 		if (m_blowCounter == 1) m_pParent->GetComponent<StateComponent>()->SetState(State::BLOW_1);
 		if (m_blowCounter == 2) m_pParent->GetComponent<StateComponent>()->SetState(State::BLOW_2);
 		if (m_blowCounter == 3) m_pParent->GetComponent<StateComponent>()->SetState(State::BLOW_3);
-		if (m_blowCounter == 4) m_pParent->GetComponent<StateComponent>()->SetState(State::BLOW_4);
+		if (m_blowCounter == 4)
+		{
+			m_pParent->GetComponent<StateComponent>()->SetState(State::BLOW_4);
+			m_blowCounter = 6;
+			m_pParent->GetComponent<DeleteSelfComponent>()->StartSelfDestruct(0.5f);
+			// call the died() to handle score
+		}
+		
+		break;
 
+	case State::CAUGHTBYROCK:
+		// THE MOVEMENT IS HANDLED BY THE ROCK
 		break;
 
 	}

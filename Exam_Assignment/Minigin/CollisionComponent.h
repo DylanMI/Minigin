@@ -37,11 +37,12 @@ namespace dae
 		void SetTag(collisionTag collTag);
 		collisionTag GetTag();
 
-		void SetBody(Rectf body);
+		void SetWidthAndHeight(Point2f WidthAndHeight);
 		Rectf getBody();
 
 	private:
 		Rectf m_collisionBody;
+		Point2f m_WidthAndHeight;
 		collisionTag m_collTag;
 		dae::GameObject* m_pParent;
 	};

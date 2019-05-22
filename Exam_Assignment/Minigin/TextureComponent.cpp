@@ -30,9 +30,13 @@ void dae::TextureComponent::Render() const
 		dst.h = 32;
 		Renderer::GetInstance().RenderTexture(*m_pTexture, m_SourceRect, dst);
 	}
+	else if(m_height != 0 && m_width != 0)
+	{
+		Renderer::GetInstance().RenderTexture(*m_pTexture, m_pParent->GetTransform().GetPosition().x, m_pParent->GetTransform().GetPosition().y,float(m_width),float(m_height));
+	}
 	else
 	{
-		Renderer::GetInstance().RenderTexture(*m_pTexture, m_pParent->GetTransform().GetPosition().x, m_pParent->GetTransform().GetPosition().y,m_width,m_height);
+		Renderer::GetInstance().RenderTexture(*m_pTexture, m_pParent->GetTransform().GetPosition().x, m_pParent->GetTransform().GetPosition().y);
 	}
 
 }
