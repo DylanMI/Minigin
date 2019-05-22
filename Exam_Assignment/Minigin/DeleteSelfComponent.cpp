@@ -23,6 +23,10 @@ void dae::DeleteSelfComponent::Update(const float & deltaTime)
 
 			m_pParent->ClearComponents();
 			// delete yourself
+			
+			
+			HandleEvent();
+			
 		}
 	}
 
@@ -49,4 +53,13 @@ void dae::DeleteSelfComponent::KillNow()
 	}
 
 	m_pParent->ClearComponents();
+	HandleEvent();
+}
+
+void dae::DeleteSelfComponent::HandleEvent()
+{
+	// check if pooka
+	// call event
+	// check if fygar
+	// call event
 }

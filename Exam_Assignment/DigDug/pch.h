@@ -44,17 +44,22 @@
 #include "PookaComponent.h"
 #include "GunComponent.h"
 #include "DeleteSelfComponent.h"
+#include "LifeComponent.h"
+#include "ScoreComponent.h"
 
 
 // services
 #include "ServiceLocator.h"
-
 
 // managers
 #include "InputManager.h"
 #include "SceneManager.h"
 #include "ResourceManager.h"
 #include "CollisionManager.h"
+#include "Messenger.h"
+#include "Observer.h"
+#include "ScoreObserver.h"
+#include "LifeObserver.h"
 
 
 // SDL 

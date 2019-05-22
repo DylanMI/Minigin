@@ -26,12 +26,22 @@ void Game::Initialize()
 
 }
 
-void Game::LoadGame() const
+void Game::LoadGame()
 {
 	using namespace dae;
 	{
 		// making the scene
 		auto& m_scene = SceneManager::GetInstance().CreateScene("Demo");
+	
+		// handling the entire observer system
+		m_LifeObserver = new LifeObserver();
+		m_ScoreObserver = new ScoreObserver();
+
+		Messenger::instance().Subscribe(m_LifeObserver, Event::EVENT_DIED);
+		Messenger::instance().Subscribe(m_ScoreObserver, Event::EVENT_DIEDONFIRSTLAYER);
+		Messenger::instance().Subscribe(m_ScoreObserver, Event::EVENT_DIEDONSECONDLAYER);
+		Messenger::instance().Subscribe(m_ScoreObserver, Event::EVENT_DIEDONTHIRDLAYER);
+		Messenger::instance().Subscribe(m_ScoreObserver, Event::EVENT_DIEDONFOURTHLAYER);
 
 		// making the grid
 		const int rows{ 25 };
@@ -231,13 +241,31 @@ void Game::LoadGame() const
 		InputManager::GetInstance().ChangeCommand(dae::ControllerButton::DpadR, 1, new MoveRightCommandPlayer(mp_Character));
 		InputManager::GetInstance().ChangeCommand(dae::ControllerButton::DpadD, 1, new MoveDownCommandPlayer(mp_Character));
 		InputManager::GetInstance().ChangeCommand(dae::ControllerButton::ButtonA, 1, new ShootCommandPlayer(mp_Character));
-		
+
 		//adding FPS counter
 		auto font = ResourceManager::GetInstance().LoadFont("Lingua.otf", 36);
 		auto mp_FPSObj = new dae::GameObject();
 		mp_FPSObj->AddComponent(new TextRendererComponent("xxx", font, mp_FPSObj));
 		mp_FPSObj->AddComponent(new FPSComponent(mp_FPSObj));
 		m_scene.Add(mp_FPSObj);
+
+		// adding the life counter
+		auto mp_LifeCounter = new dae::GameObject();
+		mp_LifeCounter->AddComponent(new TextRendererComponent("XXX", font, mp_LifeCounter));
+		// adding LifeChecker Component
+		mp_LifeCounter->AddComponent(new LifeComponent(mp_LifeCounter, m_LifeObserver));
+		mp_LifeCounter->GetComponent<TextRendererComponent>()->SetPosition(400, 50);
+		m_scene.Add(mp_LifeCounter);
+
+
+		// adding the score counter
+		auto mp_ScoreCounter = new dae::GameObject();
+		mp_ScoreCounter->AddComponent(new TextRendererComponent("XXX", font, mp_ScoreCounter));
+		// adding ScoreChecker Component
+		mp_ScoreCounter->AddComponent(new ScoreComponent(mp_ScoreCounter, m_ScoreObserver));
+		mp_ScoreCounter->GetComponent<TextRendererComponent>()->SetPosition(400,0);
+		m_scene.Add(mp_ScoreCounter);
+
 
 	}
 }
@@ -286,3 +314,9 @@ void Game::Run()
 
 	Cleanup();
 }
+
+
+
+
+
+

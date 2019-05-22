@@ -133,6 +133,24 @@
     <ClInclude Include="DeleteSelfComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
+    <ClInclude Include="Observer.h">
+      <Filter>Mainfiles</Filter>
+    </ClInclude>
+    <ClInclude Include="Messenger.h">
+      <Filter>Mainfiles</Filter>
+    </ClInclude>
+    <ClInclude Include="ScoreObserver.h">
+      <Filter>Mainfiles</Filter>
+    </ClInclude>
+    <ClInclude Include="LifeObserver.h">
+      <Filter>Mainfiles</Filter>
+    </ClInclude>
+    <ClInclude Include="LifeComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="ScoreComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BaseComponent.cpp">
@@ -235,6 +253,24 @@
       <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="DeleteSelfComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Observer.cpp">
+      <Filter>Mainfiles</Filter>
+    </ClCompile>
+    <ClCompile Include="Messenger.cpp">
+      <Filter>Mainfiles</Filter>
+    </ClCompile>
+    <ClCompile Include="ScoreObserver.cpp">
+      <Filter>Mainfiles</Filter>
+    </ClCompile>
+    <ClCompile Include="LifeObserver.cpp">
+      <Filter>Mainfiles</Filter>
+    </ClCompile>
+    <ClCompile Include="ScoreComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="LifeComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
   </ItemGroup>

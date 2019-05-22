@@ -23,6 +23,9 @@ namespace dae
 		void StartSelfDestruct(float time);
 		void KillNow();
 	private:
+
+		void HandleEvent();
+
 		GameObject* m_pParent;
 		Scene& m_scene;
 
