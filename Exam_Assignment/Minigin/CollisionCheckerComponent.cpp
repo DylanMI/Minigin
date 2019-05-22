@@ -26,7 +26,7 @@ void dae::CollisionCheckerComponent::Update(const float & deltaTime)
 		// check their bodies with your own
 		for (int i{}; i < placeholder.size(); i++)
 		{
-			if (IsRectOverlapping(m_collisionBody, placeholder[i]->GetComponent<CollisionComponent>()->getBody()))
+			if (IsRectOverlapping(m_collisionBody, placeholder[i]->GetComponent<CollisionComponent>()->getBody()) && m_pParent != placeholder[i])
 			{
 				// if they collide and the tag is "Terrain" destroy to collided, but only if the parent is a player
 				if (placeholder[i]->GetComponent<CollisionComponent>()->GetTag() == collisionTag::Terrain)
@@ -89,7 +89,7 @@ dae::collisionTag dae::CollisionCheckerComponent::Peek(Point2f Offset, Point2f w
 	std::vector<GameObject*> placeholder = CollisionManager::GetInstance().GetCollisionObjects();
 	for (int i{}; i < placeholder.size(); i++)
 	{
-		if (IsRectOverlapping(body, placeholder[i]->GetComponent<CollisionComponent>()->getBody()))
+		if (IsRectOverlapping(body, placeholder[i]->GetComponent<CollisionComponent>()->getBody()) && m_pParent != placeholder[i])
 		{
 			return placeholder[i]->GetComponent<CollisionComponent>()->GetTag();
 		}

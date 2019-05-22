@@ -15,17 +15,17 @@ void ScoreObserver::Notify(Event eventType)
 {
 	switch (eventType)
 	{
-		case Event::EVENT_DIEDONFIRSTLAYER:
-			m_Score += m_FirstLayerScoreReward;
+		case Event::EVENT_DIEDONFIRSTLAYER_POOKA:
+			m_Score += m_FirstLayerScoreReward_POOKA;
 			break;
-		case Event::EVENT_DIEDONSECONDLAYER:
-			m_Score += m_SecondLayerScoreReward;
+		case Event::EVENT_DIEDONSECONDLAYER_POOKA:
+			m_Score += m_SecondLayerScoreReward_POOKA;
 			break;
-		case Event::EVENT_DIEDONTHIRDLAYER:
-			m_Score += m_ThirdLayerScoreReward;
+		case Event::EVENT_DIEDONTHIRDLAYER_POOKA:
+			m_Score += m_ThirdLayerScoreReward_POOKA;
 			break;
-		case Event::EVENT_DIEDONFOURTHLAYER:
-			m_Score += m_FourthLayerScoreReward;
+		case Event::EVENT_DIEDONFOURTHLAYER_POOKA:
+			m_Score += m_FourthLayerScoreReward_POOKA;
 			break;
 	}
 }

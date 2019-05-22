@@ -38,10 +38,10 @@ void Game::LoadGame()
 		m_ScoreObserver = new ScoreObserver();
 
 		Messenger::instance().Subscribe(m_LifeObserver, Event::EVENT_DIED);
-		Messenger::instance().Subscribe(m_ScoreObserver, Event::EVENT_DIEDONFIRSTLAYER);
-		Messenger::instance().Subscribe(m_ScoreObserver, Event::EVENT_DIEDONSECONDLAYER);
-		Messenger::instance().Subscribe(m_ScoreObserver, Event::EVENT_DIEDONTHIRDLAYER);
-		Messenger::instance().Subscribe(m_ScoreObserver, Event::EVENT_DIEDONFOURTHLAYER);
+		Messenger::instance().Subscribe(m_ScoreObserver, Event::EVENT_DIEDONFIRSTLAYER_POOKA);
+		Messenger::instance().Subscribe(m_ScoreObserver, Event::EVENT_DIEDONSECONDLAYER_POOKA);
+		Messenger::instance().Subscribe(m_ScoreObserver, Event::EVENT_DIEDONTHIRDLAYER_POOKA);
+		Messenger::instance().Subscribe(m_ScoreObserver, Event::EVENT_DIEDONFOURTHLAYER_POOKA);
 
 		// making the grid
 		const int rows{ 25 };
@@ -168,6 +168,13 @@ void Game::LoadGame()
 		mp_Pooka->GetComponent<CollisionCheckerComponent>()->addCollisionEvent(new HitByBlowerPooka(mp_Pooka), collisionTag::Blowgun);
 		mp_Pooka->GetComponent<CollisionCheckerComponent>()->addCollisionEvent(new HitByRock(mp_Pooka), collisionTag::Rock);
 
+		// colission
+		mp_Pooka->AddComponent(new CollisionComponent(mp_Pooka));
+		mp_Pooka->GetComponent<CollisionComponent>()->SetTag(collisionTag::Pooka);
+		mp_Pooka->GetComponent<CollisionComponent>()->SetWidthAndHeight(Point2f{16,16});
+		CollisionManager::GetInstance().RegisterCollisionObject(mp_Pooka);
+
+		// animator
 		mp_Pooka->GetComponent<AnimatorComponent>()->AddAnimation(State::LEFT, dae::ResourceManager::GetInstance().LoadTexture("PookaRunLeft.png"), 16, 16, 2);
 		mp_Pooka->GetComponent<AnimatorComponent>()->AddAnimation(State::RIGHT, dae::ResourceManager::GetInstance().LoadTexture("PookaRunRight.png"), 16, 16, 2);
 		mp_Pooka->GetComponent<AnimatorComponent>()->AddAnimation(State::UP, dae::ResourceManager::GetInstance().LoadTexture("PookaRunUp.png"), 16, 16, 2);
@@ -227,6 +234,7 @@ void Game::LoadGame()
 		// collision checker
 		mp_Character->AddComponent(new CollisionCheckerComponent(mp_Character));
 		mp_Character->GetComponent<CollisionCheckerComponent>()->SetWidthAndHeightBody({ 16,16 });
+		mp_Character->GetComponent<CollisionCheckerComponent>()->addCollisionEvent(new PlayerHitPooka(mp_Character), collisionTag::Pooka);
 		m_scene.Add(mp_Character);
 
 		// shooter
@@ -251,7 +259,7 @@ void Game::LoadGame()
 
 		// adding the life counter
 		auto mp_LifeCounter = new dae::GameObject();
-		mp_LifeCounter->AddComponent(new TextRendererComponent("XXX", font, mp_LifeCounter));
+		mp_LifeCounter->AddComponent(new TextRendererComponent("LIVES: 3", font, mp_LifeCounter));
 		// adding LifeChecker Component
 		mp_LifeCounter->AddComponent(new LifeComponent(mp_LifeCounter, m_LifeObserver));
 		mp_LifeCounter->GetComponent<TextRendererComponent>()->SetPosition(400, 50);
@@ -260,7 +268,7 @@ void Game::LoadGame()
 
 		// adding the score counter
 		auto mp_ScoreCounter = new dae::GameObject();
-		mp_ScoreCounter->AddComponent(new TextRendererComponent("XXX", font, mp_ScoreCounter));
+		mp_ScoreCounter->AddComponent(new TextRendererComponent("SCORE: 0", font, mp_ScoreCounter));
 		// adding ScoreChecker Component
 		mp_ScoreCounter->AddComponent(new ScoreComponent(mp_ScoreCounter, m_ScoreObserver));
 		mp_ScoreCounter->GetComponent<TextRendererComponent>()->SetPosition(400,0);

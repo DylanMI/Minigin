@@ -145,6 +145,16 @@ namespace dae
 
 	};
 
+	class PlayerHitPooka : public CollisionCommand
+	{
+	public:
+		PlayerHitPooka(GameObject* object);
+		virtual ~PlayerHitPooka() override;
+		void Execute(float deltatime, GameObject* self, GameObject* other) override;
+	private:
+		GameObject* m_object;
+	};
+
 #pragma endregion
 
 }

@@ -2,8 +2,10 @@
 #include "BaseComponent.h"
 #include "GameObject.h"
 
+#include "PookaComponent.h"
 #include "CollisionComponent.h"
 #include "CollisionManager.h"
+#include "Messenger.h"
 
 namespace dae
 {

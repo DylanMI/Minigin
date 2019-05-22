@@ -20,12 +20,11 @@ void dae::DeleteSelfComponent::Update(const float & deltaTime)
 				// de register yourself
 				CollisionManager::GetInstance().RemoveCollisionObject(m_pParent);
 			}
-
-			m_pParent->ClearComponents();
-			// delete yourself
 			
 			
 			HandleEvent();
+			m_pParent->ClearComponents();
+			// delete yourself
 			
 		}
 	}
@@ -52,14 +51,44 @@ void dae::DeleteSelfComponent::KillNow()
 
 	}
 
-	m_pParent->ClearComponents();
 	HandleEvent();
+	m_pParent->ClearComponents();
+
 }
 
 void dae::DeleteSelfComponent::HandleEvent()
 {
+	const int height = 480;
+	
 	// check if pooka
-	// call event
+	if (m_pParent->GetComponent<PookaComponent>() != nullptr)
+	{
+		// call event accordingly
+						// set it to the right texture
+		if (m_pParent->GetTransform().GetPosition().y < (height / 4) * 1)
+		{
+			// Yellow
+			Messenger::instance().Notify(Event::EVENT_DIEDONFIRSTLAYER_POOKA);
+
+		}
+		else if (m_pParent->GetTransform().GetPosition().y < (height / 4) * 2)
+		{
+			// Orange 
+			Messenger::instance().Notify(Event::EVENT_DIEDONSECONDLAYER_POOKA);
+
+		}
+		else if (m_pParent->GetTransform().GetPosition().y < (height / 4) * 3)
+		{
+			// Brown
+			Messenger::instance().Notify(Event::EVENT_DIEDONTHIRDLAYER_POOKA);
+		}
+		else
+		{
+			// Red
+			Messenger::instance().Notify(Event::EVENT_DIEDONFOURTHLAYER_POOKA);
+		}
+
+	}
 	// check if fygar
 	// call event
 }

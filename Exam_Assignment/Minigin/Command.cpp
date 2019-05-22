@@ -233,5 +233,24 @@ void dae::HitByRock::Execute(float, GameObject* self, GameObject * other)
 	}
 }
 
-#pragma endregion
 
+dae::PlayerHitPooka::PlayerHitPooka(GameObject* object)
+	:m_object(object)
+{}
+
+
+dae::PlayerHitPooka::~PlayerHitPooka()
+{
+}
+
+void dae::PlayerHitPooka::Execute(float , GameObject *self, GameObject * )
+{
+	// put the player back to a position
+	self->SetPosition(Point2f{ 0,0 });
+
+	// tell the messenger about it
+	Messenger::instance().Notify(Event::EVENT_DIED);
+}
+
+
+#pragma endregion

@@ -16,7 +16,7 @@ void dae::LifeComponent::Update(const float & )
 	// tell the parents textrenderer what to render
 	if (m_prevLife != life)
 	{
-		m_pParent->GetComponent<TextRendererComponent>()->ChangeText(std::string("LIVES: " + life));
+		m_pParent->GetComponent<TextRendererComponent>()->ChangeText(std::string("LIVES: ") + std::to_string(life));
 		m_prevLife = life;
 	}
 
