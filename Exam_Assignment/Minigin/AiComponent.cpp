@@ -74,6 +74,31 @@ bool dae::Transition::Check()
 		}
 		return false;
 	}
+	// else check if its a fygar
+	else if (m_pParent->GetComponent<FygarComponent>() != nullptr)
+	{
+		bool checker = true;
+		// first check if the state you have to check is actually in play now (StartState)
+		if (m_StartState == m_pParent->GetComponent<FygarComponent>()->GetState())
+		{
+			// run trough all the prerequisites, and put the owner to the state it wants to go(goToState)
+			// but only if all the prerequisites are met
+			for (size_t i{}, s = m_prerequisites.size(); i < s; i++)
+			{
+				if (!*m_prerequisites[i])
+				{
+					checker = false;
+				}
+			}
+		}
+		else checker = false;
+		if (checker)
+		{
+			m_pParent->GetComponent<FygarComponent>()->SetState(m_gotoState);
+			return true;
+		}
+		return false;
+	}
 
 	//else just do the normal one
 	else

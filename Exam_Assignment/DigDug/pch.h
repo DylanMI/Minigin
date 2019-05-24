@@ -46,7 +46,8 @@
 #include "DeleteSelfComponent.h"
 #include "LifeComponent.h"
 #include "ScoreComponent.h"
-
+#include "FygarComponent.h"
+#include "FygarGunComponent.h"
 
 // services
 #include "ServiceLocator.h"

@@ -6,7 +6,6 @@
 #include "Structs.h"
 #include "Utils.h"
 
-
 namespace dae
 {
 	class GameObject;

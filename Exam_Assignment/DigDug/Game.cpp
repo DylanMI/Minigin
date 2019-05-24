@@ -43,6 +43,11 @@ void Game::LoadGame()
 		Messenger::instance().Subscribe(m_ScoreObserver, Event::EVENT_DIEDONTHIRDLAYER_POOKA);
 		Messenger::instance().Subscribe(m_ScoreObserver, Event::EVENT_DIEDONFOURTHLAYER_POOKA);
 
+		Messenger::instance().Subscribe(m_ScoreObserver, Event::EVENT_DIEDONFIRSTLAYER_FYGAR);
+		Messenger::instance().Subscribe(m_ScoreObserver, Event::EVENT_DIEDONSECONDLAYER_FYGAR);
+		Messenger::instance().Subscribe(m_ScoreObserver, Event::EVENT_DIEDONTHIRDLAYER_FYGAR);
+		Messenger::instance().Subscribe(m_ScoreObserver, Event::EVENT_DIEDONFOURTHLAYER_FYGAR);
+
 		// making the grid
 		const int rows{ 25 };
 		const int collumns{ 42 };
@@ -213,6 +218,84 @@ void Game::LoadGame()
 		mp_Clearer2->SetPosition({ 8 * 16, 26 * 16 });
 		m_scene.Add(mp_Clearer2);
 
+		// Fygar
+		auto mp_Fygar = new dae::GameObject();
+		mp_Fygar->SetSpeed(50.0f);
+		mp_Fygar->AddComponent(new StateComponent(mp_Fygar, false));
+
+		// texture
+		mp_Fygar->AddComponent(new TextureComponent(mp_Fygar));
+		mp_Fygar->GetComponent<TextureComponent>()->SetIsAnimated(true);
+
+		// animator
+		mp_Fygar->AddComponent(new AnimatorComponent(mp_Fygar));
+		mp_Fygar->GetComponent<AnimatorComponent>()->SetSpeed(0.5f);
+
+		// Fygar AI
+		mp_Fygar->AddComponent(new FygarComponent(mp_Fygar));
+
+		// collision checker
+		mp_Fygar->AddComponent(new CollisionCheckerComponent(mp_Fygar));
+		mp_Fygar->GetComponent<CollisionCheckerComponent>()->SetWidthAndHeightBody({ 16,16 });
+		mp_Fygar->GetComponent<CollisionCheckerComponent>()->addCollisionEvent(new RandomizeDirectionCommandEnemy(mp_Fygar), collisionTag::Terrain);
+		mp_Fygar->GetComponent<CollisionCheckerComponent>()->addCollisionEvent(new HitByBlowerFygar(mp_Fygar), collisionTag::Blowgun);
+		mp_Fygar->GetComponent<CollisionCheckerComponent>()->addCollisionEvent(new HitByRock(mp_Fygar), collisionTag::Rock);
+
+		// colission
+		mp_Fygar->AddComponent(new CollisionComponent(mp_Fygar));
+		mp_Fygar->GetComponent<CollisionComponent>()->SetTag(collisionTag::Fugar);
+		mp_Fygar->GetComponent<CollisionComponent>()->SetWidthAndHeight(Point2f{ 16,16 });
+		CollisionManager::GetInstance().RegisterCollisionObject(mp_Fygar);
+
+		// animator
+		mp_Fygar->GetComponent<AnimatorComponent>()->AddAnimation(State::LEFT, dae::ResourceManager::GetInstance().LoadTexture("FygarRunLeft.png"), 14, 14, 2);
+		mp_Fygar->GetComponent<AnimatorComponent>()->AddAnimation(State::RIGHT, dae::ResourceManager::GetInstance().LoadTexture("FygarRunRight.png"), 14, 14, 2);
+		mp_Fygar->GetComponent<AnimatorComponent>()->AddAnimation(State::UP, dae::ResourceManager::GetInstance().LoadTexture("FygarRunUp.png"), 14, 14, 2);
+		mp_Fygar->GetComponent<AnimatorComponent>()->AddAnimation(State::DOWN, dae::ResourceManager::GetInstance().LoadTexture("FygarRunDown.png"), 14, 14, 2);
+		mp_Fygar->GetComponent<AnimatorComponent>()->AddAnimation(State::GHOSTING, dae::ResourceManager::GetInstance().LoadTexture("FygarGhost.png"), 11, 13, 2);
+		mp_Fygar->GetComponent<AnimatorComponent>()->AddAnimation(State::BLOW_1, dae::ResourceManager::GetInstance().LoadTexture("FygarInflate1.png"), 16, 16, 1);
+		mp_Fygar->GetComponent<AnimatorComponent>()->AddAnimation(State::BLOW_2, dae::ResourceManager::GetInstance().LoadTexture("FygarInflate2.png"), 16, 16, 1);
+		mp_Fygar->GetComponent<AnimatorComponent>()->AddAnimation(State::BLOW_3, dae::ResourceManager::GetInstance().LoadTexture("FygarInflate3.png"), 20, 21, 1);
+		mp_Fygar->GetComponent<AnimatorComponent>()->AddAnimation(State::BLOW_4, dae::ResourceManager::GetInstance().LoadTexture("FygarInflate1.png"), 20, 25, 1);
+		mp_Fygar->GetComponent<AnimatorComponent>()->AddAnimation(State::CAUGHTBYROCK, dae::ResourceManager::GetInstance().LoadTexture("FygarInflate1.png"), 16, 16, 1);
+		// finite state machine
+		mp_Fygar->AddComponent(new AiComponent(mp_Fygar));
+		mp_Fygar->GetComponent<AiComponent>()->AddTransition(mp_Fygar, State::GHOSTING, State::WANDERING,
+			{ mp_Fygar->GetComponent<FygarComponent>()->GetToGhostState() }
+		);
+		mp_Fygar->GetComponent<AiComponent>()->AddTransition(mp_Fygar, State::WANDERING, State::GHOSTING,
+			{ mp_Fygar->GetComponent<FygarComponent>()->GetToWanderingState() }
+		);
+		mp_Fygar->GetComponent<AiComponent>()->AddTransition(mp_Fygar, State::WANDERING, State::SHOOTING,
+			{ mp_Fygar->GetComponent<FygarComponent>()->GetToWanderingState() }
+		);
+		mp_Fygar->GetComponent<AiComponent>()->AddTransition(mp_Fygar, State::SHOOTING, State::WANDERING,
+			{ mp_Fygar->GetComponent<FygarComponent>()->GetToShootState() }
+		);
+		mp_Fygar->GetComponent<AiComponent>()->AddTransition(mp_Fygar, State::WANDERING, State::BLOW_1,
+			{ (mp_Fygar->GetComponent<FygarComponent>()->GetIsNotInflated()) }
+		);
+		mp_Fygar->GetComponent<AiComponent>()->AddTransition(mp_Fygar, State::BLOW_1, State::WANDERING,
+			{ (mp_Fygar->GetComponent<FygarComponent>()->GetIsInflated()) }
+		);
+
+		// the fygar gun
+		mp_Fygar->AddComponent(new FygarGunComponent(mp_Fygar,m_scene));
+
+		mp_Fygar->SetPosition({ 25 * 16, 25 * 16 });
+
+		mp_Fygar->AddComponent(new DeleteSelfComponent(mp_Fygar, m_scene));
+		m_scene.Add(mp_Fygar);
+
+		// clearing of the fygar
+		// the clearing of the pooka
+		auto mp_Clearer3 = new dae::GameObject();
+		mp_Clearer3->AddComponent(new CollisionCheckerComponent(mp_Clearer3));
+		mp_Clearer3->AddComponent(new StateComponent(mp_Clearer3, true));
+		mp_Clearer3->GetComponent<CollisionCheckerComponent>()->SetWidthAndHeightBody({ 16 * 5,16 * 3 });
+		mp_Clearer3->SetPosition({ 25 * 16, 26 * 16 });
+		m_scene.Add(mp_Clearer3);
+
 		// Adding the character
 		auto mp_Character = new dae::GameObject();
 		mp_Character->SetSpeed(100.0f);
@@ -234,7 +317,7 @@ void Game::LoadGame()
 		// collision checker
 		mp_Character->AddComponent(new CollisionCheckerComponent(mp_Character));
 		mp_Character->GetComponent<CollisionCheckerComponent>()->SetWidthAndHeightBody({ 16,16 });
-		mp_Character->GetComponent<CollisionCheckerComponent>()->addCollisionEvent(new PlayerHitPooka(mp_Character), collisionTag::Pooka);
+		mp_Character->GetComponent<CollisionCheckerComponent>()->addCollisionEvent(new PlayerHitEnemy(mp_Character), collisionTag::Pooka);
 		m_scene.Add(mp_Character);
 
 		// shooter
@@ -242,6 +325,7 @@ void Game::LoadGame()
 
 		// adding the character as a target
 		mp_Pooka->GetComponent<PookaComponent>()->SetTarget(mp_Character);
+		mp_Fygar->GetComponent<FygarComponent>()->SetTarget(mp_Character);
 
 		// fixing the inputs 
 		InputManager::GetInstance().ChangeCommand(dae::ControllerButton::DpadU, 1, new MoveUpCommandPlayer(mp_Character));

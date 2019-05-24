@@ -27,6 +27,19 @@ void ScoreObserver::Notify(Event eventType)
 		case Event::EVENT_DIEDONFOURTHLAYER_POOKA:
 			m_Score += m_FourthLayerScoreReward_POOKA;
 			break;
+
+		case Event::EVENT_DIEDONFIRSTLAYER_FYGAR:
+			m_Score += m_FirstLayerScoreReward_FYGAR;
+			break;
+		case Event::EVENT_DIEDONSECONDLAYER_FYGAR:
+			m_Score += m_SecondLayerScoreReward_FYGAR;
+			break;
+		case Event::EVENT_DIEDONTHIRDLAYER_FYGAR:
+			m_Score += m_ThirdLayerScoreReward_FYGAR;
+			break;
+		case Event::EVENT_DIEDONFOURTHLAYER_FYGAR:
+			m_Score += m_FourthLayerScoreReward_FYGAR;
+			break;
 	}
 }
 

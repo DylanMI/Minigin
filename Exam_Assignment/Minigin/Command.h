@@ -4,6 +4,7 @@
 
 #include "RockComponent.h"
 #include "PookaComponent.h"
+#include "FygarComponent.h"
 #include "GunComponent.h"
 #include "DeleteSelfComponent.h"
 
@@ -134,6 +135,16 @@ namespace dae
 		GameObject* m_object;
 	};
 
+	class HitByBlowerFygar : public CollisionCommand
+	{
+	public:
+		HitByBlowerFygar(GameObject* object);
+		virtual ~HitByBlowerFygar() override;
+		void Execute(float deltatime, GameObject* self, GameObject* other) override;
+	private:
+		GameObject* m_object;
+	};
+
 	class HitByRock : public CollisionCommand
 	{
 	public:
@@ -145,11 +156,11 @@ namespace dae
 
 	};
 
-	class PlayerHitPooka : public CollisionCommand
+	class PlayerHitEnemy : public CollisionCommand
 	{
 	public:
-		PlayerHitPooka(GameObject* object);
-		virtual ~PlayerHitPooka() override;
+		PlayerHitEnemy(GameObject* object);
+		virtual ~PlayerHitEnemy() override;
 		void Execute(float deltatime, GameObject* self, GameObject* other) override;
 	private:
 		GameObject* m_object;

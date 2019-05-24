@@ -9,9 +9,12 @@ namespace dae
 		friend Scene& SceneManager::CreateScene(const std::string& name);
 	public:
 		void Add(SceneObject* object);
+		void Remove(SceneObject* object);
 
 		void Update(const float& deltaTime);
 		void Render() const;
+
+
 
 		~Scene();
 		Scene(const Scene& other) = delete;

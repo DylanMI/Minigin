@@ -173,8 +173,17 @@ dae::RandomizeDirectionCommandEnemy::~RandomizeDirectionCommandEnemy()
 
 void dae::RandomizeDirectionCommandEnemy::Execute(float deltatime, GameObject* , GameObject * )
 {
-	m_object->GetComponent<PookaComponent>()->PutBackAFrame(deltatime);
-	m_object->GetComponent<PookaComponent>()->ShiftDirection();
+	if (m_object->GetComponent<PookaComponent>() != nullptr)
+	{
+		m_object->GetComponent<PookaComponent>()->PutBackAFrame(deltatime);
+		m_object->GetComponent<PookaComponent>()->ShiftDirection();
+	}
+	if (m_object->GetComponent<FygarComponent>() != nullptr)
+	{
+		m_object->GetComponent<FygarComponent>()->PutBackAFrame(deltatime);
+		m_object->GetComponent<FygarComponent>()->ShiftDirection();
+	}
+
 }
 
 dae::HitByBlowerPooka::HitByBlowerPooka(GameObject * object)
@@ -190,6 +199,22 @@ void dae::HitByBlowerPooka::Execute(float, GameObject* , GameObject *other)
 {
 	m_object->GetComponent<PookaComponent>()->AddblowCount(1);
 	m_object->GetComponent<PookaComponent>()->SetIsInflated(true);
+	other->GetComponent<DeleteSelfComponent>()->KillNow();
+}
+
+dae::HitByBlowerFygar::HitByBlowerFygar(GameObject * object)
+	:m_object(object)
+{}
+
+dae::HitByBlowerFygar::~HitByBlowerFygar()
+{
+	m_object = nullptr;
+}
+
+void dae::HitByBlowerFygar::Execute(float , GameObject * , GameObject * other)
+{
+	m_object->GetComponent<FygarComponent>()->AddblowCount(1);
+	m_object->GetComponent<FygarComponent>()->SetIsInflated(true);
 	other->GetComponent<DeleteSelfComponent>()->KillNow();
 }
 
@@ -234,16 +259,16 @@ void dae::HitByRock::Execute(float, GameObject* self, GameObject * other)
 }
 
 
-dae::PlayerHitPooka::PlayerHitPooka(GameObject* object)
+dae::PlayerHitEnemy::PlayerHitEnemy(GameObject* object)
 	:m_object(object)
 {}
 
 
-dae::PlayerHitPooka::~PlayerHitPooka()
+dae::PlayerHitEnemy::~PlayerHitEnemy()
 {
 }
 
-void dae::PlayerHitPooka::Execute(float , GameObject *self, GameObject * )
+void dae::PlayerHitEnemy::Execute(float , GameObject *self, GameObject * )
 {
 	// put the player back to a position
 	self->SetPosition(Point2f{ 0,0 });
@@ -254,3 +279,5 @@ void dae::PlayerHitPooka::Execute(float , GameObject *self, GameObject * )
 
 
 #pragma endregion
+
+

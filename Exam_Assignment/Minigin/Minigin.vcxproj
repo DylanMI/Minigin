@@ -203,6 +203,8 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\x64\*.dll" "$(OutputPath)" /R /Y</Com
     <ClInclude Include="Command.h" />
     <ClInclude Include="Font.h" />
     <ClInclude Include="FPSComponent.h" />
+    <ClInclude Include="FygarComponent.h" />
+    <ClInclude Include="FygarGunComponent.h" />
     <ClInclude Include="GameAudio.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GunComponent.h" />
@@ -249,6 +251,8 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\x64\*.dll" "$(OutputPath)" /R /Y</Com
     <ClCompile Include="Command.cpp" />
     <ClCompile Include="Font.cpp" />
     <ClCompile Include="FPSComponent.cpp" />
+    <ClCompile Include="FygarComponent.cpp" />
+    <ClCompile Include="FygarGunComponent.cpp" />
     <ClCompile Include="GameAudio.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GunComponent.cpp" />

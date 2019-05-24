@@ -23,12 +23,10 @@ void dae::DeleteSelfComponent::Update(const float & deltaTime)
 			
 			
 			HandleEvent();
-			m_pParent->ClearComponents();
 			// delete yourself
-			
+			m_scene.Remove(m_pParent);
 		}
 	}
-
 
 }
 
@@ -50,10 +48,9 @@ void dae::DeleteSelfComponent::KillNow()
 		CollisionManager::GetInstance().RemoveCollisionObject(m_pParent);
 
 	}
-
 	HandleEvent();
-	m_pParent->ClearComponents();
 
+	m_scene.Remove(m_pParent);
 }
 
 void dae::DeleteSelfComponent::HandleEvent()
@@ -90,5 +87,32 @@ void dae::DeleteSelfComponent::HandleEvent()
 
 	}
 	// check if fygar
-	// call event
+	if (m_pParent->GetComponent<FygarComponent>() != nullptr)
+	{
+		// call event accordingly
+		// set it to the right texture
+		if (m_pParent->GetTransform().GetPosition().y < (height / 4) * 1)
+		{
+			// Yellow
+			Messenger::instance().Notify(Event::EVENT_DIEDONFIRSTLAYER_FYGAR);
+
+		}
+		else if (m_pParent->GetTransform().GetPosition().y < (height / 4) * 2)
+		{
+			// Orange 
+			Messenger::instance().Notify(Event::EVENT_DIEDONSECONDLAYER_FYGAR);
+
+		}
+		else if (m_pParent->GetTransform().GetPosition().y < (height / 4) * 3)
+		{
+			// Brown
+			Messenger::instance().Notify(Event::EVENT_DIEDONTHIRDLAYER_FYGAR);
+		}
+		else
+		{
+			// Red
+			Messenger::instance().Notify(Event::EVENT_DIEDONFOURTHLAYER_FYGAR);
+		}
+
+	}
 }
