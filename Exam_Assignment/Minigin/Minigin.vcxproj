@@ -196,6 +196,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\x64\*.dll" "$(OutputPath)" /R /Y</Com
     <ClInclude Include="AnimatorComponent.h" />
     <ClInclude Include="Audio.h" />
     <ClInclude Include="BaseComponent.h" />
+    <ClInclude Include="ClampComponent.h" />
     <ClInclude Include="DeleteSelfComponent.h" />
     <ClInclude Include="CollisionCheckerComponent.h" />
     <ClInclude Include="CollisionComponent.h" />
@@ -244,6 +245,7 @@ xcopy "$(SolutionDir)3rdParty\SDL2_ttf\lib\x64\*.dll" "$(OutputPath)" /R /Y</Com
     <ClCompile Include="AnimatorComponent.cpp" />
     <ClCompile Include="Audio.cpp" />
     <ClCompile Include="BaseComponent.cpp" />
+    <ClCompile Include="ClampComponent.cpp" />
     <ClCompile Include="DeleteSelfComponent.cpp" />
     <ClCompile Include="CollisionCheckerComponent.cpp" />
     <ClCompile Include="CollisionComponent.cpp" />

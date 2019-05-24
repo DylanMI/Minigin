@@ -50,7 +50,7 @@ void dae::DeleteSelfComponent::KillNow()
 	}
 	HandleEvent();
 
-	m_scene.Remove(m_pParent);
+	//m_scene.Remove(m_pParent);
 }
 
 void dae::DeleteSelfComponent::HandleEvent()

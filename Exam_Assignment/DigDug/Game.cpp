@@ -300,6 +300,8 @@ void Game::LoadGame()
 		auto mp_Character = new dae::GameObject();
 		mp_Character->SetSpeed(100.0f);
 		mp_Character->AddComponent(new StateComponent(mp_Character, true));
+		mp_Character->AddComponent(new ClampComponent(mp_Character));
+		mp_Character->GetComponent<ClampComponent>()->SetClampRect(Rectf{ 0,0,640,480 });
 
 		// texture
 		mp_Character->AddComponent(new TextureComponent(mp_Character));

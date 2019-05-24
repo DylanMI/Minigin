@@ -48,6 +48,7 @@
 #include "ScoreComponent.h"
 #include "FygarComponent.h"
 #include "FygarGunComponent.h"
+#include "ClampComponent.h"
 
 // services
 #include "ServiceLocator.h"

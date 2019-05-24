@@ -157,6 +157,9 @@
     <ClInclude Include="FygarGunComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
+    <ClInclude Include="ClampComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="BaseComponent.cpp">
@@ -283,6 +286,9 @@
       <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="FygarGunComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="ClampComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
   </ItemGroup>
