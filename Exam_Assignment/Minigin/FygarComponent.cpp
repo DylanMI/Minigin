@@ -21,6 +21,9 @@ dae::FygarComponent::~FygarComponent()
 {
 	delete m_ToGhostState;
 	delete m_ToWandering;
+	delete m_IsInflated;
+	delete m_IsNotInflated;
+	delete m_ToFiringState;
 }
 
 void dae::FygarComponent::Update(const float & deltaTime)

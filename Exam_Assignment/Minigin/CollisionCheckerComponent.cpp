@@ -9,6 +9,11 @@ dae::CollisionCheckerComponent::CollisionCheckerComponent(GameObject * parent)
 {
 }
 
+dae::CollisionCheckerComponent::~CollisionCheckerComponent()
+{
+	std::for_each(collisionEventMap.begin(), collisionEventMap.end(), [](std::pair<collisionTag, CollisionCommand*> x) { delete x.second; });
+}
+
 void dae::CollisionCheckerComponent::Update(const float & deltaTime)
 {
 	if (!m_isDisabled)

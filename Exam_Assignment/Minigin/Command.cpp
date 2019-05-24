@@ -274,7 +274,7 @@ void dae::PlayerHitEnemy::Execute(float , GameObject *self, GameObject * )
 	self->SetPosition(Point2f{ 0,0 });
 
 	// tell the messenger about it
-	Messenger::instance().Notify(Event::EVENT_DIED);
+	Messenger::GetInstance().Notify(Event::EVENT_DIED);
 }
 
 

@@ -19,6 +19,8 @@ dae::PookaComponent::~PookaComponent()
 {
 	delete m_ToGhostState;
 	delete m_ToWandering;
+	delete m_IsInflated;
+	delete m_IsNotInflated;
 }
 
 void dae::PookaComponent::Update(const float & deltaTime)

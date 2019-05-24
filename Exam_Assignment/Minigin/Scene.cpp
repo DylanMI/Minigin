@@ -14,6 +14,11 @@ void dae::Scene::Add(SceneObject* object)
 
 void dae::Scene::Remove(SceneObject * object)
 {
+	if (dynamic_cast<GameObject*>(object))
+	{
+		dynamic_cast<GameObject*>(object)->ClearComponents();
+	}
+	delete object;
 	mObjects.erase(std::remove(mObjects.begin(), mObjects.end(), object), mObjects.end());
 }
 

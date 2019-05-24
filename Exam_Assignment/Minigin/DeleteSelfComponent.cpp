@@ -65,24 +65,24 @@ void dae::DeleteSelfComponent::HandleEvent()
 		if (m_pParent->GetTransform().GetPosition().y < (height / 4) * 1)
 		{
 			// Yellow
-			Messenger::instance().Notify(Event::EVENT_DIEDONFIRSTLAYER_POOKA);
+			Messenger::GetInstance().Notify(Event::EVENT_DIEDONFIRSTLAYER_POOKA);
 
 		}
 		else if (m_pParent->GetTransform().GetPosition().y < (height / 4) * 2)
 		{
 			// Orange 
-			Messenger::instance().Notify(Event::EVENT_DIEDONSECONDLAYER_POOKA);
+			Messenger::GetInstance().Notify(Event::EVENT_DIEDONSECONDLAYER_POOKA);
 
 		}
 		else if (m_pParent->GetTransform().GetPosition().y < (height / 4) * 3)
 		{
 			// Brown
-			Messenger::instance().Notify(Event::EVENT_DIEDONTHIRDLAYER_POOKA);
+			Messenger::GetInstance().Notify(Event::EVENT_DIEDONTHIRDLAYER_POOKA);
 		}
 		else
 		{
 			// Red
-			Messenger::instance().Notify(Event::EVENT_DIEDONFOURTHLAYER_POOKA);
+			Messenger::GetInstance().Notify(Event::EVENT_DIEDONFOURTHLAYER_POOKA);
 		}
 
 	}
@@ -94,24 +94,24 @@ void dae::DeleteSelfComponent::HandleEvent()
 		if (m_pParent->GetTransform().GetPosition().y < (height / 4) * 1)
 		{
 			// Yellow
-			Messenger::instance().Notify(Event::EVENT_DIEDONFIRSTLAYER_FYGAR);
+			Messenger::GetInstance().Notify(Event::EVENT_DIEDONFIRSTLAYER_FYGAR);
 
 		}
 		else if (m_pParent->GetTransform().GetPosition().y < (height / 4) * 2)
 		{
 			// Orange 
-			Messenger::instance().Notify(Event::EVENT_DIEDONSECONDLAYER_FYGAR);
+			Messenger::GetInstance().Notify(Event::EVENT_DIEDONSECONDLAYER_FYGAR);
 
 		}
 		else if (m_pParent->GetTransform().GetPosition().y < (height / 4) * 3)
 		{
 			// Brown
-			Messenger::instance().Notify(Event::EVENT_DIEDONTHIRDLAYER_FYGAR);
+			Messenger::GetInstance().Notify(Event::EVENT_DIEDONTHIRDLAYER_FYGAR);
 		}
 		else
 		{
 			// Red
-			Messenger::instance().Notify(Event::EVENT_DIEDONFOURTHLAYER_FYGAR);
+			Messenger::GetInstance().Notify(Event::EVENT_DIEDONFOURTHLAYER_FYGAR);
 		}
 
 	}

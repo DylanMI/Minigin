@@ -17,7 +17,7 @@ namespace dae
 	{
 	public:
 		explicit CollisionCheckerComponent(GameObject* parent);
-		virtual ~CollisionCheckerComponent() = default;
+		virtual ~CollisionCheckerComponent();
 		CollisionCheckerComponent(const CollisionCheckerComponent& other) = delete;
 		CollisionCheckerComponent(CollisionCheckerComponent&& other) = delete;
 		CollisionCheckerComponent& operator=(const CollisionCheckerComponent& other) = delete;

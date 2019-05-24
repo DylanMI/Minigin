@@ -54,10 +54,10 @@ struct Subscription
 class Messenger
 {
 public:
-	static Messenger& instance()
+	static Messenger& GetInstance()
 	{
-		static Messenger *instance = new Messenger();
-		return *instance;
+		static Messenger instance{};
+		return instance;
 	}
 
 private:

@@ -37,16 +37,16 @@ void Game::LoadGame()
 		m_LifeObserver = new LifeObserver();
 		m_ScoreObserver = new ScoreObserver();
 
-		Messenger::instance().Subscribe(m_LifeObserver, Event::EVENT_DIED);
-		Messenger::instance().Subscribe(m_ScoreObserver, Event::EVENT_DIEDONFIRSTLAYER_POOKA);
-		Messenger::instance().Subscribe(m_ScoreObserver, Event::EVENT_DIEDONSECONDLAYER_POOKA);
-		Messenger::instance().Subscribe(m_ScoreObserver, Event::EVENT_DIEDONTHIRDLAYER_POOKA);
-		Messenger::instance().Subscribe(m_ScoreObserver, Event::EVENT_DIEDONFOURTHLAYER_POOKA);
+		Messenger::GetInstance().Subscribe(m_LifeObserver, Event::EVENT_DIED);
+		Messenger::GetInstance().Subscribe(m_ScoreObserver, Event::EVENT_DIEDONFIRSTLAYER_POOKA);
+		Messenger::GetInstance().Subscribe(m_ScoreObserver, Event::EVENT_DIEDONSECONDLAYER_POOKA);
+		Messenger::GetInstance().Subscribe(m_ScoreObserver, Event::EVENT_DIEDONTHIRDLAYER_POOKA);
+		Messenger::GetInstance().Subscribe(m_ScoreObserver, Event::EVENT_DIEDONFOURTHLAYER_POOKA);
 
-		Messenger::instance().Subscribe(m_ScoreObserver, Event::EVENT_DIEDONFIRSTLAYER_FYGAR);
-		Messenger::instance().Subscribe(m_ScoreObserver, Event::EVENT_DIEDONSECONDLAYER_FYGAR);
-		Messenger::instance().Subscribe(m_ScoreObserver, Event::EVENT_DIEDONTHIRDLAYER_FYGAR);
-		Messenger::instance().Subscribe(m_ScoreObserver, Event::EVENT_DIEDONFOURTHLAYER_FYGAR);
+		Messenger::GetInstance().Subscribe(m_ScoreObserver, Event::EVENT_DIEDONFIRSTLAYER_FYGAR);
+		Messenger::GetInstance().Subscribe(m_ScoreObserver, Event::EVENT_DIEDONSECONDLAYER_FYGAR);
+		Messenger::GetInstance().Subscribe(m_ScoreObserver, Event::EVENT_DIEDONTHIRDLAYER_FYGAR);
+		Messenger::GetInstance().Subscribe(m_ScoreObserver, Event::EVENT_DIEDONFOURTHLAYER_FYGAR);
 
 		// making the grid
 		const int rows{ 25 };
@@ -364,6 +364,8 @@ void Game::LoadGame()
 
 void Game::Cleanup()
 {
+	delete m_LifeObserver;
+	delete m_ScoreObserver;
 
 }
 
