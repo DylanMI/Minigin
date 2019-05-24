@@ -4,9 +4,6 @@
 #include "CollisionCheckerComponent.h"
 #include "FygarGunComponent.h"
 
-#include "Structs.h"
-#include "Utils.h"
-
 namespace dae
 {
 	class FygarComponent : public BaseComponent

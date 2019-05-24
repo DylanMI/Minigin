@@ -3,8 +3,7 @@
 #include "GameObject.h"
 #include "CollisionCheckerComponent.h"
 
-#include "Structs.h"
-#include "Utils.h"
+
 
 namespace dae
 {

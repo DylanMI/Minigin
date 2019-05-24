@@ -46,7 +46,7 @@ void dae::RockComponent::Update(const float & deltaTime)
 		if (m_breakTimer <= 0.0f)
 		{
 			// kill all the victims
-			for (int i{}; i < m_victims.size(); i++)
+			for (size_t i{}; i < m_victims.size(); i++)
 			{
 				m_victims[i]->GetComponent<DeleteSelfComponent>()->KillNow();
 
@@ -61,7 +61,7 @@ void dae::RockComponent::Update(const float & deltaTime)
 	// take the victims with you
 	if (!m_victims.empty())
 	{
-		for (int i{}; i < m_victims.size(); i++)
+		for (size_t i{}; i < m_victims.size(); i++)
 		{
 			m_victims[i]->SetPosition(Point2f{ m_pParent->GetTransform().GetPosition().x,m_pParent->GetTransform().GetPosition().y });
 		}

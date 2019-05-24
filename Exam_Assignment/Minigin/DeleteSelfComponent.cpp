@@ -50,6 +50,7 @@ void dae::DeleteSelfComponent::KillNow()
 	}
 	HandleEvent();
 
+	m_pParent->ClearComponents();
 	//m_scene.Remove(m_pParent);
 }
 

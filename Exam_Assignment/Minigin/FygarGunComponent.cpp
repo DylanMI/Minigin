@@ -55,7 +55,7 @@ void dae::FygarGunComponent::Shoot(Point2f direction)
 	}
 
 	// up
-	if (direction.x == Point2f{ 0,-1 }.x && direction.y == Point2f{ 0,-1 }.y)
+	if (direction.x == Point2f{ 0,1 }.x && direction.y == Point2f{ 0,1 }.y)
 	{
 		bullet->GetComponent<TextureComponent>()->SetTexture(dae::ResourceManager::GetInstance().LoadTexture("Fire_Up.png"));
 		bullet->SetPosition(Point2f{ m_pParent->GetTransform().GetPosition().x + 16 , m_pParent->GetTransform().GetPosition().y - 32 });
@@ -63,7 +63,7 @@ void dae::FygarGunComponent::Shoot(Point2f direction)
 	}
 
 	// down
-	if (direction.x == Point2f{ 0,-1 }.x && direction.y == Point2f{ 0,1 }.y)
+	if (direction.x == Point2f{ 0,-1 }.x && direction.y == Point2f{ 0,-1 }.y)
 	{
 		bullet->GetComponent<TextureComponent>()->SetTexture(dae::ResourceManager::GetInstance().LoadTexture("Fire_Down.png"));
 		bullet->SetPosition(Point2f{ m_pParent->GetTransform().GetPosition().x + 16, m_pParent->GetTransform().GetPosition().y + 32 });

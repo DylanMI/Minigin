@@ -116,6 +116,7 @@ void Game::LoadGame()
 			}
 		}
 
+#pragma region Rock_One
 		// the rock
 		auto mp_rock = new dae::GameObject();
 		
@@ -150,11 +151,51 @@ void Game::LoadGame()
 		mp_Clearer->SetPosition({ 6 * 16, 11 * 16 });
 		m_scene.Add(mp_Clearer);
 
+#pragma endregion
+#pragma region Rock_Two
+		// the rock
+		auto mp_rock2 = new dae::GameObject();
+
+		mp_rock2->AddComponent(new TextureComponent(mp_rock2));
+		mp_rock2->GetComponent<TextureComponent>()->SetTexture(dae::ResourceManager::GetInstance().LoadTexture("Rock_One.png"));
+		mp_rock2->GetComponent<TextureComponent>()->SetWidthAndHeight(16, 16);
+
+		// collision Checker
+		mp_rock2->AddComponent(new CollisionCheckerComponent(mp_rock2));
+		mp_rock2->GetComponent<CollisionCheckerComponent>()->addCollisionEvent(new FallCommandRock(mp_rock2), collisionTag::Nothing);
+		mp_rock2->GetComponent<CollisionCheckerComponent>()->addCollisionEvent(new BreakCommandRock(mp_rock2), collisionTag::Terrain);
+		mp_rock2->GetComponent<CollisionCheckerComponent>()->SetWidthAndHeightBody({ 16,16 });
+		mp_rock2->GetComponent<CollisionCheckerComponent>()->SetOffset({ 0,16 });
+
+		// collision
+		mp_rock2->AddComponent(new CollisionComponent(mp_rock2));
+		mp_rock2->GetComponent<CollisionComponent>()->SetWidthAndHeight(Point2f{ 16,16 });
+		mp_rock2->GetComponent<CollisionComponent>()->SetTag(collisionTag::Rock);
+
+		mp_rock2->AddComponent(new RockComponent(mp_rock2));
+		mp_rock2->GetComponent<RockComponent>()->SetFallSpeed(-50.0f);
+
+		mp_rock2->SetPosition({ 18 * 16, 11 * 16 });
+		m_scene.Add(mp_rock2);
+		CollisionManager::GetInstance().RegisterCollisionObject(mp_rock2);
+
+		// the clearing of the rock
+		auto mp_ClearerRock2 = new dae::GameObject();
+		mp_ClearerRock2->AddComponent(new CollisionCheckerComponent(mp_ClearerRock2));
+		mp_ClearerRock2->AddComponent(new StateComponent(mp_ClearerRock2, true));
+		mp_ClearerRock2->GetComponent<CollisionCheckerComponent>()->SetWidthAndHeightBody({ 16,16 });
+		mp_ClearerRock2->SetPosition({ 18 * 16, 11 * 16 });
+		m_scene.Add(mp_ClearerRock2);
+
+#pragma endregion
+#pragma region Pooka_One
 		// pooka
 		auto mp_Pooka = new dae::GameObject();
 		mp_Pooka->SetSpeed(50.0f);
 		mp_Pooka->AddComponent(new StateComponent(mp_Pooka, false));
-
+		mp_Pooka->AddComponent(new ClampComponent(mp_Pooka));
+		mp_Pooka->GetComponent<ClampComponent>()->SetClampRect(Rectf{ 0,100,640,380 });
+		
 		// texture
 		mp_Pooka->AddComponent(new TextureComponent(mp_Pooka));
 		mp_Pooka->GetComponent<TextureComponent>()->SetIsAnimated(true);
@@ -217,12 +258,14 @@ void Game::LoadGame()
 		mp_Clearer2->GetComponent<CollisionCheckerComponent>()->SetWidthAndHeightBody({ 16*5,16*3 });
 		mp_Clearer2->SetPosition({ 8 * 16, 26 * 16 });
 		m_scene.Add(mp_Clearer2);
-
+#pragma endregion
+#pragma region Fygar_One
 		// Fygar
 		auto mp_Fygar = new dae::GameObject();
 		mp_Fygar->SetSpeed(50.0f);
 		mp_Fygar->AddComponent(new StateComponent(mp_Fygar, false));
-
+		mp_Fygar->AddComponent(new ClampComponent(mp_Fygar));
+		mp_Fygar->GetComponent<ClampComponent>()->SetClampRect(Rectf{ 0,100,640,380 });
 		// texture
 		mp_Fygar->AddComponent(new TextureComponent(mp_Fygar));
 		mp_Fygar->GetComponent<TextureComponent>()->SetIsAnimated(true);
@@ -295,13 +338,15 @@ void Game::LoadGame()
 		mp_Clearer3->GetComponent<CollisionCheckerComponent>()->SetWidthAndHeightBody({ 16 * 5,16 * 3 });
 		mp_Clearer3->SetPosition({ 25 * 16, 26 * 16 });
 		m_scene.Add(mp_Clearer3);
-
+#pragma endregion
+#pragma region Character
 		// Adding the character
 		auto mp_Character = new dae::GameObject();
 		mp_Character->SetSpeed(100.0f);
+		mp_Character->SetPosition(Point2f{ 20 * 16 ,15 * 16 + 2 });
 		mp_Character->AddComponent(new StateComponent(mp_Character, true));
 		mp_Character->AddComponent(new ClampComponent(mp_Character));
-		mp_Character->GetComponent<ClampComponent>()->SetClampRect(Rectf{ 0,0,640,480 });
+		mp_Character->GetComponent<ClampComponent>()->SetClampRect(Rectf{ 0,51,640,380 });
 
 		// texture
 		mp_Character->AddComponent(new TextureComponent(mp_Character));
@@ -320,10 +365,22 @@ void Game::LoadGame()
 		mp_Character->AddComponent(new CollisionCheckerComponent(mp_Character));
 		mp_Character->GetComponent<CollisionCheckerComponent>()->SetWidthAndHeightBody({ 16,16 });
 		mp_Character->GetComponent<CollisionCheckerComponent>()->addCollisionEvent(new PlayerHitEnemy(mp_Character), collisionTag::Pooka);
+		mp_Character->GetComponent<CollisionCheckerComponent>()->addCollisionEvent(new PlayerHitEnemy(mp_Character), collisionTag::Fugar);
+		mp_Character->GetComponent<CollisionCheckerComponent>()->addCollisionEvent(new PlayerHitEnemy(mp_Character), collisionTag::Fire);
 		m_scene.Add(mp_Character);
 
 		// shooter
 		mp_Character->AddComponent(new GunComponent(mp_Character, m_scene));
+
+		// the clearing of the Player
+		auto mp_ClearerPlayer = new dae::GameObject();
+		mp_ClearerPlayer->AddComponent(new CollisionCheckerComponent(mp_ClearerPlayer));
+		mp_ClearerPlayer->AddComponent(new StateComponent(mp_ClearerPlayer, true));
+		mp_ClearerPlayer->GetComponent<CollisionCheckerComponent>()->SetWidthAndHeightBody({ 3*16,12*16 });
+		mp_ClearerPlayer->SetPosition({ 20 * 16, 16 * 16 });
+		m_scene.Add(mp_ClearerPlayer);
+		
+#pragma endregion
 
 		// adding the character as a target
 		mp_Pooka->GetComponent<PookaComponent>()->SetTarget(mp_Character);
@@ -397,7 +454,7 @@ void Game::Run()
 			auto currentTime = std::chrono::high_resolution_clock::now();
 			float deltaTime = std::chrono::duration<float>(currentTime - lastTime).count();
 
-			doContinue = input.ProcessInput(deltaTime);
+			doContinue = input.ProcessInput(deltaTime) && !m_LifeObserver->GetIsDead();
 			sceneManager.Update(deltaTime);
 			renderer.Render();
 

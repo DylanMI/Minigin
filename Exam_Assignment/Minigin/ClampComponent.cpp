@@ -21,9 +21,25 @@ void dae::ClampComponent::SetClampRect(Rectf newRect)
 
 bool dae::ClampComponent::CheckClamp(Point2f position, Point2f WidthAndHeight)
 {
-	if (position.x < m_ClampRect.x) return false;
-	if (position.y < m_ClampRect.y) return false;
-	if (position.x + WidthAndHeight.x > m_ClampRect.x + m_ClampRect.w) return false;
-	if (position.y + WidthAndHeight.y > m_ClampRect.y + m_ClampRect.h) return false;
+	if (position.x < m_ClampRect.x || position.y < m_ClampRect.y || position.x + WidthAndHeight.x > m_ClampRect.x + m_ClampRect.w || position.y + WidthAndHeight.y > m_ClampRect.y + m_ClampRect.h)
+	{
+		// check if its an enemy
+		if (m_pParent->GetComponent<PookaComponent>() != nullptr)
+		{
+			m_pParent->GetComponent<PookaComponent>()->ShiftDirection();
+
+		}
+		if (m_pParent->GetComponent<FygarComponent>() != nullptr)
+		{
+			m_pParent->GetComponent<FygarComponent>()->ShiftDirection();
+		}
+
+
+		// else just return false
+		return false;
+
+
+	}
+
 	return true;
 }

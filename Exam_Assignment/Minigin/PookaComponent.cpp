@@ -1,5 +1,6 @@
 #include "MiniginPCH.h"
 #include "PookaComponent.h"
+
 dae::PookaComponent::PookaComponent(GameObject * parent)
 	:m_pParent(parent)
 	,m_currentState(State::WANDERING)

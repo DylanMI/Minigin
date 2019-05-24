@@ -271,7 +271,7 @@ dae::PlayerHitEnemy::~PlayerHitEnemy()
 void dae::PlayerHitEnemy::Execute(float , GameObject *self, GameObject * )
 {
 	// put the player back to a position
-	self->SetPosition(Point2f{ 0,0 });
+	self->SetPosition(Point2f{ 0,50 });
 
 	// tell the messenger about it
 	Messenger::GetInstance().Notify(Event::EVENT_DIED);
