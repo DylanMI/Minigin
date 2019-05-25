@@ -166,6 +166,16 @@ namespace dae
 		GameObject* m_object;
 	};
 
+	class PlayerHitRock : public CollisionCommand
+	{
+	public:
+		PlayerHitRock(GameObject* object);
+		virtual ~PlayerHitRock() override;
+		void Execute(float deltatime, GameObject* self, GameObject* other) override;
+	private:
+		GameObject* m_object;
+	};
+
 #pragma endregion
 
 }

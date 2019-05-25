@@ -4,9 +4,11 @@
 dae::RockComponent::RockComponent(GameObject * parent)
 	: m_pParent(parent)
 	, m_isBreaking(false)
+	, m_isActuallyFalling(false)
 	, m_isFalling(false)
 	, m_fallSpeed(1.0f)
 	, m_breakTimer(1.0f)
+	, m_fallTimer(m_fallTime)
 {
 }
 
@@ -15,10 +17,15 @@ void dae::RockComponent::Update(const float & deltaTime)
 	// if it is falling, then fall
 	if (m_isFalling)
 	{
-		Point2f currPos = { m_pParent->GetTransform().GetPosition().x, m_pParent->GetTransform().GetPosition().y };
-		Point2f newPos = { currPos.x, currPos.y - (deltaTime * m_fallSpeed) };
-		m_pParent->SetPosition(newPos);
-
+		// after a specific time ofcourse
+		m_fallTimer -= deltaTime;
+		if (m_fallTimer < 0)
+		{
+			m_isActuallyFalling = true;
+			Point2f currPos = { m_pParent->GetTransform().GetPosition().x, m_pParent->GetTransform().GetPosition().y };
+			Point2f newPos = { currPos.x, currPos.y - (deltaTime * m_fallSpeed) };
+			m_pParent->SetPosition(newPos);
+		}
 	}
 
 	// if it is breaking, stop falling and break
@@ -106,7 +113,7 @@ bool dae::RockComponent::IsVictimAlreadyRegistered(GameObject * Victim)
 
 bool dae::RockComponent::GetIsFalling()
 {
-	return m_isFalling;
+	return m_isActuallyFalling;
 }
 
 bool dae::RockComponent::GetIsBreaking()

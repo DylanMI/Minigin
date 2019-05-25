@@ -134,7 +134,7 @@ void dae::FygarComponent::Update(const float & deltaTime)
 	case State::BLOW_3:
 	case State::BLOW_4:
 		m_DeflateTimer -= deltaTime;
-
+		m_pParent->GetComponent<CollisionComponent>()->SetTag(collisionTag::Nothing);
 		// handling deflating
 		if (m_DeflateTimer < 0)
 		{
@@ -146,6 +146,7 @@ void dae::FygarComponent::Update(const float & deltaTime)
 		if (m_blowCounter <= 0)
 		{
 			*m_IsInflated = false;
+			m_pParent->GetComponent<CollisionComponent>()->SetTag(collisionTag::Fugar);
 		}
 
 		// internally handling the state of the blows

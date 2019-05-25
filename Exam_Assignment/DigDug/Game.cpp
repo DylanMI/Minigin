@@ -367,6 +367,7 @@ void Game::LoadGame()
 		mp_Character->GetComponent<CollisionCheckerComponent>()->addCollisionEvent(new PlayerHitEnemy(mp_Character), collisionTag::Pooka);
 		mp_Character->GetComponent<CollisionCheckerComponent>()->addCollisionEvent(new PlayerHitEnemy(mp_Character), collisionTag::Fugar);
 		mp_Character->GetComponent<CollisionCheckerComponent>()->addCollisionEvent(new PlayerHitEnemy(mp_Character), collisionTag::Fire);
+		mp_Character->GetComponent<CollisionCheckerComponent>()->addCollisionEvent(new PlayerHitRock(mp_Character), collisionTag::Rock);
 		m_scene.Add(mp_Character);
 
 		// shooter

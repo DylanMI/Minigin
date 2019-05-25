@@ -277,6 +277,25 @@ void dae::PlayerHitEnemy::Execute(float , GameObject *self, GameObject * )
 	Messenger::GetInstance().Notify(Event::EVENT_DIED);
 }
 
+dae::PlayerHitRock::PlayerHitRock(GameObject * object)
+	: m_object(object)
+{}
+
+dae::PlayerHitRock::~PlayerHitRock()
+{
+}
+
+void dae::PlayerHitRock::Execute(float , GameObject * self, GameObject * other)
+{
+	if (other->GetComponent<RockComponent>()->GetIsFalling())
+	{
+		// put the player back to a position
+		self->SetPosition(Point2f{ 0,50 });
+
+		// tell the messenger about it
+		Messenger::GetInstance().Notify(Event::EVENT_DIED);
+	}
+}
 
 #pragma endregion
 

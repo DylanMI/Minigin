@@ -41,9 +41,13 @@ namespace dae
 		float m_fallSpeed;
 
 		bool m_isFalling;
+		
 		bool m_isBreaking;
-
+		bool m_isActuallyFalling;
 		float m_breakTimer;
+
+		const float m_fallTime = 0.5f;
+		float m_fallTimer;
 
 	};
 
