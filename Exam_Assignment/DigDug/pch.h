@@ -65,11 +65,11 @@
 
 
 // SDL 
-#pragma comment(lib, "sdl2.lib")
-#pragma comment(lib, "SDL2main.lib")
-#pragma comment(lib, "SDL2_mixer.lib")  
-#pragma comment(lib, "SDL2_image.lib")
-#pragma comment(lib, "SDL2_ttf.lib")
+//#pragma comment(lib, "sdl2.lib")
+//#pragma comment(lib, "SDL2main.lib")
+//#pragma comment(lib, "SDL2_mixer.lib")  
+//#pragma comment(lib, "SDL2_image.lib")
+//#pragma comment(lib, "SDL2_ttf.lib")
 
 #include <SDL_image.h>
 #include <SDL_ttf.h>

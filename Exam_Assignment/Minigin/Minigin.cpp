@@ -50,38 +50,10 @@ void dae::Minigin::Initialize()
 	
 }
 
-/**
- * Code constructing the scene world starts here
- */
+
 void dae::Minigin::LoadGame() const
 {
-	//auto& scene = SceneManager::GetInstance().CreateScene("Demo");
 
-	//Adding background
-	//auto pGameObject = new GameObject();
-	//pGameObject->AddComponent(new TextureComponent(pGameObject));
-	//pGameObject->GetComponent<TextureComponent>()->SetTexture("background.jpg");
-	//scene.Add(pGameObject);
-
-	// adding FPS counter
-	//auto font = ResourceManager::GetInstance().LoadFont("Lingua.otf", 36);
-	//auto pFPSObject = new GameObject;
-	//pFPSObject->AddComponent(new TextRendererComponent("xxx", font, pFPSObject));
-	//pFPSObject->AddComponent(new FPSComponent(pFPSObject));
-	//scene.Add(pFPSObject);
-
-	// services
-	//ServiceLocator::GetInstance().Init();
-	//ServiceLocator::GetInstance().RegisterAudioService(new GameAudio());
-	//ServiceLocator::GetInstance().GetAudio().Init();
-	// adding sound
-	//ServiceLocator::GetInstance().GetAudio().AddSound("../Data/laser.ogg");
-
-	// inputs
-	//InputManager::GetInstance().ChangeCommand(ControllerButton::DpadL, 0, new MoveLeftCommand(pGameObject));
-	//InputManager::GetInstance().ChangeCommand(ControllerButton::DpadR, 0, new MoveRightCommand(pGameObject));
-	//InputManager::GetInstance().ChangeCommand(ControllerButton::DpadU, 0, new MoveUpCommand(pGameObject));
-	//InputManager::GetInstance().ChangeCommand(ControllerButton::DpadD, 0, new MoveDownCommand(pGameObject));
 }
 
 void dae::Minigin::Cleanup()
