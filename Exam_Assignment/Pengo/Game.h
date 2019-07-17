@@ -17,7 +17,5 @@ public:
 
 
 private:
-	LifeObserver* m_LifeObserver;
-	ScoreObserver* m_ScoreObserver;
 
 };

@@ -27,8 +27,6 @@ namespace dae
 	private:
 
 		void HandleEvent();
-
-		GameObject* m_pParent;
 		Scene& m_scene;
 
 		bool m_isTicking;

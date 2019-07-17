@@ -22,7 +22,6 @@ namespace dae
 		void Render() const override;
 
 	private: 
-		GameObject* m_pParent;
 		ScoreObserver* m_ScoreObserver;
 
 		int m_prevScore;

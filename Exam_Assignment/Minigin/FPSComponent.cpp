@@ -14,7 +14,7 @@ void dae::FPSComponent::Update(const float& deltaTime)
 	m_FPS = 1 / deltaTime;
 
 	// update the fps to the text renderer from the parent if it has one
-	TextRendererComponent* placeholder = m_pParent->GetComponent<TextRendererComponent>();
+	TextRendererComponent* placeholder = BaseComponent::m_pParent->GetComponent<TextRendererComponent>();
 	placeholder->ChangeText("FPS: " + std::to_string(int(m_FPS)));
 }
 

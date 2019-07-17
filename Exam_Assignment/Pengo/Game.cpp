@@ -31,7 +31,16 @@ void Game::LoadGame()
 {
 	using namespace dae;
 	{
+		// making the scene
+		auto& m_scene = SceneManager::GetInstance().CreateScene("Pengo");
 
+		//adding FPS counter
+		auto font = ResourceManager::GetInstance().LoadFont("Lingua.otf", 36);
+		auto mp_FPSObj = new dae::GameObject();
+		mp_FPSObj->AddComponent(new TextRendererComponent("xxx", font, mp_FPSObj));
+		mp_FPSObj->AddComponent(new FPSComponent(mp_FPSObj));
+		
+		m_scene.Add(mp_FPSObj);
 	}
 }
 

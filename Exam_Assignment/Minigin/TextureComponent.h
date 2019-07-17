@@ -35,8 +35,6 @@ namespace dae
 
 	private:
 		std::shared_ptr<Texture2D> m_pTexture;
-		GameObject* m_pParent;
-
 		bool m_isAnimated = false;
 		SDL_Rect m_SourceRect;
 

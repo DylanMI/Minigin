@@ -30,8 +30,6 @@ namespace dae
 		dae::Transform m_Transform;
 		std::shared_ptr<dae::Font> m_Font;
 		std::shared_ptr<Texture2D> m_Texture;
-
-		GameObject* m_pParent;
 	};
 
 }

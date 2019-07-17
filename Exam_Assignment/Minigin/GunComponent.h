@@ -28,7 +28,6 @@ namespace dae
 		bool GetCanShoot();
 
 	private:
-		GameObject* m_pParent;
 		Scene& m_scene;
 
 		const float m_shootCooldownTime = 0.5f; 

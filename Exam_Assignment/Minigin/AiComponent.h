@@ -43,7 +43,6 @@ namespace dae
 		void Render() const override;
 		void AddTransition(GameObject* parent, State goToState, State startState, std::vector<bool*> prerequisites);
 	private:
-		GameObject* m_pParent;
 		std::vector<Transition> m_transitions;
 	};
 #pragma endregion AIComponent

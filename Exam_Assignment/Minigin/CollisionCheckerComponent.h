@@ -35,7 +35,6 @@ namespace dae
 		void SetDisabled(bool isDisabled);
 
 	private:
-		GameObject* m_pParent;
 		std::map<collisionTag, CollisionCommand* > collisionEventMap;
 		Rectf m_collisionBody{};
 		

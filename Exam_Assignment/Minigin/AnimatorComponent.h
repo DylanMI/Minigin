@@ -30,7 +30,6 @@ namespace dae
 
 
 	private:
-		GameObject* m_pParent;
 		std::map <State, std::shared_ptr<Texture2D>> m_StateTextureMap;
 		std::map <State, int> m_StateFrameHeight;
 		std::map <State, int> m_StateFrameWidth;

@@ -31,7 +31,6 @@ namespace dae
 	private:
 		dae::Point2f m_position;
 		float m_FPS;
-		GameObject* m_pParent;
 
 	};
 }

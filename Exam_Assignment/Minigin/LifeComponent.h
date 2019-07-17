@@ -21,7 +21,6 @@ namespace dae
 		void Render() const override;
 
 	private:
-		GameObject* m_pParent;
 		LifeObserver* m_lifeObserver;
 
 		int m_prevLife;

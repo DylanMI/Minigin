@@ -46,7 +46,6 @@ namespace dae
 
 
 	private:
-		GameObject* m_pParent;
 		State m_CurrentState = State::IDLE;
 
 		bool m_isDigDug;
