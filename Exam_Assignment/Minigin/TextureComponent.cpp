@@ -2,7 +2,7 @@
 #include "TextureComponent.h"
 
 dae::TextureComponent::TextureComponent(GameObject * parent)
-	: m_pParent (parent)
+	: BaseComponent(parent)
 {
 }
 

@@ -44,7 +44,6 @@ namespace dae
 		Rectf m_collisionBody;
 		Point2f m_WidthAndHeight;
 		collisionTag m_collTag;
-		dae::GameObject* m_pParent;
 	};
 }
 

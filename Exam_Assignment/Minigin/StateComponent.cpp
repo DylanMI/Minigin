@@ -2,7 +2,7 @@
 #include "StateComponent.h"
 
 dae::StateComponent::StateComponent(GameObject * parent, bool isDigDug)
-	: m_pParent(parent)
+	: BaseComponent(parent)
 	, m_isDigDug(isDigDug)
 {
 }

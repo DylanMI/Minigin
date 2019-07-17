@@ -2,7 +2,7 @@
 #include "ScoreComponent.h"
 
 dae::ScoreComponent::ScoreComponent(GameObject * parent, ScoreObserver * scoreObserver)
-	:m_pParent(parent)
+	: BaseComponent(parent)
 	,m_ScoreObserver(scoreObserver)
 	, m_prevScore(0)
 {

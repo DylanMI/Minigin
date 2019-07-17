@@ -12,7 +12,7 @@ dae::TextRendererComponent::TextRendererComponent(const std::string& text, std::
 	: m_Text(text)
 	, m_Font(font)
 	, m_Texture(nullptr)
-	, m_pParent(parent)
+	, BaseComponent(parent)
 {
 	const SDL_Color color = { 255,255,255 }; // only white text is supported now
 	const auto SDLsurf = TTF_RenderText_Blended(m_Font->GetFont(), m_Text.c_str(), color);

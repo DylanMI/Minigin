@@ -2,7 +2,7 @@
 #include "CollisionComponent.h"
 
 dae::CollisionComponent::CollisionComponent(GameObject * parent)
-	:m_pParent(parent)
+	: BaseComponent(parent)
 {
 }
 

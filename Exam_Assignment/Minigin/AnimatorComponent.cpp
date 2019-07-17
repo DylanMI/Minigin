@@ -3,7 +3,7 @@
 
 
 dae::AnimatorComponent::AnimatorComponent(GameObject * parent)
-	:m_pParent(parent)
+	: BaseComponent(parent)
 {
 	m_previousState = State::IDLE;
 }

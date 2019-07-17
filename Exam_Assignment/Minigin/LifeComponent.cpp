@@ -2,7 +2,7 @@
 #include "LifeComponent.h"
 
 dae::LifeComponent::LifeComponent(GameObject * parent, LifeObserver * lifeObserver)
-	:m_pParent(parent)
+	: BaseComponent(parent)
 	,m_lifeObserver(lifeObserver)
 	,m_prevLife(3)
 {

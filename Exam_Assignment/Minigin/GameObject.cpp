@@ -62,17 +62,6 @@ void dae::GameObject::Move(Point2f direction, float deltaTime)
 	newpos.x += (direction.x * m_speed) * deltaTime;
 	newpos.y += (-direction.y * m_speed) * deltaTime;
 
-	// check if there is a clampComponent
-	if (this->GetComponent<ClampComponent>())
-	{
-		// if yes, then check if its allowed to move, then push it, if not then its either impossible, or the checkclamp ordered the AI to turn around
-		if (this->GetComponent<ClampComponent>()->CheckClamp(newpos, Point2f{16,16})) SetPosition(newpos);		
-	}
-	// else just push it
-	else
-	{
-		SetPosition(newpos);
-	}
 
 }
 

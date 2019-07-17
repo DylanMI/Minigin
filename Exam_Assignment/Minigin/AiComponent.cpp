@@ -3,7 +3,7 @@
 
 #pragma region AIComponent
 dae::AiComponent::AiComponent(GameObject * parent)
-	: m_pParent(parent)
+	: BaseComponent(parent)
 {
 }
 

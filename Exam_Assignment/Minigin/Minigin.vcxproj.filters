@@ -118,13 +118,7 @@
     <ClInclude Include="CollisionCheckerComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
-    <ClInclude Include="RockComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
     <ClInclude Include="StateComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="PookaComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="GunComponent.h">
@@ -149,15 +143,6 @@
       <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="ScoreComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="FygarComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="FygarGunComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
-    <ClInclude Include="ClampComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>
@@ -249,13 +234,7 @@
     <ClCompile Include="CollisionCheckerComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
-    <ClCompile Include="RockComponent.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
     <ClCompile Include="StateComponent.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="PookaComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="GunComponent.cpp">
@@ -280,15 +259,6 @@
       <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="LifeComponent.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="FygarComponent.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="FygarGunComponent.cpp">
-      <Filter>Components</Filter>
-    </ClCompile>
-    <ClCompile Include="ClampComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
   </ItemGroup>

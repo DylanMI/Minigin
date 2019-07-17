@@ -2,7 +2,7 @@
 #include "DeleteSelfComponent.h"
 
 dae::DeleteSelfComponent::DeleteSelfComponent(GameObject * parent, Scene & scene)
-	: m_pParent(parent)
+	: BaseComponent(parent)
 	, m_scene(scene)
 	, m_isTicking(false)
 {

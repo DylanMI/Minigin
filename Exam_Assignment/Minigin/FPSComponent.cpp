@@ -4,7 +4,7 @@
 #include <SDL_ttf.h>
 
 dae::FPSComponent::FPSComponent(GameObject*parent)
-	: m_pParent(parent)
+	: BaseComponent(parent)
 {
 }
 

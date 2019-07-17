@@ -231,7 +231,6 @@ xcopy "$(SolutionDir)3rdParty\SDL2_mixer\lib\x64\*.lib" "$(OutputPath)" /R /Y</C
     <ClInclude Include="AnimatorComponent.h" />
     <ClInclude Include="Audio.h" />
     <ClInclude Include="BaseComponent.h" />
-    <ClInclude Include="ClampComponent.h" />
     <ClInclude Include="DeleteSelfComponent.h" />
     <ClInclude Include="CollisionCheckerComponent.h" />
     <ClInclude Include="CollisionComponent.h" />
@@ -239,8 +238,6 @@ xcopy "$(SolutionDir)3rdParty\SDL2_mixer\lib\x64\*.lib" "$(OutputPath)" /R /Y</C
     <ClInclude Include="Command.h" />
     <ClInclude Include="Font.h" />
     <ClInclude Include="FPSComponent.h" />
-    <ClInclude Include="FygarComponent.h" />
-    <ClInclude Include="FygarGunComponent.h" />
     <ClInclude Include="GameAudio.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GunComponent.h" />
@@ -254,10 +251,8 @@ xcopy "$(SolutionDir)3rdParty\SDL2_mixer\lib\x64\*.lib" "$(OutputPath)" /R /Y</C
     <ClInclude Include="MiniginPCH.h" />
     <ClInclude Include="NullAudio.h" />
     <ClInclude Include="Observer.h" />
-    <ClInclude Include="PookaComponent.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="ResourceManager.h" />
-    <ClInclude Include="RockComponent.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="SceneObject.h" />
@@ -280,7 +275,6 @@ xcopy "$(SolutionDir)3rdParty\SDL2_mixer\lib\x64\*.lib" "$(OutputPath)" /R /Y</C
     <ClCompile Include="AnimatorComponent.cpp" />
     <ClCompile Include="Audio.cpp" />
     <ClCompile Include="BaseComponent.cpp" />
-    <ClCompile Include="ClampComponent.cpp" />
     <ClCompile Include="DeleteSelfComponent.cpp" />
     <ClCompile Include="CollisionCheckerComponent.cpp" />
     <ClCompile Include="CollisionComponent.cpp" />
@@ -288,8 +282,6 @@ xcopy "$(SolutionDir)3rdParty\SDL2_mixer\lib\x64\*.lib" "$(OutputPath)" /R /Y</C
     <ClCompile Include="Command.cpp" />
     <ClCompile Include="Font.cpp" />
     <ClCompile Include="FPSComponent.cpp" />
-    <ClCompile Include="FygarComponent.cpp" />
-    <ClCompile Include="FygarGunComponent.cpp" />
     <ClCompile Include="GameAudio.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GunComponent.cpp" />
@@ -309,10 +301,8 @@ xcopy "$(SolutionDir)3rdParty\SDL2_mixer\lib\x64\*.lib" "$(OutputPath)" /R /Y</C
     </ClCompile>
     <ClCompile Include="NullAudio.cpp" />
     <ClCompile Include="Observer.cpp" />
-    <ClCompile Include="PookaComponent.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
-    <ClCompile Include="RockComponent.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="SceneObject.cpp" />

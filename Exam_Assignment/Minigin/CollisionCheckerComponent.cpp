@@ -2,7 +2,7 @@
 #include "CollisionCheckerComponent.h"
 
 dae::CollisionCheckerComponent::CollisionCheckerComponent(GameObject * parent)
-	:m_pParent(parent)
+	: BaseComponent(parent)
 	,m_widthAndHeight({0,0})
 	,m_offset({0,0})
 	,m_isDisabled(false)

@@ -2,7 +2,7 @@
 #include "GunComponent.h"
 
 dae::GunComponent::GunComponent(GameObject * parent, Scene& scene)
-	: m_pParent(parent)
+	: BaseComponent(parent)
 	, m_scene(scene)
 	, m_canShoot(true)
 	, m_shootCooldownTimer(m_shootCooldownTime)

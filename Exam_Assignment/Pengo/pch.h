@@ -1,14 +1,75 @@
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
-
-#ifndef PCH_H
-#define PCH_H
+#pragma once
+#include "targetver.h"
+#include <windows.h>
+#include <vld.h>
+#include "SDL.h"
+#include "Minigin.h"
 
 // TODO: add headers that you want to pre-compile here
+#include <stdio.h>
+#include <memory> // smart pointers
+#include <map>
+#include <iostream>
+#include <sstream>
+#include <vector>
+#include <chrono>
+#include <thread>
 
-#endif //PCH_H
+#include "Structs.h"
+#include "Utils.h"
+
+#include "Scene.h"
+
+// XInput
+#pragma comment(lib, "XInput.lib") 
+#include <XInput.h>
+
+// components and objects
+#include "GameObject.h"
+#include "SceneObject.h"
+#include "BaseComponent.h"
+#include "BaseCharacter.h"
+#include "TextRendererComponent.h"
+#include "FPSComponent.h"
+#include "TextureComponent.h"
+#include "Texture2D.h"
+#include "AnimatorComponent.h"
+#include "AiComponent.h"
+#include "CollisionComponent.h"
+#include "CollisionCheckerComponent.h"
+#include "StateComponent.h"
+#include "GunComponent.h"
+#include "DeleteSelfComponent.h"
+#include "LifeComponent.h"
+#include "ScoreComponent.h"
+
+// services
+#include "ServiceLocator.h"
+
+// managers
+#include "InputManager.h"
+#include "SceneManager.h"
+#include "ResourceManager.h"
+#include "CollisionManager.h"
+#include "Messenger.h"
+#include "Observer.h"
+#include "ScoreObserver.h"
+#include "LifeObserver.h"
+
+
+// SDL 
+//#pragma comment(lib, "sdl2.lib")
+//#pragma comment(lib, "SDL2main.lib")
+//#pragma comment(lib, "SDL2_mixer.lib")  
+//#pragma comment(lib, "SDL2_image.lib")
+//#pragma comment(lib, "SDL2_ttf.lib")
+
+#include <SDL_image.h>
+#include <SDL_ttf.h>
+#include <SDL_mixer.h> 
+
+// audio
+#include "Audio.h"
+#include "NullAudio.h"
+#include "GameAudio.h"
+

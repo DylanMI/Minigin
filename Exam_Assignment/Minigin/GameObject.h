@@ -5,7 +5,6 @@
 #include "FPSComponent.h"
 #include "TextRendererComponent.h"
 #include "StateComponent.h"
-#include "ClampComponent.h"
 
 
 #include "Scene.h"
