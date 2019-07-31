@@ -72,3 +72,7 @@
 #include "NullAudio.h"
 #include "GameAudio.h"
 
+
+// game components
+#include "GameFieldGridComponent.h"
+#include "PlayerPengoMovementComponent.h"

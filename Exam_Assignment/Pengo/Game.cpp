@@ -36,8 +36,7 @@ void Game::LoadGame()
 
 		// adding the gameFieldGrid
 		auto mp_gameFieldGridObject = new dae::GameObject();
-		
-
+		mp_gameFieldGridObject->AddComponent(new dae::GameFieldGridComponent(mp_gameFieldGridObject, { 16,32,640,464 }, 13, 15));
 		// adding the inputs
 		
 		// adding blocks

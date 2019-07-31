@@ -160,6 +160,7 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameFieldGridComponent.h" />
     <ClInclude Include="pch.h" />
+    <ClInclude Include="PlayerPengoMovementComponent.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp" />
@@ -171,6 +172,7 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="Pengo.cpp" />
+    <ClCompile Include="PlayerPengoMovementComponent.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

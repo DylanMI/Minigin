@@ -19,6 +19,9 @@
     <ClInclude Include="GameFieldGridComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
+    <ClInclude Include="PlayerPengoMovementComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -31,6 +34,9 @@
       <Filter>GameFiles</Filter>
     </ClCompile>
     <ClCompile Include="GameFieldGridComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerPengoMovementComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
   </ItemGroup>
