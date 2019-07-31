@@ -8,6 +8,9 @@
     <Filter Include="Components">
       <UniqueIdentifier>{71a9cfd7-3094-4b04-803f-34a92a7a7163}</UniqueIdentifier>
     </Filter>
+    <Filter Include="MainFiles">
+      <UniqueIdentifier>{984d89be-6e55-45e5-b285-b234797521d7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -21,6 +24,9 @@
     </ClInclude>
     <ClInclude Include="PlayerPengoMovementComponent.h">
       <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="GameCommand.h">
+      <Filter>GameFiles</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -39,5 +45,6 @@
     <ClCompile Include="PlayerPengoMovementComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
+    <ClCompile Include="GameCommand.cpp" />
   </ItemGroup>
 </Project>
