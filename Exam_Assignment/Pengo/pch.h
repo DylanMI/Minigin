@@ -38,7 +38,6 @@
 #include "CollisionComponent.h"
 #include "CollisionCheckerComponent.h"
 #include "StateComponent.h"
-#include "GunComponent.h"
 #include "DeleteSelfComponent.h"
 #include "LifeComponent.h"
 #include "ScoreComponent.h"

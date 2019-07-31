@@ -48,72 +48,7 @@ void dae::DeleteSelfComponent::KillNow()
 		CollisionManager::GetInstance().RemoveCollisionObject(m_pParent);
 
 	}
-	HandleEvent();
 
 	m_pParent->ClearComponents();
-	//m_scene.Remove(m_pParent);
 }
 
-void dae::DeleteSelfComponent::HandleEvent()
-{
-	const int height = 480;
-	
-	// check if pooka
-	if (m_pParent->GetComponent<PookaComponent>() != nullptr)
-	{
-		// call event accordingly
-						// set it to the right texture
-		if (m_pParent->GetTransform().GetPosition().y < (height / 4) * 1)
-		{
-			// Yellow
-			Messenger::GetInstance().Notify(Event::EVENT_DIEDONFIRSTLAYER_POOKA);
-
-		}
-		else if (m_pParent->GetTransform().GetPosition().y < (height / 4) * 2)
-		{
-			// Orange 
-			Messenger::GetInstance().Notify(Event::EVENT_DIEDONSECONDLAYER_POOKA);
-
-		}
-		else if (m_pParent->GetTransform().GetPosition().y < (height / 4) * 3)
-		{
-			// Brown
-			Messenger::GetInstance().Notify(Event::EVENT_DIEDONTHIRDLAYER_POOKA);
-		}
-		else
-		{
-			// Red
-			Messenger::GetInstance().Notify(Event::EVENT_DIEDONFOURTHLAYER_POOKA);
-		}
-
-	}
-	// check if fygar
-	if (m_pParent->GetComponent<FygarComponent>() != nullptr)
-	{
-		// call event accordingly
-		// set it to the right texture
-		if (m_pParent->GetTransform().GetPosition().y < (height / 4) * 1)
-		{
-			// Yellow
-			Messenger::GetInstance().Notify(Event::EVENT_DIEDONFIRSTLAYER_FYGAR);
-
-		}
-		else if (m_pParent->GetTransform().GetPosition().y < (height / 4) * 2)
-		{
-			// Orange 
-			Messenger::GetInstance().Notify(Event::EVENT_DIEDONSECONDLAYER_FYGAR);
-
-		}
-		else if (m_pParent->GetTransform().GetPosition().y < (height / 4) * 3)
-		{
-			// Brown
-			Messenger::GetInstance().Notify(Event::EVENT_DIEDONTHIRDLAYER_FYGAR);
-		}
-		else
-		{
-			// Red
-			Messenger::GetInstance().Notify(Event::EVENT_DIEDONFOURTHLAYER_FYGAR);
-		}
-
-	}
-}

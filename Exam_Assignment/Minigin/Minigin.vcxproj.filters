@@ -103,9 +103,6 @@
     <ClInclude Include="Texture2D.h">
       <Filter>Mainfiles</Filter>
     </ClInclude>
-    <ClInclude Include="AiComponent.h">
-      <Filter>Components</Filter>
-    </ClInclude>
     <ClInclude Include="Utils.h">
       <Filter>Mainfiles</Filter>
     </ClInclude>
@@ -218,9 +215,6 @@
     </ClCompile>
     <ClCompile Include="Texture2D.cpp">
       <Filter>Mainfiles</Filter>
-    </ClCompile>
-    <ClCompile Include="AiComponent.cpp">
-      <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="CollisionComponent.cpp">
       <Filter>Components</Filter>

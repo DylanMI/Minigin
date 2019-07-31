@@ -228,7 +228,6 @@ xcopy "$(SolutionDir)3rdParty\SDL2_mixer\lib\x64\*.lib" "$(OutputPath)" /R /Y</C
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="AiComponent.h" />
     <ClInclude Include="AnimatorComponent.h" />
     <ClInclude Include="Audio.h" />
     <ClInclude Include="BaseComponent.h" />
@@ -271,7 +270,6 @@ xcopy "$(SolutionDir)3rdParty\SDL2_mixer\lib\x64\*.lib" "$(OutputPath)" /R /Y</C
     <ClInclude Include="Utils.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="AiComponent.cpp" />
     <ClCompile Include="AnimatorComponent.cpp" />
     <ClCompile Include="Audio.cpp" />
     <ClCompile Include="BaseComponent.cpp" />
