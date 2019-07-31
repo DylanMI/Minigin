@@ -241,7 +241,6 @@ xcopy "$(SolutionDir)3rdParty\SDL2_mixer\lib\x64\*.lib" "$(OutputPath)" /R /Y</C
     <ClInclude Include="FPSComponent.h" />
     <ClInclude Include="GameAudio.h" />
     <ClInclude Include="GameObject.h" />
-    <ClInclude Include="GunComponent.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="json.hpp" />
     <ClInclude Include="LifeComponent.h" />
@@ -285,7 +284,6 @@ xcopy "$(SolutionDir)3rdParty\SDL2_mixer\lib\x64\*.lib" "$(OutputPath)" /R /Y</C
     <ClCompile Include="FPSComponent.cpp" />
     <ClCompile Include="GameAudio.cpp" />
     <ClCompile Include="GameObject.cpp" />
-    <ClCompile Include="GunComponent.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="LifeComponent.cpp" />
     <ClCompile Include="LifeObserver.cpp" />
