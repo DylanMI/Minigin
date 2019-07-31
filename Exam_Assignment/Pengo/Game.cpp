@@ -34,6 +34,18 @@ void Game::LoadGame()
 		// making the scene
 		auto& m_scene = SceneManager::GetInstance().CreateScene("Pengo");
 
+		// adding the gameFieldGrid
+		auto mp_gameFieldGridObject = new dae::GameObject();
+		
+
+		// adding the inputs
+		
+		// adding blocks
+
+		// adding enemies
+
+		// adding UI
+
 		//adding FPS counter
 		auto font = ResourceManager::GetInstance().LoadFont("Lingua.otf", 36);
 		auto mp_FPSObj = new dae::GameObject();

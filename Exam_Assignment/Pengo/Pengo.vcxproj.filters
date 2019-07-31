@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="MainFiles">
-      <UniqueIdentifier>{71a9cfd7-3094-4b04-803f-34a92a7a7163}</UniqueIdentifier>
-    </Filter>
     <Filter Include="GameFiles">
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Components">
+      <UniqueIdentifier>{71a9cfd7-3094-4b04-803f-34a92a7a7163}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -16,14 +16,11 @@
     <ClInclude Include="Game.h">
       <Filter>GameFiles</Filter>
     </ClInclude>
-    <ClInclude Include="GameFieldGrid.h">
-      <Filter>MainFiles</Filter>
+    <ClInclude Include="GameFieldGridComponent.h">
+      <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="GameFieldGrid.cpp">
-      <Filter>MainFiles</Filter>
-    </ClCompile>
     <ClCompile Include="Game.cpp">
       <Filter>GameFiles</Filter>
     </ClCompile>
@@ -32,6 +29,9 @@
     </ClCompile>
     <ClCompile Include="Pengo.cpp">
       <Filter>GameFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="GameFieldGridComponent.cpp">
+      <Filter>Components</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
