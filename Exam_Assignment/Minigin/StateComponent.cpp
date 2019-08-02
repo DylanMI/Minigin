@@ -1,9 +1,9 @@
 #include "MiniginPCH.h"
 #include "StateComponent.h"
 
-dae::StateComponent::StateComponent(GameObject * parent, bool isDigDug)
+dae::StateComponent::StateComponent(GameObject * parent, bool isPlayer)
 	: BaseComponent(parent)
-	, m_isDigDug(isDigDug)
+	, m_isPlayer(isPlayer)
 {
 }
 
@@ -25,7 +25,7 @@ void dae::StateComponent::SetState(State newState)
 	m_CurrentState = newState;
 }
 
-bool dae::StateComponent::GetIsDigDug()
+bool dae::StateComponent::GetIsPlayer()
 {
-	return m_isDigDug;
+	return m_isPlayer;
 }

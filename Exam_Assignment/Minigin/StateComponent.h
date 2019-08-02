@@ -6,24 +6,12 @@ namespace dae
 {
 	enum State
 	{
-		LEFT,
-		RIGHT,
-		UP,
-		DOWN,
+		FACING_LEFT,
+		FACING_RIGHT,
+		FACING_UP,
+		FACING_DOWN,
 		IDLE,
-		WANDERING,
-		GHOSTING,
-		SHOOTING,
-		DEAD,
-		BREAK,
-		BREAK_1,
-		BREAK_2,
-		BLOW_1,
-		BLOW_2,
-		BLOW_3,
-		BLOW_4,
-		CAUGHTBYROCK,
-		ANY,
+
 	};
 
 	class GameObject;
@@ -42,13 +30,13 @@ namespace dae
 
 		State GetState();
 		void SetState(State newState);
-		bool GetIsDigDug();
+		bool GetIsPlayer();
 
 
 	private:
-		State m_CurrentState = State::IDLE;
+		State m_CurrentState = State::FACING_DOWN;
 
-		bool m_isDigDug;
+		bool m_isPlayer;
 	};
 
 }

@@ -1,13 +1,21 @@
 #pragma once
 #include "BaseComponent.h"
 #include "GameObject.h"
+#include "GameFieldGridComponent.h"
+
 #include <cmath>
 namespace dae
 {
+	enum direction
+	{
+		LEFT,RIGHT,UP,DOWN,NONE
+
+	};
+
 	class PlayerPengoMovementComponent : public BaseComponent
 	{
 	public:
-		explicit PlayerPengoMovementComponent(GameObject* parent, float Speed);
+		explicit PlayerPengoMovementComponent(GameObject* parent, Point2f WidthAndHeight, float Speed, GameObject * gameGridObj);
 		virtual ~PlayerPengoMovementComponent();
 		PlayerPengoMovementComponent(const PlayerPengoMovementComponent& other) = delete;
 		PlayerPengoMovementComponent(PlayerPengoMovementComponent&& other) = delete;
@@ -16,9 +24,16 @@ namespace dae
 
 		void Update(const float& deltaTime) override;
 		void Render() const override;
+
+		void Move(direction direction);
+		void SetPosition(int idxPos);
+
 	private:
 
-		// variables
+		GameObject* m_gameGridObj;
+
+		// movement variables
+		Point2f m_WidthAndHeight;
 		float m_Speed;
 		Point2f m_currPos;
 		

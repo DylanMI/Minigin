@@ -38,7 +38,7 @@ void dae::CollisionCheckerComponent::Update(const float & deltaTime)
 				{
 					if (m_pParent->GetComponent<StateComponent>())
 					{
-						if (m_pParent->GetComponent<StateComponent>()->GetIsDigDug())
+						if (m_pParent->GetComponent<StateComponent>()->GetIsPlayer())
 						{
 							// clear its components so its empty
 							placeholder[i]->ClearComponents();

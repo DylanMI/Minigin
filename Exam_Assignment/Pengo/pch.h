@@ -76,3 +76,6 @@
 // game components
 #include "GameFieldGridComponent.h"
 #include "PlayerPengoMovementComponent.h"
+
+// game mainfiles
+#include "GameCommand.h"

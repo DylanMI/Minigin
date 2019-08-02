@@ -33,38 +33,6 @@ void dae::GameObject::Render() const
 	}
 }
 
-void dae::GameObject::Move(Point2f direction, float deltaTime)
-{
-
-	// right
-	if (direction.x == 1)
-	{
-		if(GetComponent<StateComponent>() != nullptr)GetComponent<StateComponent>()->SetState(State::RIGHT);
-	}
-	// left
-	if (direction.x == -1)
-	{
-		if (GetComponent<StateComponent>() != nullptr)GetComponent<StateComponent>()->SetState(State::LEFT);
-	}
-	// up
-	if (direction.y == 1)
-	{
-		if (GetComponent<StateComponent>() != nullptr)GetComponent<StateComponent>()->SetState(State::UP);
-	}
-	//down
-	if (direction.y == -1)
-	{
-		if (GetComponent<StateComponent>() != nullptr)GetComponent<StateComponent>()->SetState(State::DOWN);
-	}
-	Point2f newpos;
-	// the moving
-	newpos = { mTransform.GetPosition().x , mTransform.GetPosition().y };
-	newpos.x += (direction.x * m_speed) * deltaTime;
-	newpos.y += (-direction.y * m_speed) * deltaTime;
-
-
-}
-
 void dae::GameObject::SetPosition(Point2f pos)
 {
 	mTransform.SetPosition(pos.x, pos.y, 0.0f);

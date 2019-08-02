@@ -12,7 +12,7 @@ namespace dae
 	inline bool IsPointInSquare(Point2f point, Rectf rect)
 	{
 		return(point.x >= rect.x && point.x <= rect.x + rect.w) &&
-			(point.y >= rect.y + rect.h && point.y <= rect.y);
+			(point.y >= rect.y - rect.h && point.y <= rect.y);
 	}
 
 	inline Point2f GetDirectionToTarget(Point2f self, Point2f target)
@@ -24,6 +24,6 @@ namespace dae
 
 	inline Point2f lerp(Point2f a, Point2f b, float f)
 	{
-		return Point2f{ (a.x * (1.0 - f)) + (b.x * f),(a.y * (1.0 - f)) + (b.y * f) };
+		return Point2f{ (a.x * (1.0f - f)) + (b.x * f),(a.y * (1.0f - f)) + (b.y * f) };
 	}
 }

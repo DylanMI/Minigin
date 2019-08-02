@@ -16,10 +16,9 @@ dae::GameFieldGridComponent::GameFieldGridComponent(GameObject * parent, dae::Re
 		(m_dimension.w / m_ammPointsPerWidth) / 2
 		,(m_dimension.h / m_ammPointsPerHeight) / 2
 	};
-
-	for (int i{}, s = m_ammPointsPerWidth; i < s; i++)
+	for (int k{}, s2 = m_ammPointsPerHeight; k < s2; k++)
 	{
-		for (int k{}, s2 = m_ammPointsPerHeight; k < s2; k++)
+		for (int i{}, s = m_ammPointsPerWidth; i < s; i++)
 		{
 			// Width and Height
 			float width = (i + 1) * (m_dimension.w / m_ammPointsPerWidth)  - (m_distanceBtwPoints.x);
@@ -52,7 +51,7 @@ const std::vector<dae::GridInfo>& dae::GameFieldGridComponent::getInfo()
 const int dae::GameFieldGridComponent::getCurrGridIndex(dae::Rectf dimensions)
 {
 	Point2f center = Point2f{ dimensions.x + (dimensions.w / 2),dimensions.y + (dimensions.h / 2) };
-	for (size_t i{}, s = m_GridInfo.size(); i < s; i++)
+	for (int i{}, s = int(m_GridInfo.size()); i < s; i++)
 	{
 		if (IsPointInSquare(m_GridInfo[i].coordinate, dimensions)) return i;
 	}

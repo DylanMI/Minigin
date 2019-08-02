@@ -37,8 +37,36 @@ void Game::LoadGame()
 		// adding the gameFieldGrid
 		auto mp_gameFieldGridObject = new dae::GameObject();
 		mp_gameFieldGridObject->AddComponent(new dae::GameFieldGridComponent(mp_gameFieldGridObject, { 16,32,640,464 }, 13, 15));
-		// adding the inputs
+		m_scene.Add(mp_gameFieldGridObject);
+		// adding the player 
+		auto mp_PlayerPengo = new dae::GameObject();
 		
+		// -- adding the movement comp
+		mp_PlayerPengo->AddComponent(new dae::PlayerPengoMovementComponent(mp_PlayerPengo, { 16,16 }, 0.05, mp_gameFieldGridObject));
+		mp_PlayerPengo->GetComponent<PlayerPengoMovementComponent>()->SetPosition(0);
+
+		// -- adding the state component
+		mp_PlayerPengo->AddComponent(new StateComponent(mp_PlayerPengo,true));
+
+		// -- adding the texture comp
+		mp_PlayerPengo->AddComponent(new dae::TextureComponent(mp_PlayerPengo));
+		mp_PlayerPengo->GetComponent<dae::TextureComponent>()->SetIsAnimated(true);
+		
+		// -- adding the animator
+		mp_PlayerPengo->AddComponent(new dae::AnimatorComponent(mp_PlayerPengo));
+		mp_PlayerPengo->GetComponent<AnimatorComponent>()->SetSpeed(0.5f);
+		mp_PlayerPengo->GetComponent<AnimatorComponent>()->AddAnimation(State::FACING_LEFT, dae::ResourceManager::GetInstance().LoadTexture("RedPengoWalkLeft.png"), 16, 16, 2);
+		mp_PlayerPengo->GetComponent<AnimatorComponent>()->AddAnimation(State::FACING_RIGHT, dae::ResourceManager::GetInstance().LoadTexture("RedPengoWalkRight.png"), 16, 16, 2);
+		mp_PlayerPengo->GetComponent<AnimatorComponent>()->AddAnimation(State::FACING_DOWN, dae::ResourceManager::GetInstance().LoadTexture("RedPengoWalkDown.png"), 16, 16, 2);
+		mp_PlayerPengo->GetComponent<AnimatorComponent>()->AddAnimation(State::FACING_UP, dae::ResourceManager::GetInstance().LoadTexture("RedPengoWalkUp.png"), 16, 16, 2);
+		
+		m_scene.Add(mp_PlayerPengo);
+		
+		// adding the inputs
+		InputManager::GetInstance().ChangeCommand(dae::ControllerButton::DpadL, 1, new MoveLeftCommandPlayer(mp_PlayerPengo));
+		InputManager::GetInstance().ChangeCommand(dae::ControllerButton::DpadR, 1, new MoveRightCommandPlayer(mp_PlayerPengo));
+
+
 		// adding blocks
 
 		// adding enemies
