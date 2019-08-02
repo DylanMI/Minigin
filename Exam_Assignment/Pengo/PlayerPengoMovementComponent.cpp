@@ -75,7 +75,7 @@ void dae::PlayerPengoMovementComponent::Move(direction direction)
 		}
 
 		// check if you are at the right border
-		if (ammPointsW % currIdx == ammPointsW - 1)
+		if (currIdx % ammPointsW == ammPointsW - 1)
 		{
 			m_isTraveling = false;
 			m_destination = m_currPos;
@@ -92,13 +92,37 @@ void dae::PlayerPengoMovementComponent::Move(direction direction)
 	case direction::UP:
 		// change state to looking left
 		m_pParent->GetComponent<StateComponent>()->SetState(State::FACING_UP);
-
+		
+		// check if you are at the top border
+		if (currIdx - ammPointsW < 0)
+		{
+			m_isTraveling = false;
+			m_destination = m_currPos;
+		}
+		// else set destination there
+		else
+		{
+			m_start = m_currPos;
+			m_destination = m_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfo()[currIdx - ammPointsW].coordinate;
+			m_isTraveling = true;
+		}
 
 		break;
 	case direction::DOWN:
 		// change state to looking left
 		m_pParent->GetComponent<StateComponent>()->SetState(State::FACING_DOWN);
-
+		if (currIdx + ammPointsW >= m_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfo().size())
+		{
+			m_isTraveling = false;
+			m_destination = m_currPos;
+		}
+		// else set destination there
+		else
+		{
+			m_start = m_currPos;
+			m_destination = m_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfo()[currIdx + ammPointsW].coordinate;
+			m_isTraveling = true;
+		}
 
 		break;
 	}
@@ -113,8 +137,7 @@ void dae::PlayerPengoMovementComponent::SetPosition(int idxPos)
 
 dae::Point2f dae::PlayerPengoMovementComponent::LerpPos(float DT)
 {
-	T += DT;
-	//T *= m_Speed;
+	T += DT * m_Speed;
 	if (T > 1)
 	{
 		T = 1;

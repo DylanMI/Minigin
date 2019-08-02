@@ -36,13 +36,13 @@ void Game::LoadGame()
 
 		// adding the gameFieldGrid
 		auto mp_gameFieldGridObject = new dae::GameObject();
-		mp_gameFieldGridObject->AddComponent(new dae::GameFieldGridComponent(mp_gameFieldGridObject, { 16,32,640,464 }, 13, 15));
+		mp_gameFieldGridObject->AddComponent(new dae::GameFieldGridComponent(mp_gameFieldGridObject, { 36,16,640,464 }, 13, 15));
 		m_scene.Add(mp_gameFieldGridObject);
 		// adding the player 
 		auto mp_PlayerPengo = new dae::GameObject();
 		
 		// -- adding the movement comp
-		mp_PlayerPengo->AddComponent(new dae::PlayerPengoMovementComponent(mp_PlayerPengo, { 16,16 }, 0.05, mp_gameFieldGridObject));
+		mp_PlayerPengo->AddComponent(new dae::PlayerPengoMovementComponent(mp_PlayerPengo, { 16,16 }, 3, mp_gameFieldGridObject));
 		mp_PlayerPengo->GetComponent<PlayerPengoMovementComponent>()->SetPosition(0);
 
 		// -- adding the state component
@@ -65,6 +65,8 @@ void Game::LoadGame()
 		// adding the inputs
 		InputManager::GetInstance().ChangeCommand(dae::ControllerButton::DpadL, 1, new MoveLeftCommandPlayer(mp_PlayerPengo));
 		InputManager::GetInstance().ChangeCommand(dae::ControllerButton::DpadR, 1, new MoveRightCommandPlayer(mp_PlayerPengo));
+		InputManager::GetInstance().ChangeCommand(dae::ControllerButton::DpadU, 1, new MoveUpCommandPlayer(mp_PlayerPengo));
+		InputManager::GetInstance().ChangeCommand(dae::ControllerButton::DpadD, 1, new MoveDownCommandPlayer(mp_PlayerPengo));
 
 
 		// adding blocks

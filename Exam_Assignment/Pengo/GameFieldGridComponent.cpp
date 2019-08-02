@@ -21,8 +21,8 @@ dae::GameFieldGridComponent::GameFieldGridComponent(GameObject * parent, dae::Re
 		for (int i{}, s = m_ammPointsPerWidth; i < s; i++)
 		{
 			// Width and Height
-			float width = (i + 1) * (m_dimension.w / m_ammPointsPerWidth)  - (m_distanceBtwPoints.x);
-			float height= (k + 1) * (m_dimension.h / m_ammPointsPerHeight) - (m_distanceBtwPoints.y);
+			float width = m_dimension.x + ((i) * (m_dimension.w / m_ammPointsPerWidth) - (m_distanceBtwPoints.x));
+			float height= m_dimension.y + ((k) * (m_dimension.h / m_ammPointsPerHeight) - (m_distanceBtwPoints.y));
 
 			m_GridInfo[counter].coordinate = Point2f{ width, height };
 			counter++;
