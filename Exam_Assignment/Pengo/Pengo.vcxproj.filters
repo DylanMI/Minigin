@@ -26,7 +26,13 @@
       <Filter>Components</Filter>
     </ClInclude>
     <ClInclude Include="GameCommand.h">
-      <Filter>GameFiles</Filter>
+      <Filter>MainFiles</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelLoader.h">
+      <Filter>MainFiles</Filter>
+    </ClInclude>
+    <ClInclude Include="IceBlockComponent.h">
+      <Filter>Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -46,7 +52,13 @@
       <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="GameCommand.cpp">
-      <Filter>GameFiles</Filter>
+      <Filter>MainFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="LevelLoader.cpp">
+      <Filter>MainFiles</Filter>
+    </ClCompile>
+    <ClCompile Include="IceBlockComponent.cpp">
+      <Filter>Components</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

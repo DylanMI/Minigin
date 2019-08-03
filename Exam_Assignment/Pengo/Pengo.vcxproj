@@ -160,6 +160,8 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameCommand.h" />
     <ClInclude Include="GameFieldGridComponent.h" />
+    <ClInclude Include="IceBlockComponent.h" />
+    <ClInclude Include="LevelLoader.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="PlayerPengoMovementComponent.h" />
   </ItemGroup>
@@ -167,6 +169,8 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameCommand.cpp" />
     <ClCompile Include="GameFieldGridComponent.cpp" />
+    <ClCompile Include="IceBlockComponent.cpp" />
+    <ClCompile Include="LevelLoader.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

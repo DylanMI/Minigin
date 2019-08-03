@@ -4,7 +4,7 @@
 dae::PlayerPengoMovementComponent::PlayerPengoMovementComponent(GameObject * parent, Point2f WidthAndHeight, float TimeToTravel, GameObject * gameGridObj)
 	: BaseComponent(parent)
 	, m_Speed(TimeToTravel)
-	, m_gameGridObj(gameGridObj)
+	, mp_gameGridObj(gameGridObj)
 	, m_WidthAndHeight(WidthAndHeight)
 {
 }
@@ -32,10 +32,10 @@ void dae::PlayerPengoMovementComponent::Move(direction direction)
 	if (m_isTraveling) return;
 
 	// get the current position
-	int currIdx = m_gameGridObj->GetComponent<GameFieldGridComponent>()->getCurrGridIndex(Rectf{m_currPos.x, m_currPos.y, m_WidthAndHeight.x, m_WidthAndHeight.y}); 
+	int currIdx = mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getCurrGridIndex(Rectf{m_currPos.x, m_currPos.y, m_WidthAndHeight.x, m_WidthAndHeight.y}); 
 	
-	int ammPointsW = m_gameGridObj->GetComponent<GameFieldGridComponent>()->getAmmPointPerWidth();
-	int ammPointsH = m_gameGridObj->GetComponent<GameFieldGridComponent>()->getAmmPointPerHeight();
+	int ammPointsW = mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getAmmPointPerWidth();
+	int ammPointsH = mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getAmmPointPerHeight();
 	
 	// find the new position
 	switch (direction)
@@ -59,7 +59,7 @@ void dae::PlayerPengoMovementComponent::Move(direction direction)
 		else
 		{
 			m_start = m_currPos;
-			m_destination = m_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfo()[currIdx - 1].coordinate;
+			m_destination = mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfo()[currIdx - 1].coordinate;
 			m_isTraveling = true;
 		}
 		break;
@@ -69,7 +69,7 @@ void dae::PlayerPengoMovementComponent::Move(direction direction)
 		if (currIdx == 0)
 		{
 			m_start = m_currPos;
-			m_destination = m_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfo()[currIdx + 1].coordinate;
+			m_destination = mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfo()[currIdx + 1].coordinate;
 			m_isTraveling = true;
 			return;
 		}
@@ -84,7 +84,7 @@ void dae::PlayerPengoMovementComponent::Move(direction direction)
 		else
 		{
 			m_start = m_currPos;
-			m_destination = m_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfo()[currIdx + 1].coordinate;
+			m_destination = mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfo()[currIdx + 1].coordinate;
 			m_isTraveling = true;
 		}
 
@@ -103,7 +103,7 @@ void dae::PlayerPengoMovementComponent::Move(direction direction)
 		else
 		{
 			m_start = m_currPos;
-			m_destination = m_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfo()[currIdx - ammPointsW].coordinate;
+			m_destination = mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfo()[currIdx - ammPointsW].coordinate;
 			m_isTraveling = true;
 		}
 
@@ -111,7 +111,7 @@ void dae::PlayerPengoMovementComponent::Move(direction direction)
 	case direction::DOWN:
 		// change state to looking left
 		m_pParent->GetComponent<StateComponent>()->SetState(State::FACING_DOWN);
-		if (currIdx + ammPointsW >= m_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfo().size())
+		if (currIdx + ammPointsW >= mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfo().size())
 		{
 			m_isTraveling = false;
 			m_destination = m_currPos;
@@ -120,7 +120,7 @@ void dae::PlayerPengoMovementComponent::Move(direction direction)
 		else
 		{
 			m_start = m_currPos;
-			m_destination = m_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfo()[currIdx + ammPointsW].coordinate;
+			m_destination = mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfo()[currIdx + ammPointsW].coordinate;
 			m_isTraveling = true;
 		}
 
@@ -132,7 +132,7 @@ void dae::PlayerPengoMovementComponent::Move(direction direction)
 
 void dae::PlayerPengoMovementComponent::SetPosition(int idxPos)
 {
-	m_currPos = m_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfo()[idxPos].coordinate;
+	m_currPos = mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfo()[idxPos].coordinate;
 }
 
 dae::Point2f dae::PlayerPengoMovementComponent::LerpPos(float DT)

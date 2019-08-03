@@ -30,7 +30,7 @@ namespace dae
 
 	private:
 
-		GameObject* m_gameGridObj;
+		GameObject* mp_gameGridObj;
 
 		// movement variables
 		Point2f m_WidthAndHeight;
