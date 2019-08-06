@@ -76,6 +76,8 @@
 // game components
 #include "GameFieldGridComponent.h"
 #include "PlayerPengoMovementComponent.h"
+#include "IceBlockComponent.h"
 
 // game mainfiles
 #include "GameCommand.h"
+#include "LevelLoader.h"

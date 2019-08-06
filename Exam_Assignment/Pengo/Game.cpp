@@ -36,8 +36,13 @@ void Game::LoadGame()
 
 		// adding the gameFieldGrid
 		auto mp_gameFieldGridObject = new dae::GameObject();
-		mp_gameFieldGridObject->AddComponent(new dae::GameFieldGridComponent(mp_gameFieldGridObject, { 36,16,640,464 }, 13, 15));
+		mp_gameFieldGridObject->AddComponent(new dae::GameFieldGridComponent(mp_gameFieldGridObject, { 80,72,464,464 }, 13, 13));
 		m_scene.Add(mp_gameFieldGridObject);
+		
+		// loading the level
+		LevelLoader::GetInstance().loadLevel(m_scene,mp_gameFieldGridObject,"../Data/Map.txt");
+		
+		
 		// adding the player 
 		auto mp_PlayerPengo = new dae::GameObject();
 		

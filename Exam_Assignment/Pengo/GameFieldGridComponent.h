@@ -8,6 +8,7 @@ namespace dae
 	{
 		GameObject* object;
 		Point2f coordinate;
+		bool isObstacle;
 	};
 
 	class GameFieldGridComponent : public BaseComponent
