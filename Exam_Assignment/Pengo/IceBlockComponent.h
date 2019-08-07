@@ -22,6 +22,7 @@ namespace dae
 
 		void SetPosition(int idxPos);
 
+		void SetSpeed(float newSpeed);
 		void StartGliding(direction glidingDirection);
 		void StopGliding();
 

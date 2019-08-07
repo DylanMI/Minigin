@@ -59,7 +59,7 @@ void dae::PlayerPengoMovementComponent::Move(direction direction)
 		else
 		{
 			m_start = m_currPos;
-			m_destination = mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfo()[currIdx - 1].coordinate;
+			m_destination = mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx - 1].coordinate;
 			m_isTraveling = true;
 		}
 		break;
@@ -69,7 +69,7 @@ void dae::PlayerPengoMovementComponent::Move(direction direction)
 		if (currIdx == 0)
 		{
 			m_start = m_currPos;
-			m_destination = mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfo()[currIdx + 1].coordinate;
+			m_destination = mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx + 1].coordinate;
 			m_isTraveling = true;
 			return;
 		}
@@ -84,7 +84,7 @@ void dae::PlayerPengoMovementComponent::Move(direction direction)
 		else
 		{
 			m_start = m_currPos;
-			m_destination = mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfo()[currIdx + 1].coordinate;
+			m_destination = mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx + 1].coordinate;
 			m_isTraveling = true;
 		}
 
@@ -103,7 +103,7 @@ void dae::PlayerPengoMovementComponent::Move(direction direction)
 		else
 		{
 			m_start = m_currPos;
-			m_destination = mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfo()[currIdx - ammPointsW].coordinate;
+			m_destination = mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx - ammPointsW].coordinate;
 			m_isTraveling = true;
 		}
 
@@ -111,7 +111,7 @@ void dae::PlayerPengoMovementComponent::Move(direction direction)
 	case direction::DOWN:
 		// change state to looking left
 		m_pParent->GetComponent<StateComponent>()->SetState(State::FACING_DOWN);
-		if (currIdx + ammPointsW >= mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfo().size())
+		if (currIdx + ammPointsW >= mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef().size())
 		{
 			m_isTraveling = false;
 			m_destination = m_currPos;
@@ -120,7 +120,7 @@ void dae::PlayerPengoMovementComponent::Move(direction direction)
 		else
 		{
 			m_start = m_currPos;
-			m_destination = mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfo()[currIdx + ammPointsW].coordinate;
+			m_destination = mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx + ammPointsW].coordinate;
 			m_isTraveling = true;
 		}
 
@@ -132,7 +132,7 @@ void dae::PlayerPengoMovementComponent::Move(direction direction)
 
 void dae::PlayerPengoMovementComponent::SetPosition(int idxPos)
 {
-	m_currPos = mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfo()[idxPos].coordinate;
+	m_currPos = mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[idxPos].coordinate;
 }
 
 dae::Point2f dae::PlayerPengoMovementComponent::LerpPos(float DT)

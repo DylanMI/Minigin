@@ -43,7 +43,7 @@ void dae::GameFieldGridComponent::Render() const
 {
 }
 
-const std::vector<dae::GridInfo>& dae::GameFieldGridComponent::getInfo()
+std::vector<dae::GridInfo>& dae::GameFieldGridComponent::getInfoRef()
 {
 	return m_GridInfo;
 }

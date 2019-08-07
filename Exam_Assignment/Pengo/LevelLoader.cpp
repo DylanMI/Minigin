@@ -39,6 +39,10 @@ std::vector<dae::GameObject*> dae::LevelLoader::loadLevel(Scene & sceneRef, Game
 			objects.back()->AddComponent(new IceBlockComponent(objects.back(), Point2f{ 32.0f,32.0f }, gameGridObj));
 			objects.back()->GetComponent<IceBlockComponent>()->SetPosition(counter);
 
+			// -- Giving the game grid the information
+			gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[counter].isObstacle = true;
+			gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[counter].object = objects.back();
+
 			counter++;
 			break;
 		// diamond block
@@ -65,9 +69,10 @@ std::vector<dae::GameObject*> dae::LevelLoader::loadLevel(Scene & sceneRef, Game
 
 	for (int i{}; i < objects.size(); i++)
 	{
+		objects[i]->GetComponent<IceBlockComponent>()->SetSpeed(6.0f);
 		sceneRef.Add(objects[i]);
+		
 	}
-
 	inputStream.close();
 	return objects;
 }

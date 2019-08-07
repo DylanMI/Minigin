@@ -24,7 +24,7 @@ namespace dae
 		void Update(const float& deltaTime) override;
 		void Render() const override;
 	
-		const std::vector<GridInfo>& getInfo();
+		std::vector<GridInfo>& getInfoRef();
 		const int getCurrGridIndex(dae::Rectf dimensions);
 		const int getAmmPointPerWidth();
 		const int getAmmPointPerHeight();
