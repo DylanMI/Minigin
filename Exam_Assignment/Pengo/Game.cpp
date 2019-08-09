@@ -41,8 +41,7 @@ void Game::LoadGame()
 		
 		// loading the level
 		LevelLoader::GetInstance().loadLevel(m_scene,mp_gameFieldGridObject,"../Data/Map.txt");
-		
-		
+			
 		// adding the player 
 		auto mp_PlayerPengo = new dae::GameObject();
 		
@@ -72,12 +71,8 @@ void Game::LoadGame()
 		InputManager::GetInstance().ChangeCommand(dae::ControllerButton::DpadR, 1, new MoveRightCommandPlayer(mp_PlayerPengo));
 		InputManager::GetInstance().ChangeCommand(dae::ControllerButton::DpadU, 1, new MoveUpCommandPlayer(mp_PlayerPengo));
 		InputManager::GetInstance().ChangeCommand(dae::ControllerButton::DpadD, 1, new MoveDownCommandPlayer(mp_PlayerPengo));
-
-
-		// adding blocks
-
-		// adding enemies
-
+		InputManager::GetInstance().ChangeCommand(dae::ControllerButton::ButtonA, 1, new InteractCommand(mp_PlayerPengo));
+		
 		// adding UI
 
 		//adding FPS counter

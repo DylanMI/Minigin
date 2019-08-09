@@ -26,6 +26,8 @@ namespace dae
 		void Render() const override;
 
 		void Move(direction direction);
+		void Interact();
+		
 		void SetPosition(int idxPos);
 
 	private:
@@ -37,6 +39,13 @@ namespace dae
 		float m_Speed;
 		Point2f m_currPos;
 		
+		// used for interacting
+		int m_lastBumpedIntoIdx = -1;
+
+		const float m_interactCD = 0.5f;
+		float m_interactTimer;
+		bool m_canInteract;
+
 		// used for lerping
 		Point2f m_start;
 		Point2f m_destination;

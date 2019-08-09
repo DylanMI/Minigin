@@ -6,6 +6,8 @@ dae::PlayerPengoMovementComponent::PlayerPengoMovementComponent(GameObject * par
 	, m_Speed(TimeToTravel)
 	, mp_gameGridObj(gameGridObj)
 	, m_WidthAndHeight(WidthAndHeight)
+	,m_interactTimer(0.0f)
+	,m_canInteract(true)
 {
 }
 
@@ -16,6 +18,16 @@ dae::PlayerPengoMovementComponent::~PlayerPengoMovementComponent()
 void dae::PlayerPengoMovementComponent::Update(const float & deltaTime)
 {
 	m_pParent->SetPosition(m_currPos);
+
+	if (m_canInteract == false)
+	{
+		m_interactTimer += deltaTime;
+		if (m_interactTimer > m_interactCD)
+		{
+			m_canInteract = true;
+			m_interactTimer = 0.0f;
+		}
+	}
 
 	if (m_isTraveling)
 	{
@@ -54,6 +66,17 @@ void dae::PlayerPengoMovementComponent::Move(direction direction)
 		{
 			m_isTraveling = false;
 			m_destination = m_currPos;
+			return;
+		}
+		// check if there is an obstacle there
+		if (mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx - 1].isObstacle)
+		{
+			// do not move
+			m_isTraveling = false;
+			m_destination = m_currPos;
+			// remember the index of it, if you want to push it
+			m_lastBumpedIntoIdx = currIdx - 1;
+			return;
 		}
 		// else set destination there
 		else
@@ -66,6 +89,17 @@ void dae::PlayerPengoMovementComponent::Move(direction direction)
 	case direction::RIGHT:
 		// change state to looking left
 		m_pParent->GetComponent<StateComponent>()->SetState(State::FACING_RIGHT);
+		
+		// check if there is an obstacle there
+		if (mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx + 1].isObstacle)
+		{
+			// do not move
+			m_isTraveling = false;
+			m_destination = m_currPos;
+			// remember the index of it, if you want to push it
+			m_lastBumpedIntoIdx = currIdx + 1;
+			return;
+		}
 		if (currIdx == 0)
 		{
 			m_start = m_currPos;
@@ -99,6 +133,16 @@ void dae::PlayerPengoMovementComponent::Move(direction direction)
 			m_isTraveling = false;
 			m_destination = m_currPos;
 		}
+		// check if there is an obstacle there
+		else if (mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx - ammPointsW].isObstacle)
+		{
+			// do not move
+			m_isTraveling = false;
+			m_destination = m_currPos;
+			// remember the index of it, if you want to push it
+			m_lastBumpedIntoIdx = currIdx - ammPointsW;
+			return;
+		}
 		// else set destination there
 		else
 		{
@@ -111,10 +155,22 @@ void dae::PlayerPengoMovementComponent::Move(direction direction)
 	case direction::DOWN:
 		// change state to looking left
 		m_pParent->GetComponent<StateComponent>()->SetState(State::FACING_DOWN);
+		
+		// check if you are at the bottom border
 		if (currIdx + ammPointsW >= mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef().size())
 		{
 			m_isTraveling = false;
 			m_destination = m_currPos;
+		}
+		// check if there is an obstacle there
+		if (mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx + ammPointsW].isObstacle)
+		{
+			// do not move
+			m_isTraveling = false;
+			m_destination = m_currPos;
+			// remember the index of it, if you want to push it
+			m_lastBumpedIntoIdx = currIdx + ammPointsW;
+			return;
 		}
 		// else set destination there
 		else
@@ -128,6 +184,82 @@ void dae::PlayerPengoMovementComponent::Move(direction direction)
 	}
 
 
+}
+
+void dae::PlayerPengoMovementComponent::Interact()
+{
+	if (m_lastBumpedIntoIdx == -1 || m_canInteract == false) return;
+	// get the current position
+	int currIdx = mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getCurrGridIndex(Rectf{ m_currPos.x, m_currPos.y, m_WidthAndHeight.x, m_WidthAndHeight.y });
+
+	int ammPointsW = mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getAmmPointPerWidth();
+	int ammPointsH = mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getAmmPointPerHeight();
+
+	// get current state
+	State currentState = m_pParent->GetComponent<StateComponent>()->GetState();
+
+	switch (currentState)
+	{
+	case State::FACING_UP:
+		// instant fail checks
+		if (currIdx - ammPointsW < 0) return;
+		
+		// check if the interacted block is the block we tried to push previously
+		if (currIdx - ammPointsW == m_lastBumpedIntoIdx)
+		{
+			// push it
+			mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[m_lastBumpedIntoIdx].object->GetComponent<IceBlockComponent>()->StartGliding(direction::UP);
+	
+			m_lastBumpedIntoIdx = -1;
+		}
+
+		break;
+	case State::FACING_DOWN:
+		// instant fail checks
+		if (currIdx + ammPointsW >= mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef().size()) return;
+		
+		// check if the interacted block is the block we tried to push previously
+		if (currIdx + ammPointsW == m_lastBumpedIntoIdx)
+		{
+			// push it
+			mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[m_lastBumpedIntoIdx].object->GetComponent<IceBlockComponent>()->StartGliding(direction::DOWN);
+			m_lastBumpedIntoIdx = -1;
+		}
+
+		break;
+	case State::FACING_LEFT:
+		// instant fail checks
+		if (currIdx == 0) return;
+		if (currIdx % ammPointsW == 0) return;
+		// check if the interacted block is the block we tried to push previously
+		if (currIdx - 1 == m_lastBumpedIntoIdx)
+		{
+			// push it
+			mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[m_lastBumpedIntoIdx].object->GetComponent<IceBlockComponent>()->StartGliding(direction::LEFT);
+			m_lastBumpedIntoIdx = -1;
+		}
+		
+		break;
+	case State::FACING_RIGHT:
+		// instant fail checks
+		if (currIdx % ammPointsW == ammPointsW - 1) return;
+		// check if the interacted block is the block we tried to push previously
+		if (currIdx + 1 == m_lastBumpedIntoIdx)
+		{
+			// push it
+			mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[m_lastBumpedIntoIdx].object->GetComponent<IceBlockComponent>()->StartGliding(direction::RIGHT);
+			m_lastBumpedIntoIdx = -1;
+		}
+
+		break;
+
+
+	default:
+		break;
+	}
+
+
+	m_canInteract = false;
 }
 
 void dae::PlayerPengoMovementComponent::SetPosition(int idxPos)

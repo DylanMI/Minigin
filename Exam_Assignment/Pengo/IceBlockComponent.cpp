@@ -41,7 +41,7 @@ void dae::IceBlockComponent::Update(const float & deltaTime)
 			mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx].isObstacle = true;
 
 			mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx + 1].object = nullptr;
-			mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx].isObstacle = m_pParent;
+			mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx].object = m_pParent;
 			// check if you can go that way without getting of the grid
 			if (currIdx == 0)
 			{
@@ -85,7 +85,7 @@ void dae::IceBlockComponent::Update(const float & deltaTime)
 			mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx].isObstacle = true;
 
 			mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx - 1].object = nullptr;
-			mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx].isObstacle = m_pParent;
+			mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx].object = m_pParent;
 			// check if you can go that way without getting of the grid
 			if (currIdx == 0)
 			{
@@ -132,7 +132,7 @@ void dae::IceBlockComponent::Update(const float & deltaTime)
 			mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx].isObstacle = true;
 			
 			mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx + ammPointsW].object = nullptr;
-			mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx].isObstacle = m_pParent;
+			mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx].object = m_pParent;
 			
 			// check if you can go that way without getting of the grid
 			if (currIdx - ammPointsW < 0)
@@ -169,7 +169,7 @@ void dae::IceBlockComponent::Update(const float & deltaTime)
 			mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx].isObstacle = true;
 
 			mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx - ammPointsW].object = nullptr;
-			mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx].isObstacle = m_pParent;
+			mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx].object = m_pParent;
 			// check if you can go that way without getting of the grid
 			if (currIdx + ammPointsW >= mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef().size())
 			{

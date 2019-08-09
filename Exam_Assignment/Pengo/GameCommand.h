@@ -63,5 +63,18 @@ namespace dae
 
 #pragma endregion
 
+#pragma region PlayerInteractions
+
+	class InteractCommand : public Command
+	{
+	public:
+		InteractCommand(GameObject* object);
+		virtual ~InteractCommand() override;
+		void Execute(float deltatime) override;
+	private:
+		GameObject* m_object;
+	};
+
+#pragma endregion
 
 } 

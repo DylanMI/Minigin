@@ -73,6 +73,6 @@ std::vector<dae::GameObject*> dae::LevelLoader::loadLevel(Scene & sceneRef, Game
 		sceneRef.Add(objects[i]);
 		
 	}
-	inputStream.close();
+	inputStream.close(); 
 	return objects;
 }
