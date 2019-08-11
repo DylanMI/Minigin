@@ -6,11 +6,23 @@ namespace dae
 {
 	enum State
 	{
+		// general
 		FACING_LEFT,
 		FACING_RIGHT,
 		FACING_UP,
 		FACING_DOWN,
+		
+		DIGGING_LEFT,
+		DIGGING_RIGHT,
+		DIGGING_UP,
+		DIGGING_DOWN,
+
 		IDLE,
+		// player
+
+		// AI
+		STRUGGLING,
+
 
 	};
 

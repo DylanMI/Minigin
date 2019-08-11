@@ -164,6 +164,7 @@
     <ClInclude Include="LevelLoader.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="PlayerPengoMovementComponent.h" />
+    <ClInclude Include="SnoBeeAIComponent.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp" />
@@ -179,6 +180,7 @@
     </ClCompile>
     <ClCompile Include="Pengo.cpp" />
     <ClCompile Include="PlayerPengoMovementComponent.cpp" />
+    <ClCompile Include="SnoBeeAIComponent.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

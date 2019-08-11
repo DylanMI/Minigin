@@ -34,6 +34,9 @@
     <ClInclude Include="IceBlockComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
+    <ClInclude Include="SnoBeeAIComponent.h">
+      <Filter>GameFiles</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -60,5 +63,6 @@
     <ClCompile Include="IceBlockComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
+    <ClCompile Include="SnoBeeAIComponent.cpp" />
   </ItemGroup>
 </Project>
