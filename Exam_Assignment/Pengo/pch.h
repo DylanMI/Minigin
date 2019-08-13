@@ -76,6 +76,7 @@
 // game components
 #include "GameFieldGridComponent.h"
 #include "PlayerPengoMovementComponent.h"
+#include "SnoBeeAIComponent.h"
 #include "IceBlockComponent.h"
 
 // game mainfiles

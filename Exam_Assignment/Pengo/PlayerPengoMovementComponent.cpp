@@ -87,7 +87,7 @@ void dae::PlayerPengoMovementComponent::Move(direction direction)
 		}
 		break;
 	case direction::RIGHT:
-		// change state to looking left
+		// change state to looking right
 		m_pParent->GetComponent<StateComponent>()->SetState(State::FACING_RIGHT);
 		
 		// check if there is an obstacle there
@@ -124,7 +124,7 @@ void dae::PlayerPengoMovementComponent::Move(direction direction)
 
 		break;
 	case direction::UP:
-		// change state to looking left
+		// change state to looking up
 		m_pParent->GetComponent<StateComponent>()->SetState(State::FACING_UP);
 		
 		// check if you are at the top border
@@ -153,7 +153,7 @@ void dae::PlayerPengoMovementComponent::Move(direction direction)
 
 		break;
 	case direction::DOWN:
-		// change state to looking left
+		// change state to looking down
 		m_pParent->GetComponent<StateComponent>()->SetState(State::FACING_DOWN);
 		
 		// check if you are at the bottom border

@@ -16,6 +16,8 @@ namespace dae
 		void Update(const float& deltaTime) override;
 		void Render() const override;
 
+		void SetPosition(int idxPos);
+
 	private:
 
 		GameObject* mp_gameGridObj;
@@ -24,6 +26,8 @@ namespace dae
 		Point2f m_WidthAndHeight;
 		float m_Speed;
 		Point2f m_currPos;
+
+		bool m_IsDigging;
 
 		// used for lerping
 		Point2f m_start;
@@ -37,6 +41,3 @@ namespace dae
 
 
 }
-
-
-

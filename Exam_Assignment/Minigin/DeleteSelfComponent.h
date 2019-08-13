@@ -26,7 +26,6 @@ namespace dae
 		void KillNow();
 	private:
 
-		void HandleEvent();
 		Scene& m_scene;
 
 		bool m_isTicking;

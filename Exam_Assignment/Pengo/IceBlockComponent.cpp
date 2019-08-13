@@ -6,7 +6,7 @@ dae::IceBlockComponent::IceBlockComponent(GameObject * parent,Point2f WidthAndHe
 	,mp_gameGridObj(gameGridObj)
 	,m_glidingDirection(direction::NONE)
 	,m_isGliding(false)
-	, m_WidthAndHeight(WidthAndHeight)
+	,m_WidthAndHeight(WidthAndHeight)
 {
 }
 
@@ -295,6 +295,29 @@ void dae::IceBlockComponent::StopGliding()
 {
 	m_isGliding = false;
 	m_glidingDirection = direction::NONE;
+}
+
+void dae::IceBlockComponent::StartBreaking(float speedOfBreak)
+{
+	// change the texture
+	m_pParent->GetComponent<TextureComponent>()->SetTexture("IceBreakAnim.png");
+	m_pParent->GetComponent<TextureComponent>()->SetIsAnimated(true);
+	
+	// add a state, for the animator to work
+	m_pParent->AddComponent(new StateComponent(m_pParent, false));
+	m_pParent->GetComponent<StateComponent>()->SetState(State::IDLE);
+
+	// add an animator
+	m_pParent->AddComponent(new AnimatorComponent(m_pParent));
+	m_pParent->GetComponent<AnimatorComponent>()->AddAnimation(State::IDLE, dae::ResourceManager::GetInstance().LoadTexture("IceBreakAnim.png"), 64, 16, 4);
+	m_pParent->GetComponent<AnimatorComponent>()->SetSpeed(speedOfBreak / 4);
+
+	// start selfDestruct
+	m_pParent->GetComponent<DeleteSelfComponent>()->StartSelfDestruct(speedOfBreak);
+
+	
+
+
 }
 
 

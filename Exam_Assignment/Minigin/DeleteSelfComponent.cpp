@@ -21,8 +21,6 @@ void dae::DeleteSelfComponent::Update(const float & deltaTime)
 				CollisionManager::GetInstance().RemoveCollisionObject(m_pParent);
 			}
 			
-			
-			HandleEvent();
 			// delete yourself
 			m_scene.Remove(m_pParent);
 		}

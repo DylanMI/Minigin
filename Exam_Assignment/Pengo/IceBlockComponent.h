@@ -25,6 +25,7 @@ namespace dae
 		void SetSpeed(float newSpeed);
 		void StartGliding(direction glidingDirection);
 		void StopGliding();
+		void StartBreaking(float speedOfBreak);
 
 	private:
 		direction m_glidingDirection;

@@ -7,10 +7,10 @@ namespace dae
 	enum State
 	{
 		// general
-		FACING_LEFT,
-		FACING_RIGHT,
-		FACING_UP,
-		FACING_DOWN,
+		FACING_LEFT = 0,
+		FACING_RIGHT = 1,
+		FACING_UP = 2,
+		FACING_DOWN = 3,
 		
 		DIGGING_LEFT,
 		DIGGING_RIGHT,

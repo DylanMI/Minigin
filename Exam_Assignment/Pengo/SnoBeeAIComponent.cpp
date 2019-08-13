@@ -15,11 +15,32 @@ dae::SnoBeeAIComponent::~SnoBeeAIComponent()
 
 void dae::SnoBeeAIComponent::Update(const float & deltaTime)
 {
+	// get the current position
+	int currIdx = mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getCurrGridIndex(Rectf{ m_currPos.x, m_currPos.y, m_WidthAndHeight.x, m_WidthAndHeight.y });
+
+	int ammPointsW = mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getAmmPointPerWidth();
+	int ammPointsH = mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getAmmPointPerHeight();
+
+	State randState = State::IDLE;
+
+	if (m_isTraveling)
+	{
+		LerpPos(deltaTime);
+	}
+
+	m_pParent->SetPosition(m_currPos);
+
 	switch ( m_pParent->GetComponent<StateComponent>()->GetState())
 	{
 		// find out what to do next
 	case State::IDLE:
-		
+		// reset digging bool
+		m_IsDigging = false;
+		// randomize between the four directions
+		randState =  State(rand() % 4);
+		// then change the actual state
+		m_pParent->GetComponent<StateComponent>()->SetState(randState);
+
 		break;
 
 		// stunned and weak
@@ -29,51 +50,210 @@ void dae::SnoBeeAIComponent::Update(const float & deltaTime)
 
 		// basic movement
 	case State::FACING_LEFT:
+		if (m_isTraveling) return;
+		// check if you are at the left border
+		if (currIdx == 0)
+		{
+			m_isTraveling = false;
+			m_destination = m_currPos;
+			m_pParent->GetComponent<StateComponent>()->SetState(State::IDLE);
+			return;
+		}
+		if (currIdx % ammPointsW == 0)
+		{
+			m_isTraveling = false;
+			m_destination = m_currPos;
+			m_pParent->GetComponent<StateComponent>()->SetState(State::IDLE);
+			return;
+		}
+		// check if there is an obstacle there, then set the state accordingly
+		if (mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx - 1].isObstacle)
+		{
+			// move but set the Diggingbool
+			m_start = m_currPos;
+			m_destination = mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx - 1].coordinate;
+			m_IsDigging = true;
+			m_isTraveling = true;
 
+			// tell the block to break
+			mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx - 1].object->GetComponent<IceBlockComponent>()->StartBreaking(m_Speed / 2.0f);
+			// tell the grid to forget about that block
+			mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx - 1].isObstacle = false;
+			mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx - 1].object = nullptr;
+
+			// set the animation state
+			m_pParent->GetComponent<StateComponent>()->SetState(State::DIGGING_LEFT);
+			return;
+		}
+		// else set destination there
+		else
+		{
+			m_start = m_currPos;
+			m_destination = mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx - 1].coordinate;
+			m_isTraveling = true;
+		}
 		break;
-	case State::FACING_RIGHT:
 
+	case State::FACING_RIGHT:
+		if (m_isTraveling) return;
+		// check if there is an obstacle there, then set the state accordingly
+		if (mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx + 1].isObstacle)
+		{
+			// move but set the Diggingbool
+			m_start = m_currPos;
+			m_destination = mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx + 1].coordinate;
+			m_IsDigging = true;
+			m_isTraveling = true;
+
+			// tell the block to break
+			mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx + 1].object->GetComponent<IceBlockComponent>()->StartBreaking(m_Speed / 2.0f);
+			// tell the grid to forget about that block
+			mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx + 1].isObstacle = false;
+			mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx + 1].object = nullptr;
+
+			// set the animation state		
+			m_pParent->GetComponent<StateComponent>()->SetState(State::DIGGING_RIGHT);
+			return;
+		}
+		if (currIdx == 0)
+		{
+			m_start = m_currPos;
+			m_destination = mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx + 1].coordinate;
+			m_isTraveling = true;
+			return;
+		}
+		// check if you are at the right border
+		if (currIdx % ammPointsW == ammPointsW - 1)
+		{
+			m_isTraveling = false;
+			m_destination = m_currPos;
+			m_pParent->GetComponent<StateComponent>()->SetState(State::IDLE);
+		}
+		// else set destination there
+		else
+		{
+			m_start = m_currPos;
+			m_destination = mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx + 1].coordinate;
+			m_isTraveling = true;
+		}
 		break;
 	case State::FACING_UP:
+		if (m_isTraveling) return;
+		// check if you are at the top border
+		if (currIdx - ammPointsW < 0)
+		{
+			m_isTraveling = false;
+			m_destination = m_currPos;
+			m_pParent->GetComponent<StateComponent>()->SetState(State::IDLE);
+		}
+		// check if there is an obstacle there, then set the state accordingly
+		else if (mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx - ammPointsW].isObstacle)
+		{
+			// move but set the Diggingbool
+			m_start = m_currPos;
+			m_destination = mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx - ammPointsW].coordinate;
+			m_IsDigging = true;
+			m_isTraveling = true;
 
+			// tell the block to break
+			mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx - ammPointsW].object->GetComponent<IceBlockComponent>()->StartBreaking(m_Speed / 2.0f);
+			// tell the grid to forget about that block
+			mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx - ammPointsW].isObstacle = false;
+			mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx - ammPointsW].object = nullptr;
+
+			// set the animation state
+			m_pParent->GetComponent<StateComponent>()->SetState(State::DIGGING_UP);
+			return;
+		}
+		// else set destination there
+		else
+		{
+			m_start = m_currPos;
+			m_destination = mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx - ammPointsW].coordinate;
+			m_isTraveling = true;
+		}
 		break;
+
 	case State::FACING_DOWN:
+		if (m_isTraveling) return;
+		// check if you are at the bottom border
+		if (currIdx + ammPointsW >= mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef().size())
+		{
+			m_isTraveling = false;
+			m_destination = m_currPos;
+			m_pParent->GetComponent<StateComponent>()->SetState(State::IDLE);
+		}
+		// check if there is an obstacle there, then set the state accordingly
+		if (mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx + ammPointsW].isObstacle)
+		{
+			// move but set the Diggingbool
+			m_start = m_currPos;
+			m_destination = mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx + ammPointsW].coordinate;
+			m_IsDigging = true;
+			m_isTraveling = true;
 
+			// tell the block to break
+			mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx + ammPointsW].object->GetComponent<IceBlockComponent>()->StartBreaking(m_Speed / 2.0f);
+			
+			// tell the grid to forget about that block
+			mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx + ammPointsW].isObstacle = false;
+			mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx + ammPointsW].object = nullptr;
+			
+			// set the animation state
+			m_pParent->GetComponent<StateComponent>()->SetState(State::DIGGING_DOWN);
+			return;
+		}
+		// else set destination there
+		else
+		{
+			m_start = m_currPos;
+			m_destination = mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx + ammPointsW].coordinate;
+			m_isTraveling = true;
+		}
 		break;
 
-		// slowed down movement and destroying the block
 	case State::DIGGING_LEFT:
+		if (m_isTraveling) return;
 
 		break;
 	case State::DIGGING_RIGHT:
+		if (m_isTraveling) return;
 
 		break;
 	case State::DIGGING_UP:
+		if (m_isTraveling) return;
 
 		break;
 	case State::DIGGING_DOWN:
+		if (m_isTraveling) return;
 
 		break;
 
 	default:
 		break;
 	}
-
 }
 
 void dae::SnoBeeAIComponent::Render() const
 {
 }
 
+void dae::SnoBeeAIComponent::SetPosition(int idxPos)
+{
+	m_currPos = mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[idxPos].coordinate;
+}
+
 dae::Point2f dae::SnoBeeAIComponent::LerpPos(float DT)
 {
-	T += DT * m_Speed;
+	if (m_IsDigging) T += DT * (m_Speed / 2.0f);
+	else T += DT * m_Speed;
 	if (T > 1)
 	{
 		T = 1;
 		m_currPos = lerp(m_start, m_destination, T);
 		T = 0;
 		m_isTraveling = false;
+		m_pParent->GetComponent<StateComponent>()->SetState(State::IDLE);
 		return m_currPos;
 	}
 	else

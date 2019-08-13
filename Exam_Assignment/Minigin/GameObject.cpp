@@ -16,6 +16,7 @@ void dae::GameObject::Update(const float& deltaTime)
 	// update all the components
 	for (size_t i{}, s = m_pComponents.size(); i < s; i++)
 	{
+		if (m_pComponents.size() <= 0) return;
 		m_pComponents[i]->Update(deltaTime);
 	}
 }
@@ -29,6 +30,7 @@ void dae::GameObject::Render() const
 	// render all the components
 	for (size_t i{}, s = m_pComponents.size(); i < s; i++)
 	{
+		if (m_pComponents.size() <= 0) return;
 		m_pComponents[i]->Render();
 	}
 }
