@@ -36,12 +36,7 @@ void dae::IceBlockComponent::Update(const float & deltaTime)
 		switch (m_glidingDirection)
 		{
 		case direction::LEFT:
-			// first fix the grid information to the new layout 
-			mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx + 1].isObstacle = false;
-			mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx].isObstacle = true;
 
-			mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx + 1].object = nullptr;
-			mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx].object = m_pParent;
 			// check if you can go that way without getting of the grid
 			if (currIdx == 0)
 			{
@@ -58,15 +53,27 @@ void dae::IceBlockComponent::Update(const float & deltaTime)
 				m_destination = m_currPos;
 				return;
 			}
-			// check if there is already a block
+
+			// check if there is already a block, or a sno bee
 			IdxLeft = currIdx - 1;
 			GridInfo infoLeft = mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[IdxLeft];
+			// stop gliding
 			if (infoLeft.isObstacle)
 			{
 				m_isGliding = false;
 				m_isTraveling = false;
 				m_destination = m_currPos;
 				return;
+			}
+			// continue gliding, but catch the sno bee
+			else if (infoLeft.isSnoBee)
+			{
+				infoLeft.object->GetComponent<SnoBeeAIComponent>()->GetCatched(m_pParent);
+				
+				// set the traveling vars
+				m_start = m_currPos;
+				m_destination = mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx - 1].coordinate;
+				m_isTraveling = true;
 			}
 			// else continue gliding
 			else
@@ -77,16 +84,26 @@ void dae::IceBlockComponent::Update(const float & deltaTime)
 				m_isTraveling = true;
 			}
 
+			// once you moved, fix the grid information to the new layout 
+			mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx].isObstacle = false;
+			mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx - 1].isObstacle = true;
+
+			mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx].object = nullptr;
+			mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx - 1].object = m_pParent;
+
+
 			break;
 
 		case direction::RIGHT:
-			// first fix the grid information to the new layout 
-			mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx - 1].isObstacle = false;
-			mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx].isObstacle = true;
-
-			mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx - 1].object = nullptr;
-			mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx].object = m_pParent;
-			// check if you can go that way without getting of the grid
+			// check if you are at the right border
+			if (currIdx % ammPointsW == ammPointsW - 1)
+			{
+				m_isGliding = false;
+				m_isTraveling = false;
+				m_destination = m_currPos;
+				return;
+			}
+			
 			if (currIdx == 0)
 			{
 				m_start = m_currPos;
@@ -96,16 +113,7 @@ void dae::IceBlockComponent::Update(const float & deltaTime)
 				return;
 			}
 
-			// check if you are at the right border
-			if (currIdx % ammPointsW == ammPointsW - 1)
-			{
-				m_isGliding = false;
-				m_isTraveling = false;
-				m_destination = m_currPos;
-				return;
-			}
-
-			// check if there is already a block
+			// check if there is already a block, or a sno bee
 			IdxRight = currIdx + 1;
 			GridInfo infoRight = mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[IdxRight];
 			if (infoRight.isObstacle)
@@ -114,6 +122,16 @@ void dae::IceBlockComponent::Update(const float & deltaTime)
 				m_isTraveling = false;
 				m_destination = m_currPos;
 				return;
+			}		
+			// continue gliding, but catch the sno bee
+			else if (infoRight.isSnoBee)
+			{
+				infoRight.object->GetComponent<SnoBeeAIComponent>()->GetCatched(m_pParent);
+
+				// set the traveling vars
+				m_start = m_currPos;
+				m_destination = mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx + 1].coordinate;
+				m_isTraveling = true;
 			}
 			// else continue gliding
 			else
@@ -123,17 +141,18 @@ void dae::IceBlockComponent::Update(const float & deltaTime)
 				m_destination = mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx + 1].coordinate;
 				m_isTraveling = true;
 			}
+
+			// once you moved, fix the grid information to the new layout 
+			mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx].isObstacle = false;
+			mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx + 1].isObstacle = true;
+
+			mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx].object = nullptr;
+			mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx + 1].object = m_pParent;
+
 			break;
 
 
 		case direction::UP:
-			// first fix the grid information to the new layout 
-			mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx + ammPointsW].isObstacle = false;
-			mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx].isObstacle = true;
-			
-			mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx + ammPointsW].object = nullptr;
-			mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx].object = m_pParent;
-			
 			// check if you can go that way without getting of the grid
 			if (currIdx - ammPointsW < 0)
 			{
@@ -142,7 +161,8 @@ void dae::IceBlockComponent::Update(const float & deltaTime)
 				m_destination = m_currPos;
 				return;
 			}
-			// check if there is already a block
+
+			// check if there is already a block, or a sno bee
 			IdxAbove = currIdx - ammPointsW;
 			GridInfo infoAbove = mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[IdxAbove];
 			if (infoAbove.isObstacle)
@@ -152,6 +172,16 @@ void dae::IceBlockComponent::Update(const float & deltaTime)
 				m_destination = m_currPos;
 				return;
 			}
+			// continue gliding, but catch the sno bee
+			else if (infoAbove.isSnoBee)
+			{
+				infoAbove.object->GetComponent<SnoBeeAIComponent>()->GetCatched(m_pParent);
+
+				// set the traveling vars
+				m_start = m_currPos;
+				m_destination = mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx - ammPointsW].coordinate;
+				m_isTraveling = true;
+			}
 			// else continue gliding
 			else
 			{
@@ -160,16 +190,16 @@ void dae::IceBlockComponent::Update(const float & deltaTime)
 				m_destination = mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx - ammPointsW].coordinate;
 				m_isTraveling = true;
 			}
-			
+			// once you moved, fix the grid information to the new layout 
+			mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx].isObstacle = false;
+			mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx - ammPointsW].isObstacle = true;
+
+			mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx].object = nullptr;
+			mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx - ammPointsW].object = m_pParent;
+
 			break;
 
 		case direction::DOWN:
-			// first fix the grid information to the new layout 
-			mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx - ammPointsW].isObstacle = false;
-			mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx].isObstacle = true;
-
-			mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx - ammPointsW].object = nullptr;
-			mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx].object = m_pParent;
 			// check if you can go that way without getting of the grid
 			if (currIdx + ammPointsW >= mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef().size())
 			{
@@ -188,6 +218,16 @@ void dae::IceBlockComponent::Update(const float & deltaTime)
 				m_destination = m_currPos;
 				return;
 			}
+			// continue gliding, but catch the sno bee
+			else if (infoBelow.isSnoBee)
+			{
+				infoBelow.object->GetComponent<SnoBeeAIComponent>()->GetCatched(m_pParent);
+
+				// set the traveling vars
+				m_start = m_currPos;
+				m_destination = mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx + ammPointsW].coordinate;
+				m_isTraveling = true;
+			}
 			// else continue gliding
 			else
 			{
@@ -195,6 +235,13 @@ void dae::IceBlockComponent::Update(const float & deltaTime)
 				m_destination = mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx + ammPointsW].coordinate;
 				m_isTraveling = true;
 			}
+			// once you moved, fix the grid information to the new layout 
+			mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx].isObstacle = false;
+			mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx + ammPointsW].isObstacle = true;
+
+			mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx].object = nullptr;
+			mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx + ammPointsW].object = m_pParent;
+
 			break;
 
 		default:
@@ -226,6 +273,9 @@ void dae::IceBlockComponent::SetSpeed(float newSpeed)
 
 void dae::IceBlockComponent::StartGliding(direction glidingDirection)
 {
+	// safety check
+	if (this == nullptr) return;
+
 	int IdxLeft{};
 	int IdxRight{};
 	int IdxAbove{};
@@ -245,41 +295,52 @@ void dae::IceBlockComponent::StartGliding(direction glidingDirection)
 		IdxLeft = currIdx - 1;
 		GridInfo infoLeft = mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[IdxLeft];
 		if (infoLeft.isObstacle) return;
-		// set the traveling vars
+		// set the traveling vars, and update gamegrid
 		m_start = m_currPos;
 		m_destination = mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx - 1].coordinate;
 		m_isTraveling = true;
+
+		mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx].isObstacle = false;
+		mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx].object = nullptr;
 		break;
 	case direction::RIGHT:
 		if (currIdx % ammPointsW == ammPointsW - 1) return;
 		IdxRight = currIdx + 1;
 		GridInfo infoRight = mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[IdxRight];
 		if (infoRight.isObstacle) return;
-		// set the traveling vars
+		// set the traveling vars, and update gamegrid
 		m_start = m_currPos;
 		m_destination = mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx + 1].coordinate;
 		m_isTraveling = true;
 
+		mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx].isObstacle = false;
+		mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx].object = nullptr;
 		break;
 	case direction::UP:
 		if (currIdx - ammPointsW < 0) return;
 		IdxAbove = currIdx - ammPointsW;
 		GridInfo infoAbove = mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[IdxAbove];
 		if (infoAbove.isObstacle) return;
-		// set the traveling vars
+		// set the traveling vars, and update gamegrid
 		m_start = m_currPos;
 		m_destination = mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx - ammPointsW].coordinate;
 		m_isTraveling = true;
+		
+		mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx].isObstacle = false;
+		mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx].object = nullptr;
 		break;
 	case direction::DOWN:
 		if (currIdx + ammPointsW >= mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef().size()) return;
 		IdxBelow = currIdx + ammPointsW;
 		GridInfo infoBelow = mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[IdxBelow];
 		if (infoBelow.isObstacle) return;
-		// set the traveling vars
+		// set the traveling vars, and update gamegrid
 		m_start = m_currPos;
 		m_destination = mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx + ammPointsW].coordinate;
 		m_isTraveling = true;
+		
+		mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx].isObstacle = false;
+		mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx].object = nullptr;
 		break;
 
 	default:
@@ -318,6 +379,11 @@ void dae::IceBlockComponent::StartBreaking(float speedOfBreak)
 	
 
 
+}
+
+bool dae::IceBlockComponent::GetIsSliding()
+{
+	return m_isGliding;
 }
 
 

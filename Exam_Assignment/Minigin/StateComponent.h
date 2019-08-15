@@ -18,10 +18,12 @@ namespace dae
 		DIGGING_DOWN,
 
 		IDLE,
+		DYING,
 		// player
 
 		// AI
 		STRUGGLING,
+		CAUGHTBYBLOCK,
 
 
 	};

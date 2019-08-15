@@ -17,6 +17,8 @@ namespace dae
 		void Render() const override;
 
 		void SetPosition(int idxPos);
+		void GetCatched(GameObject* Catcher);
+
 
 	private:
 
@@ -28,6 +30,8 @@ namespace dae
 		Point2f m_currPos;
 
 		bool m_IsDigging;
+
+		GameObject* m_CatchedByThis;
 
 		// used for lerping
 		Point2f m_start;

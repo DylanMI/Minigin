@@ -250,23 +250,19 @@ void dae::SnoBeeAIComponent::Update(const float & deltaTime)
 
 		break;
 
-	case State::DIGGING_LEFT:
-		if (m_isTraveling) return;
+	case State::CAUGHTBYBLOCK:
+		// set the object position to the catchers position
+		m_pParent->SetPosition(Point2f{ m_CatchedByThis->GetTransform().GetPosition().x ,m_CatchedByThis->GetTransform().GetPosition().y });
+		// if the catcher ever stops sliding, then die
+		if (!m_CatchedByThis->GetComponent<IceBlockComponent>()->GetIsSliding())
+		{
+			m_pParent->GetComponent<StateComponent>()->SetState(State::DYING);
+			
+			// WIP DIE
+		}
 
 		break;
-	case State::DIGGING_RIGHT:
-		if (m_isTraveling) return;
-
-		break;
-	case State::DIGGING_UP:
-		if (m_isTraveling) return;
-
-		break;
-	case State::DIGGING_DOWN:
-		if (m_isTraveling) return;
-
-		break;
-
+		 
 	default:
 		break;
 	}
@@ -279,6 +275,12 @@ void dae::SnoBeeAIComponent::Render() const
 void dae::SnoBeeAIComponent::SetPosition(int idxPos)
 {
 	m_currPos = mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[idxPos].coordinate;
+}
+
+void dae::SnoBeeAIComponent::GetCatched(GameObject * Catcher)
+{
+	m_CatchedByThis = Catcher;
+	m_pParent->GetComponent<StateComponent>()->SetState(State::CAUGHTBYBLOCK);
 }
 
 dae::Point2f dae::SnoBeeAIComponent::LerpPos(float DT)
