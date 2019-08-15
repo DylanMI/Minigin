@@ -66,6 +66,7 @@ void dae::SnoBeeAIComponent::Update(const float & deltaTime)
 			m_pParent->GetComponent<StateComponent>()->SetState(State::IDLE);
 			return;
 		}
+
 		// check if there is an obstacle there, then set the state accordingly
 		if (mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx - 1].isObstacle)
 		{
@@ -83,7 +84,6 @@ void dae::SnoBeeAIComponent::Update(const float & deltaTime)
 
 			// set the animation state
 			m_pParent->GetComponent<StateComponent>()->SetState(State::DIGGING_LEFT);
-			return;
 		}
 		// else set destination there
 		else
@@ -92,10 +92,29 @@ void dae::SnoBeeAIComponent::Update(const float & deltaTime)
 			m_destination = mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx - 1].coordinate;
 			m_isTraveling = true;
 		}
+		
+		// Once you have moved, fix the gameGrid info
+		mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx].isSnoBee = false;
+		mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx - 1].isSnoBee = true;
+
+		mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx].object = nullptr;
+		mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx - 1].object = m_pParent;
+
+
 		break;
 
 	case State::FACING_RIGHT:
 		if (m_isTraveling) return;
+		// check if you are at the right border
+		if (currIdx % ammPointsW == ammPointsW - 1)
+		{
+			m_isTraveling = false;
+			m_destination = m_currPos;
+			m_pParent->GetComponent<StateComponent>()->SetState(State::IDLE);
+			return;
+		}
+
+
 		// check if there is an obstacle there, then set the state accordingly
 		if (mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx + 1].isObstacle)
 		{
@@ -113,21 +132,12 @@ void dae::SnoBeeAIComponent::Update(const float & deltaTime)
 
 			// set the animation state		
 			m_pParent->GetComponent<StateComponent>()->SetState(State::DIGGING_RIGHT);
-			return;
 		}
-		if (currIdx == 0)
+		else if (currIdx == 0)
 		{
 			m_start = m_currPos;
 			m_destination = mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx + 1].coordinate;
 			m_isTraveling = true;
-			return;
-		}
-		// check if you are at the right border
-		if (currIdx % ammPointsW == ammPointsW - 1)
-		{
-			m_isTraveling = false;
-			m_destination = m_currPos;
-			m_pParent->GetComponent<StateComponent>()->SetState(State::IDLE);
 		}
 		// else set destination there
 		else
@@ -136,7 +146,16 @@ void dae::SnoBeeAIComponent::Update(const float & deltaTime)
 			m_destination = mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx + 1].coordinate;
 			m_isTraveling = true;
 		}
+
+		// Once you have moved, fix the gameGrid info
+		mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx].isSnoBee = false;
+		mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx + 1].isSnoBee = true;
+
+		mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx].object = nullptr;
+		mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx + 1].object = m_pParent;
 		break;
+
+
 	case State::FACING_UP:
 		if (m_isTraveling) return;
 		// check if you are at the top border
@@ -145,9 +164,12 @@ void dae::SnoBeeAIComponent::Update(const float & deltaTime)
 			m_isTraveling = false;
 			m_destination = m_currPos;
 			m_pParent->GetComponent<StateComponent>()->SetState(State::IDLE);
+			return;
 		}
+
+
 		// check if there is an obstacle there, then set the state accordingly
-		else if (mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx - ammPointsW].isObstacle)
+		if (mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx - ammPointsW].isObstacle)
 		{
 			// move but set the Diggingbool
 			m_start = m_currPos;
@@ -163,7 +185,6 @@ void dae::SnoBeeAIComponent::Update(const float & deltaTime)
 
 			// set the animation state
 			m_pParent->GetComponent<StateComponent>()->SetState(State::DIGGING_UP);
-			return;
 		}
 		// else set destination there
 		else
@@ -172,6 +193,14 @@ void dae::SnoBeeAIComponent::Update(const float & deltaTime)
 			m_destination = mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx - ammPointsW].coordinate;
 			m_isTraveling = true;
 		}
+
+		// Once you have moved, fix the gameGrid info
+		mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx].isSnoBee = false;
+		mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx - ammPointsW].isSnoBee = true;
+
+		mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx].object = nullptr;
+		mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx - ammPointsW].object = m_pParent;
+
 		break;
 
 	case State::FACING_DOWN:
@@ -182,7 +211,9 @@ void dae::SnoBeeAIComponent::Update(const float & deltaTime)
 			m_isTraveling = false;
 			m_destination = m_currPos;
 			m_pParent->GetComponent<StateComponent>()->SetState(State::IDLE);
+			return;
 		}
+
 		// check if there is an obstacle there, then set the state accordingly
 		if (mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx + ammPointsW].isObstacle)
 		{
@@ -201,7 +232,6 @@ void dae::SnoBeeAIComponent::Update(const float & deltaTime)
 			
 			// set the animation state
 			m_pParent->GetComponent<StateComponent>()->SetState(State::DIGGING_DOWN);
-			return;
 		}
 		// else set destination there
 		else
@@ -210,6 +240,14 @@ void dae::SnoBeeAIComponent::Update(const float & deltaTime)
 			m_destination = mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx + ammPointsW].coordinate;
 			m_isTraveling = true;
 		}
+
+		// Once you have moved, fix the gameGrid info
+		mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx].isSnoBee = false;
+		mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx + ammPointsW].isSnoBee = true;
+
+		mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx].object = nullptr;
+		mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx + ammPointsW].object = m_pParent;
+
 		break;
 
 	case State::DIGGING_LEFT:
