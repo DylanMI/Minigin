@@ -23,7 +23,7 @@ void dae::SnoBeeAIComponent::Update(const float & deltaTime)
 
 	State randState = State::IDLE;
 
-	if (m_isTraveling)
+	if (m_isTraveling && m_pParent->GetComponent<StateComponent>()->GetState() != State::CAUGHTBYBLOCK)
 	{
 		LerpPos(deltaTime);
 	}
@@ -256,9 +256,8 @@ void dae::SnoBeeAIComponent::Update(const float & deltaTime)
 		// if the catcher ever stops sliding, then die
 		if (!m_CatchedByThis->GetComponent<IceBlockComponent>()->GetIsSliding())
 		{
-			m_pParent->GetComponent<StateComponent>()->SetState(State::DYING);
-			
-			// WIP DIE
+			m_pParent->GetComponent<StateComponent>()->SetState(State::DYING);		
+			Die(400);
 		}
 
 		break;
@@ -281,6 +280,34 @@ void dae::SnoBeeAIComponent::GetCatched(GameObject * Catcher)
 {
 	m_CatchedByThis = Catcher;
 	m_pParent->GetComponent<StateComponent>()->SetState(State::CAUGHTBYBLOCK);
+}
+
+void dae::SnoBeeAIComponent::Die(int ScoreForDeath)
+{
+	// load font 
+	auto font = ResourceManager::GetInstance().LoadFont("Lingua.otf", 36);
+
+	// make text object with score value
+	auto mp_ScoreText = new dae::GameObject();
+
+	// -- give the text component
+	mp_ScoreText->AddComponent(new TextRendererComponent(std::to_string(ScoreForDeath), font, mp_ScoreText));
+
+	// -- give the self destruct component
+	mp_ScoreText->AddComponent(new DeleteSelfComponent(mp_ScoreText, mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getSceneRef()));
+	// and tell it delete itself after a while
+	mp_ScoreText->GetComponent<DeleteSelfComponent>()->StartSelfDestruct(2.0f);
+
+	// add the object
+	mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getSceneRef().Add(mp_ScoreText);
+
+	// set the location
+	mp_ScoreText->SetPosition(Point2f{ m_pParent->GetTransform().GetPosition().x ,m_pParent->GetTransform().GetPosition().y });
+
+
+	// and finally, kill yourself ... finally .... an end to eternal suffering
+	m_pParent->AddComponent(new DeleteSelfComponent(m_pParent, mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getSceneRef()));
+	m_pParent->GetComponent<DeleteSelfComponent>()->KillNow();
 }
 
 dae::Point2f dae::SnoBeeAIComponent::LerpPos(float DT)

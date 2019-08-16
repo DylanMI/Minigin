@@ -1,11 +1,12 @@
 #include "pch.h"
 #include "GameFieldGridComponent.h"
 
-dae::GameFieldGridComponent::GameFieldGridComponent(GameObject * parent, dae::Rectf dimension, int PPW, int PPH)
+dae::GameFieldGridComponent::GameFieldGridComponent(GameObject * parent, dae::Rectf dimension, int PPW, int PPH, Scene& sceneref)
 	: BaseComponent(parent)
 	, m_dimension(dimension)
     , m_ammPointsPerWidth(PPW)
 	, m_ammPointsPerHeight(PPH)
+	, m_SceneRef(sceneref)
 {
 	m_GridInfo.resize(PPW * PPH, GridInfo());
 
@@ -46,6 +47,11 @@ void dae::GameFieldGridComponent::Render() const
 std::vector<dae::GridInfo>& dae::GameFieldGridComponent::getInfoRef()
 {
 	return m_GridInfo;
+}
+
+dae::Scene & dae::GameFieldGridComponent::getSceneRef()
+{
+	return m_SceneRef;
 }
 
 const int dae::GameFieldGridComponent::getCurrGridIndex(dae::Rectf dimensions)

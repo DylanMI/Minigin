@@ -271,10 +271,10 @@ void dae::IceBlockComponent::SetSpeed(float newSpeed)
 	m_Speed = newSpeed;
 }
 
-void dae::IceBlockComponent::StartGliding(direction glidingDirection)
+bool dae::IceBlockComponent::StartGliding(direction glidingDirection)
 {
 	// safety check
-	if (this == nullptr) return;
+	if (this == nullptr) return true;
 
 	int IdxLeft{};
 	int IdxRight{};
@@ -291,10 +291,10 @@ void dae::IceBlockComponent::StartGliding(direction glidingDirection)
 	switch (glidingDirection)
 	{
 	case direction::LEFT:
-		if (currIdx == 0 || currIdx % ammPointsW == 0) return;
+		if (currIdx == 0 || currIdx % ammPointsW == 0) return false;
 		IdxLeft = currIdx - 1;
 		GridInfo infoLeft = mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[IdxLeft];
-		if (infoLeft.isObstacle) return;
+		if (infoLeft.isObstacle) return false;
 		// set the traveling vars, and update gamegrid
 		m_start = m_currPos;
 		m_destination = mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx - 1].coordinate;
@@ -302,12 +302,17 @@ void dae::IceBlockComponent::StartGliding(direction glidingDirection)
 
 		mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx].isObstacle = false;
 		mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx].object = nullptr;
+
+		mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx - 1].isObstacle = true;
+		mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx - 1].object = m_pParent;
+
+
 		break;
 	case direction::RIGHT:
-		if (currIdx % ammPointsW == ammPointsW - 1) return;
+		if (currIdx % ammPointsW == ammPointsW - 1) return false;
 		IdxRight = currIdx + 1;
 		GridInfo infoRight = mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[IdxRight];
-		if (infoRight.isObstacle) return;
+		if (infoRight.isObstacle) return false;
 		// set the traveling vars, and update gamegrid
 		m_start = m_currPos;
 		m_destination = mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx + 1].coordinate;
@@ -315,12 +320,15 @@ void dae::IceBlockComponent::StartGliding(direction glidingDirection)
 
 		mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx].isObstacle = false;
 		mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx].object = nullptr;
+
+		mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx + 1].isObstacle = true;
+		mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx + 1].object = m_pParent;
 		break;
 	case direction::UP:
-		if (currIdx - ammPointsW < 0) return;
+		if (currIdx - ammPointsW < 0) return false;
 		IdxAbove = currIdx - ammPointsW;
 		GridInfo infoAbove = mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[IdxAbove];
-		if (infoAbove.isObstacle) return;
+		if (infoAbove.isObstacle) return false;
 		// set the traveling vars, and update gamegrid
 		m_start = m_currPos;
 		m_destination = mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx - ammPointsW].coordinate;
@@ -328,12 +336,16 @@ void dae::IceBlockComponent::StartGliding(direction glidingDirection)
 		
 		mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx].isObstacle = false;
 		mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx].object = nullptr;
+
+		mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx - ammPointsW].isObstacle = true;
+		mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx - ammPointsW].object = m_pParent;
+
 		break;
 	case direction::DOWN:
-		if (currIdx + ammPointsW >= mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef().size()) return;
+		if (currIdx + ammPointsW >= mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef().size()) return false;
 		IdxBelow = currIdx + ammPointsW;
 		GridInfo infoBelow = mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[IdxBelow];
-		if (infoBelow.isObstacle) return;
+		if (infoBelow.isObstacle) return false;
 		// set the traveling vars, and update gamegrid
 		m_start = m_currPos;
 		m_destination = mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx + ammPointsW].coordinate;
@@ -341,6 +353,9 @@ void dae::IceBlockComponent::StartGliding(direction glidingDirection)
 		
 		mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx].isObstacle = false;
 		mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx].object = nullptr;
+		
+		mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx + ammPointsW].isObstacle = true;
+		mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx + ammPointsW].object = m_pParent;
 		break;
 
 	default:
@@ -350,6 +365,7 @@ void dae::IceBlockComponent::StartGliding(direction glidingDirection)
 
 	m_isGliding = true;
 	m_glidingDirection = glidingDirection;
+	return true;
 }
 
 void dae::IceBlockComponent::StopGliding()

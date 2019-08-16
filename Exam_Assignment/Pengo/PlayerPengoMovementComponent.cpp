@@ -161,6 +161,7 @@ void dae::PlayerPengoMovementComponent::Move(direction direction)
 		{
 			m_isTraveling = false;
 			m_destination = m_currPos;
+			return;
 		}
 		// check if there is an obstacle there
 		if (mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx + ammPointsW].isObstacle)
@@ -207,8 +208,17 @@ void dae::PlayerPengoMovementComponent::Interact()
 		// check if the interacted block is the block we tried to push previously
 		if (currIdx - ammPointsW == m_lastBumpedIntoIdx)
 		{
-			// push it
-			mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[m_lastBumpedIntoIdx].object->GetComponent<IceBlockComponent>()->StartGliding(direction::UP);
+			// try to push it
+			if (! mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[m_lastBumpedIntoIdx].object->GetComponent<IceBlockComponent>()->StartGliding(direction::UP))
+			{
+				// break it
+				// tell the block to break
+				mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx - ammPointsW].object->GetComponent<IceBlockComponent>()->StartBreaking(m_Speed / 2.0f);
+				// tell the grid to forget about that block
+				mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx - ammPointsW].isObstacle = false;
+				mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx - ammPointsW].object = nullptr;
+
+			}
 	
 			m_lastBumpedIntoIdx = -1;
 		}
@@ -221,8 +231,17 @@ void dae::PlayerPengoMovementComponent::Interact()
 		// check if the interacted block is the block we tried to push previously
 		if (currIdx + ammPointsW == m_lastBumpedIntoIdx)
 		{
-			// push it
-			mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[m_lastBumpedIntoIdx].object->GetComponent<IceBlockComponent>()->StartGliding(direction::DOWN);
+			// try to push it
+			if (! mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[m_lastBumpedIntoIdx].object->GetComponent<IceBlockComponent>()->StartGliding(direction::DOWN))
+			{
+				// break it
+				// tell the block to break
+				mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx + ammPointsW].object->GetComponent<IceBlockComponent>()->StartBreaking(m_Speed / 2.0f);
+				// tell the grid to forget about that block
+				mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx + ammPointsW].isObstacle = false;
+				mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx + ammPointsW].object = nullptr;
+
+			}
 			m_lastBumpedIntoIdx = -1;
 		}
 
@@ -234,8 +253,17 @@ void dae::PlayerPengoMovementComponent::Interact()
 		// check if the interacted block is the block we tried to push previously
 		if (currIdx - 1 == m_lastBumpedIntoIdx)
 		{
-			// push it
-			mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[m_lastBumpedIntoIdx].object->GetComponent<IceBlockComponent>()->StartGliding(direction::LEFT);
+			// try to push it
+			if (! mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[m_lastBumpedIntoIdx].object->GetComponent<IceBlockComponent>()->StartGliding(direction::LEFT))
+			{
+				// break it
+				// tell the block to break
+				mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx - 1].object->GetComponent<IceBlockComponent>()->StartBreaking(m_Speed / 2.0f);
+				// tell the grid to forget about that block
+				mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx - 1].isObstacle = false;
+				mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx - 1].object = nullptr;
+
+			}
 			m_lastBumpedIntoIdx = -1;
 		}
 		
@@ -246,8 +274,17 @@ void dae::PlayerPengoMovementComponent::Interact()
 		// check if the interacted block is the block we tried to push previously
 		if (currIdx + 1 == m_lastBumpedIntoIdx)
 		{
-			// push it
-			mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[m_lastBumpedIntoIdx].object->GetComponent<IceBlockComponent>()->StartGliding(direction::RIGHT);
+			// try to push it
+			if (!mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[m_lastBumpedIntoIdx].object->GetComponent<IceBlockComponent>()->StartGliding(direction::RIGHT))
+			{
+				// break it
+				// tell the block to break
+				mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx + 1].object->GetComponent<IceBlockComponent>()->StartBreaking(m_Speed / 2.0f);
+				// tell the grid to forget about that block
+				mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx + 1].isObstacle = false;
+				mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx + 1].object = nullptr;
+
+			}
 			m_lastBumpedIntoIdx = -1;
 		}
 

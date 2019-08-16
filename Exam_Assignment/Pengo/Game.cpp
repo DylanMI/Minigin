@@ -36,7 +36,7 @@ void Game::LoadGame()
 
 		// adding the gameFieldGrid
 		auto mp_gameFieldGridObject = new dae::GameObject();
-		mp_gameFieldGridObject->AddComponent(new dae::GameFieldGridComponent(mp_gameFieldGridObject, { 80,72,464,464 }, 13, 13));
+		mp_gameFieldGridObject->AddComponent(new dae::GameFieldGridComponent(mp_gameFieldGridObject, { 96,34,464,464 }, 13, 13, m_scene));
 		m_scene.Add(mp_gameFieldGridObject);
 		
 		// loading the level
@@ -74,14 +74,16 @@ void Game::LoadGame()
 		InputManager::GetInstance().ChangeCommand(dae::ControllerButton::ButtonA, 1, new InteractCommand(mp_PlayerPengo));
 		
 		// adding UI
-
 		//adding FPS counter
 		auto font = ResourceManager::GetInstance().LoadFont("Lingua.otf", 36);
 		auto mp_FPSObj = new dae::GameObject();
 		mp_FPSObj->AddComponent(new TextRendererComponent("xxx", font, mp_FPSObj));
 		mp_FPSObj->AddComponent(new FPSComponent(mp_FPSObj));
-		
+
 		m_scene.Add(mp_FPSObj);
+
+
+
 	}
 }
 

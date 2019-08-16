@@ -15,7 +15,7 @@ namespace dae
 	class GameFieldGridComponent : public BaseComponent
 	{
 	public:
-		explicit GameFieldGridComponent(GameObject* parent, dae::Rectf dimension, int PPW, int PPH);
+		explicit GameFieldGridComponent(GameObject* parent, dae::Rectf dimension, int PPW, int PPH, Scene& sceneref);
 		virtual ~GameFieldGridComponent();
 		GameFieldGridComponent(const GameFieldGridComponent& other) = delete;
 		GameFieldGridComponent(GameFieldGridComponent&& other) = delete;
@@ -26,6 +26,7 @@ namespace dae
 		void Render() const override;
 	
 		std::vector<GridInfo>& getInfoRef();
+		Scene& getSceneRef();
 		const int getCurrGridIndex(dae::Rectf dimensions);
 		const int getAmmPointPerWidth();
 		const int getAmmPointPerHeight();
@@ -39,6 +40,8 @@ namespace dae
 		// will be calculated
 		Point2f m_distanceBtwPoints;
 		std::vector<GridInfo> m_GridInfo;
+		Scene& m_SceneRef;
+	
 	};
 
 }

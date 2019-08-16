@@ -40,6 +40,8 @@ namespace dae
 		float T;
 
 		// functions
+		void Die(int ScoreForDeath);
+		
 		Point2f LerpPos(float DT);
 	};
 
