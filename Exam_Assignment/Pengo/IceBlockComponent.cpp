@@ -402,6 +402,16 @@ bool dae::IceBlockComponent::GetIsSliding()
 	return m_isGliding;
 }
 
+dae::Point2f dae::IceBlockComponent::getCurrPos()
+{
+	return m_currPos;
+}
+
+dae::Point2f dae::IceBlockComponent::getWidthnHeight()
+{
+	return m_WidthAndHeight;
+}
+
 
 dae::Point2f dae::IceBlockComponent::LerpPos(float DT)
 {

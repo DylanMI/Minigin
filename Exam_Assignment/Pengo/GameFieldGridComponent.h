@@ -9,6 +9,7 @@ namespace dae
 		GameObject* object;
 		Point2f coordinate;
 		bool isObstacle;
+		bool isDiamondBlock;
 		bool isSnoBee;
 	};
 

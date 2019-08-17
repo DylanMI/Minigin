@@ -285,7 +285,7 @@ void dae::SnoBeeAIComponent::GetCatched(GameObject * Catcher)
 void dae::SnoBeeAIComponent::Die(int ScoreForDeath)
 {
 	// load font 
-	auto font = ResourceManager::GetInstance().LoadFont("Lingua.otf", 36);
+	auto font = ResourceManager::GetInstance().LoadFont("Lingua.otf", 24);
 
 	// make text object with score value
 	auto mp_ScoreText = new dae::GameObject();
@@ -302,8 +302,7 @@ void dae::SnoBeeAIComponent::Die(int ScoreForDeath)
 	mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getSceneRef().Add(mp_ScoreText);
 
 	// set the location
-	mp_ScoreText->SetPosition(Point2f{ m_pParent->GetTransform().GetPosition().x ,m_pParent->GetTransform().GetPosition().y });
-
+	mp_ScoreText->GetComponent<TextRendererComponent>()->SetPosition(m_pParent->GetTransform().GetPosition().x, m_pParent->GetTransform().GetPosition().y);
 
 	// and finally, kill yourself ... finally .... an end to eternal suffering
 	m_pParent->AddComponent(new DeleteSelfComponent(m_pParent, mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getSceneRef()));

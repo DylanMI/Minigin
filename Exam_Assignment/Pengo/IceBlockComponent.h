@@ -29,6 +29,9 @@ namespace dae
 
 		bool GetIsSliding();
 
+		Point2f getCurrPos();
+		Point2f getWidthnHeight();
+
 	private:
 		direction m_glidingDirection;
 		bool m_isGliding;

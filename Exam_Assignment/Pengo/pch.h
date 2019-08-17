@@ -78,6 +78,7 @@
 #include "PlayerPengoMovementComponent.h"
 #include "SnoBeeAIComponent.h"
 #include "IceBlockComponent.h"
+#include "DiamondBlockComponent.h"
 
 // game mainfiles
 #include "GameCommand.h"

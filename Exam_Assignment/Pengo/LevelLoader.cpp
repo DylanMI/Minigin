@@ -43,8 +43,7 @@ std::vector<dae::GameObject*> dae::LevelLoader::loadLevel(Scene & sceneRef, Game
 			objects.back()->GetComponent<AnimatorComponent>()->AddAnimation(State::DIGGING_UP, dae::ResourceManager::GetInstance().LoadTexture("GreenBeeDigUp.png"), 16, 16, 2);
 
 			objects.back()->GetComponent<AnimatorComponent>()->AddAnimation(State::STRUGGLING, dae::ResourceManager::GetInstance().LoadTexture("GreenBeeStruggle.png"), 16, 16, 2);
-
-		
+	
 			// -- brainnnz
 			objects.back()->AddComponent(new StateComponent(objects.back(),false));
 			
@@ -82,6 +81,31 @@ std::vector<dae::GameObject*> dae::LevelLoader::loadLevel(Scene & sceneRef, Game
 		// diamond block
 		case 'D':
 			// add a diamond block
+			objects.push_back(new GameObject);
+			// give components
+
+			// -- texture
+			objects.back()->AddComponent(new TextureComponent(objects.back()));
+			objects.back()->GetComponent<TextureComponent>()->SetTexture("IceBlock.png");
+			objects.back()->GetComponent<TextureComponent>()->SetWidthAndHeight(32, 32);
+			objects.back()->GetComponent<TextureComponent>()->SetIsAnimated(false);
+
+			// -- ice functionality				
+			objects.back()->AddComponent(new IceBlockComponent(objects.back(), Point2f{ 32.0f,32.0f }, gameGridObj));
+			objects.back()->GetComponent<IceBlockComponent>()->SetPosition(counter);
+			objects.back()->GetComponent<IceBlockComponent>()->SetSpeed(6.0f);
+
+			// -- Diamond functionality
+			objects.back()->AddComponent(new DiamondBlockComponent(objects.back(), gameGridObj));
+
+			// -- add a self destruct for future use
+			objects.back()->AddComponent(new DeleteSelfComponent(objects.back(), sceneRef));
+
+			// -- Giving the game grid the information
+			gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[counter].isObstacle = true;
+			gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[counter].isDiamondBlock = true;
+			gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[counter].object = objects.back();
+			
 			counter++;
 			break;	
 		// egg block
