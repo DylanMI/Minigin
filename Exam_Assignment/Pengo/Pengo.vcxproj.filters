@@ -40,6 +40,9 @@
     <ClInclude Include="DiamondBlockComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
+    <ClInclude Include="GameObserver.h">
+      <Filter>GameFiles</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -71,6 +74,9 @@
     </ClCompile>
     <ClCompile Include="DiamondBlockComponent.cpp">
       <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="GameObserver.cpp">
+      <Filter>GameFiles</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -86,7 +86,7 @@ std::vector<dae::GameObject*> dae::LevelLoader::loadLevel(Scene & sceneRef, Game
 
 			// -- texture
 			objects.back()->AddComponent(new TextureComponent(objects.back()));
-			objects.back()->GetComponent<TextureComponent>()->SetTexture("IceBlock.png");
+			objects.back()->GetComponent<TextureComponent>()->SetTexture("DiamondBlock.png");
 			objects.back()->GetComponent<TextureComponent>()->SetWidthAndHeight(32, 32);
 			objects.back()->GetComponent<TextureComponent>()->SetIsAnimated(false);
 

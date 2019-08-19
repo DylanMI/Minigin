@@ -243,7 +243,6 @@ xcopy "$(SolutionDir)3rdParty\SDL2_mixer\lib\x64\*.lib" "$(OutputPath)" /R /Y</C
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="json.hpp" />
     <ClInclude Include="LifeComponent.h" />
-    <ClInclude Include="LifeObserver.h" />
     <ClInclude Include="Log.h" />
     <ClInclude Include="Messenger.h" />
     <ClInclude Include="Minigin.h" />
@@ -256,7 +255,6 @@ xcopy "$(SolutionDir)3rdParty\SDL2_mixer\lib\x64\*.lib" "$(OutputPath)" /R /Y</C
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="SceneObject.h" />
     <ClInclude Include="ScoreComponent.h" />
-    <ClInclude Include="ScoreObserver.h" />
     <ClInclude Include="ServiceLocator.h" />
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="StateComponent.h" />
@@ -284,7 +282,6 @@ xcopy "$(SolutionDir)3rdParty\SDL2_mixer\lib\x64\*.lib" "$(OutputPath)" /R /Y</C
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="LifeComponent.cpp" />
-    <ClCompile Include="LifeObserver.cpp" />
     <ClCompile Include="Log.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Messenger.cpp" />
@@ -304,7 +301,6 @@ xcopy "$(SolutionDir)3rdParty\SDL2_mixer\lib\x64\*.lib" "$(OutputPath)" /R /Y</C
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="SceneObject.cpp" />
     <ClCompile Include="ScoreComponent.cpp" />
-    <ClCompile Include="ScoreObserver.cpp" />
     <ClCompile Include="ServiceLocator.cpp" />
     <ClCompile Include="StateComponent.cpp" />
     <ClCompile Include="TextObject.cpp" />

@@ -7,7 +7,7 @@ class LifeObserver : public Observer
 public:
 	LifeObserver();
 	~LifeObserver();
-	virtual void Notify(Event eventType) override;
+	virtual void Notify(Event eventType, int) override;
 
 	int GetLives();
 	bool GetIsDead();

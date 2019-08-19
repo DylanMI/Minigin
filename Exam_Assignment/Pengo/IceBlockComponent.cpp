@@ -91,6 +91,13 @@ void dae::IceBlockComponent::Update(const float & deltaTime)
 			mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx].object = nullptr;
 			mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx - 1].object = m_pParent;
 
+			// Diamond block
+			if (dynamic_cast<DiamondBlockComponent*>(m_pParent->GetComponent<DiamondBlockComponent>()))
+			{
+				mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx].isDiamondBlock = false;
+				mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx - 1].isDiamondBlock = true;
+			}
+			// Egg block
 
 			break;
 
@@ -149,6 +156,14 @@ void dae::IceBlockComponent::Update(const float & deltaTime)
 			mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx].object = nullptr;
 			mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx + 1].object = m_pParent;
 
+			// Diamond block
+			if (dynamic_cast<DiamondBlockComponent*>(m_pParent->GetComponent<DiamondBlockComponent>()))
+			{
+				mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx].isDiamondBlock = false;
+				mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx + 1].isDiamondBlock = true;
+			}
+			// Egg block
+
 			break;
 
 
@@ -196,6 +211,14 @@ void dae::IceBlockComponent::Update(const float & deltaTime)
 
 			mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx].object = nullptr;
 			mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx - ammPointsW].object = m_pParent;
+			
+			// Diamond block
+			if (dynamic_cast<DiamondBlockComponent*>(m_pParent->GetComponent<DiamondBlockComponent>()))
+			{
+				mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx].isDiamondBlock = false;
+				mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx - ammPointsW].isDiamondBlock = true;
+			}
+			// Egg block
 
 			break;
 
@@ -241,6 +264,15 @@ void dae::IceBlockComponent::Update(const float & deltaTime)
 
 			mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx].object = nullptr;
 			mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx + ammPointsW].object = m_pParent;
+
+			// Diamond block
+			if (dynamic_cast<DiamondBlockComponent*>(m_pParent->GetComponent<DiamondBlockComponent>()))
+			{
+				mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx].isDiamondBlock = false;
+				mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx + ammPointsW].isDiamondBlock = true;
+			}
+			// Egg block
+
 
 			break;
 
@@ -305,7 +337,14 @@ bool dae::IceBlockComponent::StartGliding(direction glidingDirection)
 
 		mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx - 1].isObstacle = true;
 		mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx - 1].object = m_pParent;
-
+		
+		// Diamond block
+		if (dynamic_cast<DiamondBlockComponent*>(m_pParent->GetComponent<DiamondBlockComponent>()))
+		{
+			mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx].isDiamondBlock = false;
+			mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx - 1].isDiamondBlock = true;
+		}
+		// Egg block
 
 		break;
 	case direction::RIGHT:
@@ -323,6 +362,14 @@ bool dae::IceBlockComponent::StartGliding(direction glidingDirection)
 
 		mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx + 1].isObstacle = true;
 		mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx + 1].object = m_pParent;
+		
+		// Diamond block
+		if (dynamic_cast<DiamondBlockComponent*>(m_pParent->GetComponent<DiamondBlockComponent>()))
+		{
+			mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx].isDiamondBlock = false;
+			mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx + 1].isDiamondBlock = true;
+		}
+		// Egg block
 		break;
 	case direction::UP:
 		if (currIdx - ammPointsW < 0) return false;
@@ -340,6 +387,14 @@ bool dae::IceBlockComponent::StartGliding(direction glidingDirection)
 		mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx - ammPointsW].isObstacle = true;
 		mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx - ammPointsW].object = m_pParent;
 
+		// Diamond block
+		if (dynamic_cast<DiamondBlockComponent*>(m_pParent->GetComponent<DiamondBlockComponent>()))
+		{
+			mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx].isDiamondBlock = false;
+			mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx - ammPointsW].isDiamondBlock = true;
+		}
+		// Egg block
+
 		break;
 	case direction::DOWN:
 		if (currIdx + ammPointsW >= mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef().size()) return false;
@@ -356,6 +411,14 @@ bool dae::IceBlockComponent::StartGliding(direction glidingDirection)
 		
 		mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx + ammPointsW].isObstacle = true;
 		mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx + ammPointsW].object = m_pParent;
+		
+		// Diamond block
+		if (dynamic_cast<DiamondBlockComponent*>(m_pParent->GetComponent<DiamondBlockComponent>()))
+		{
+			mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx].isDiamondBlock = false;
+			mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx + ammPointsW].isDiamondBlock = true;
+		}
+		// Egg block
 		break;
 
 	default:

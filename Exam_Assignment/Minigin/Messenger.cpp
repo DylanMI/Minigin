@@ -2,11 +2,11 @@
 #include "Messenger.h"
 #include "Observer.h"
 
-void Messenger::Notify(Event eventType)
+void Messenger::Notify(Event eventType, int extraInfo)
 {
 	for (size_t i{}, s = m_Subscriptions.size(); i < s; i++)
 	{
-		if (m_Subscriptions[i].eventType == eventType) m_Subscriptions[i].client->Notify(eventType);
+		if (m_Subscriptions[i].eventType == eventType) m_Subscriptions[i].client->Notify(eventType, extraInfo);
 	}
 }
 

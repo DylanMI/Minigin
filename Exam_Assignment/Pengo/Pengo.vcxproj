@@ -161,6 +161,7 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameCommand.h" />
     <ClInclude Include="GameFieldGridComponent.h" />
+    <ClInclude Include="GameObserver.h" />
     <ClInclude Include="IceBlockComponent.h" />
     <ClInclude Include="LevelLoader.h" />
     <ClInclude Include="pch.h" />
@@ -172,6 +173,7 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameCommand.cpp" />
     <ClCompile Include="GameFieldGridComponent.cpp" />
+    <ClCompile Include="GameObserver.cpp" />
     <ClCompile Include="IceBlockComponent.cpp" />
     <ClCompile Include="LevelLoader.cpp" />
     <ClCompile Include="pch.cpp">

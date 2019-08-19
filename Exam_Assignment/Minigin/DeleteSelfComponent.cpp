@@ -44,9 +44,8 @@ void dae::DeleteSelfComponent::KillNow()
 	{
 		// de register yourself
 		CollisionManager::GetInstance().RemoveCollisionObject(m_pParent);
-
 	}
-
-	m_pParent->ClearComponents();
+	// delete yourself
+	m_scene.Remove(m_pParent);
 }
 

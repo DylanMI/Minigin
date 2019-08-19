@@ -8,7 +8,7 @@ public:
 	ScoreObserver();
 	~ScoreObserver();
 
-	virtual void Notify(Event eventType) override;
+	virtual void Notify(Event eventType,int ) override;
 
 	int GetScore();
 	void Reset();

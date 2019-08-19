@@ -5,5 +5,5 @@ class Observer
 {
 public:
 	virtual ~Observer() {}
-	virtual void Notify(Event eventType) = 0;
+	virtual void Notify(Event eventType, int extraInfo) = 0;
 };
