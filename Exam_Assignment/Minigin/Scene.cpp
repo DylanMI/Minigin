@@ -24,17 +24,17 @@ void dae::Scene::Remove(SceneObject * object)
 
 void dae::Scene::Update(const float& deltaTime)
 {
-	for(auto gameObject : mObjects)
+	for (int i{}; i < mObjects.size(); i++)
 	{
-		gameObject->Update(deltaTime);
+		mObjects[i]->Update(deltaTime);
 	}
 }
 
 void dae::Scene::Render() const
 {
-	for (const auto gameObject : mObjects)
+	for (int i{}; i < mObjects.size(); i++)
 	{
-		gameObject->Render();
+		mObjects[i]->Render();
 	}
 }
 
