@@ -6,6 +6,7 @@ dae::EggBlockComponent::EggBlockComponent(GameObject * parent, GameObject * game
 	, m_SceneRef(sceneRef)
 	, mp_gameGridObj(gameGridObj)
 {
+	Messenger::GetInstance().Notify(EVENT_EGGSPAWNED, 0);
 }
 
 dae::EggBlockComponent::~EggBlockComponent()
@@ -29,6 +30,7 @@ void dae::EggBlockComponent::Update(const float & deltaTime)
 			m_pParent->GetComponent<TextureComponent>()->SetTexture("IceBlock.png");
 			m_pParent->GetComponent<TextureComponent>()->SetWidthAndHeight(32, 32);
 			m_pParent->GetComponent<TextureComponent>()->SetIsAnimated(false);
+
 		}
 	}
 }
@@ -70,6 +72,7 @@ void dae::EggBlockComponent::Hatch(int positionIdx)
 	snoBee->AddComponent(new SnoBeeAIComponent(snoBee, Point2f{ 16,16 }, 2.0f, mp_gameGridObj));
 	snoBee->GetComponent<SnoBeeAIComponent>()->SetPosition(positionIdx);
 
+	m_SceneRef.Add(snoBee);
 
 }
 

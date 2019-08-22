@@ -11,6 +11,7 @@ dae::SnoBeeAIComponent::SnoBeeAIComponent(GameObject * parent, Point2f WidthAndH
 
 dae::SnoBeeAIComponent::~SnoBeeAIComponent()
 {
+	
 }
 
 void dae::SnoBeeAIComponent::Update(const float & deltaTime)
@@ -303,6 +304,9 @@ void dae::SnoBeeAIComponent::Die(int ScoreForDeath)
 
 	// set the location
 	mp_ScoreText->GetComponent<TextRendererComponent>()->SetPosition(m_pParent->GetTransform().GetPosition().x, m_pParent->GetTransform().GetPosition().y);
+
+	// send the event
+	Messenger::GetInstance().Notify(EVENT_ENEMYDIED, ScoreForDeath);
 
 	// and finally, kill yourself ... finally .... an end to eternal suffering
 	m_pParent->AddComponent(new DeleteSelfComponent(m_pParent, mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getSceneRef()));

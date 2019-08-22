@@ -57,6 +57,23 @@ void dae::GameFieldGridComponent::ShowEggBlocks()
 	}
 }
 
+int dae::GameFieldGridComponent::GetAmmEggsLeft()
+{
+	return m_eggBlocks.size();
+}
+
+void dae::GameFieldGridComponent::HatchNextEgg()
+{
+	int currIdx = getCurrGridIndex(Rectf{ m_eggBlocks[0]->GetTransform().GetPosition().x, m_eggBlocks[0]->GetTransform().GetPosition().y, m_eggBlocks[0]->GetComponent<IceBlockComponent>()->getWidthnHeight().x, m_eggBlocks[0]->GetComponent<IceBlockComponent>()->getWidthnHeight().y });
+
+	m_eggBlocks[0]->GetComponent<EggBlockComponent>()->Hatch(currIdx);
+	m_eggBlocks[0]->GetComponent<DeleteSelfComponent>()->KillNow();
+	
+	m_eggBlocks.erase(std::remove(m_eggBlocks.begin(), m_eggBlocks.end(), m_eggBlocks[0]), m_eggBlocks.end());
+
+	
+}
+
 std::vector<dae::GridInfo>& dae::GameFieldGridComponent::getInfoRef()
 {
 	return m_GridInfo;

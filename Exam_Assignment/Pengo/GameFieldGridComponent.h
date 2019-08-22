@@ -29,6 +29,8 @@ namespace dae
 	
 		void addEggBlock(GameObject* eggBlock);
 		void ShowEggBlocks();
+		int GetAmmEggsLeft();
+		void HatchNextEgg();
 
 		std::vector<GridInfo>& getInfoRef();
 		Scene& getSceneRef();

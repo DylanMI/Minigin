@@ -34,11 +34,23 @@ void Game::LoadGame()
 		// making the scene
 		auto& m_scene = SceneManager::GetInstance().CreateScene("Pengo");
 
+
+
 		// adding the gameFieldGrid
 		auto mp_gameFieldGridObject = new dae::GameObject();
 		mp_gameFieldGridObject->AddComponent(new dae::GameFieldGridComponent(mp_gameFieldGridObject, { 96,34,464,464 }, 13, 13, m_scene));
 		m_scene.Add(mp_gameFieldGridObject);
 		
+		// event system
+		gameObserver = new GameObserver(mp_gameFieldGridObject);
+		Messenger::GetInstance().Subscribe(gameObserver, Event::EVENT_DIAMONDSCHAIN);
+		Messenger::GetInstance().Subscribe(gameObserver, Event::EVENT_EGGHATCHED);
+		Messenger::GetInstance().Subscribe(gameObserver, Event::EVENT_EGGSPAWNED);
+		Messenger::GetInstance().Subscribe(gameObserver, Event::EVENT_ENDGAME);
+		Messenger::GetInstance().Subscribe(gameObserver, Event::EVENT_ENEMYDIED);
+		Messenger::GetInstance().Subscribe(gameObserver, Event::EVENT_ENEMYSPAWNED);
+		Messenger::GetInstance().Subscribe(gameObserver, Event::EVENT_PENGODIED);
+
 		// loading the level
 		LevelLoader::GetInstance().loadLevel(m_scene,mp_gameFieldGridObject,"../Data/Map.txt");
 			
@@ -130,5 +142,5 @@ void Game::Run()
 
 void Game::Cleanup()
 {
-
+	delete gameObserver;
 }

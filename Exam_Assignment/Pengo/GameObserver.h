@@ -1,27 +1,34 @@
 #pragma once
 #include <Observer.h>
 #include "Messenger.h"
-
-class GameObserver : public Observer
+#include "GameObject.h"
+namespace dae
 {
-public:
-	GameObserver(GameObject* gameGridObj);
-	~GameObserver();
-	virtual void Notify(Event eventType, int extraInfo) override;
+	class GameObserver : public Observer
+	{
+	public:
+		GameObserver(GameObject* gameGridObj);
+		~GameObserver();
+		virtual void Notify(Event eventType, int extraInfo) override;
 
-	int GetScore();
-	int GetLives();
-	
-	int GetAmmSnoBeeAlive();
+		int GetScore();
+		int GetLives();
 
-private:
-	int m_score;
-	int m_lives;
+		int GetAmmSnoBeeAlive();
 
-	int m_ammSnoBeeAlive;
+	private:
+		int m_score;
+		int m_lives;
 
-	bool m_isDiamondEventLocked;
+		int m_ammSnoBeeAlive;
+		int m_eggCount;
+
+		bool m_isDiamondEventLocked;
+
+		GameObject* mp_gameGridObj;
+	};
+}
 
 
-};
+
 

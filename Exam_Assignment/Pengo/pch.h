@@ -49,11 +49,10 @@
 #include "InputManager.h"
 #include "SceneManager.h"
 #include "ResourceManager.h"
-#include "CollisionManager.h"
+
 #include "Messenger.h"
 #include "Observer.h"
-#include "ScoreObserver.h"
-#include "LifeObserver.h"
+#include "GameObserver.h"
 
 
 // SDL 
