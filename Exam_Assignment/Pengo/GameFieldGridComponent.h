@@ -11,6 +11,7 @@ namespace dae
 		bool isObstacle;
 		bool isDiamondBlock;
 		bool isSnoBee;
+		bool isEggBlock;
 	};
 
 	class GameFieldGridComponent : public BaseComponent
@@ -26,6 +27,9 @@ namespace dae
 		void Update(const float& deltaTime) override;
 		void Render() const override;
 	
+		void addEggBlock(GameObject* eggBlock);
+		void ShowEggBlocks();
+
 		std::vector<GridInfo>& getInfoRef();
 		Scene& getSceneRef();
 		const int getCurrGridIndex(dae::Rectf dimensions);
@@ -37,11 +41,15 @@ namespace dae
 		Rectf m_dimension;
 		int m_ammPointsPerWidth;
 		int m_ammPointsPerHeight;
+		Scene& m_SceneRef;
+
+		// will be defined by level loader
+		std::vector<GameObject*> m_eggBlocks;
 
 		// will be calculated
 		Point2f m_distanceBtwPoints;
 		std::vector<GridInfo> m_GridInfo;
-		Scene& m_SceneRef;
+		
 	
 	};
 

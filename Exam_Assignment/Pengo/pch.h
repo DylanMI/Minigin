@@ -79,6 +79,8 @@
 #include "SnoBeeAIComponent.h"
 #include "IceBlockComponent.h"
 #include "DiamondBlockComponent.h"
+#include "EggBlockComponent.h"
+
 
 // game mainfiles
 #include "GameCommand.h"

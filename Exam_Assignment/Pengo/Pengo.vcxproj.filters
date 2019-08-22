@@ -43,6 +43,7 @@
     <ClInclude Include="GameObserver.h">
       <Filter>GameFiles</Filter>
     </ClInclude>
+    <ClInclude Include="EggBlockComponent.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -78,5 +79,6 @@
     <ClCompile Include="GameObserver.cpp">
       <Filter>GameFiles</Filter>
     </ClCompile>
+    <ClCompile Include="EggBlockComponent.cpp" />
   </ItemGroup>
 </Project>

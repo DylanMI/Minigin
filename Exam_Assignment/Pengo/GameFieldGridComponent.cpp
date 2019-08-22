@@ -44,6 +44,19 @@ void dae::GameFieldGridComponent::Render() const
 {
 }
 
+void dae::GameFieldGridComponent::addEggBlock(GameObject * eggBlock)
+{
+	m_eggBlocks.push_back(eggBlock);
+}
+
+void dae::GameFieldGridComponent::ShowEggBlocks()
+{
+	for (int i{}; i < m_eggBlocks.size(); i++)
+	{
+		m_eggBlocks[i]->GetComponent<EggBlockComponent>()->Show(2.0f);
+	}
+}
+
 std::vector<dae::GridInfo>& dae::GameFieldGridComponent::getInfoRef()
 {
 	return m_GridInfo;

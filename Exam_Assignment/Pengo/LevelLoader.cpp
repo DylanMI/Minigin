@@ -111,6 +111,40 @@ std::vector<dae::GameObject*> dae::LevelLoader::loadLevel(Scene & sceneRef, Game
 		// egg block
 		case 'E':
 			// add an egg block
+			objects.push_back(new GameObject);
+			// give components
+
+			// -- texture
+			objects.back()->AddComponent(new TextureComponent(objects.back()));
+			objects.back()->GetComponent<TextureComponent>()->SetTexture("IceBlock.png");
+			objects.back()->GetComponent<TextureComponent>()->SetWidthAndHeight(32, 32);
+			objects.back()->GetComponent<TextureComponent>()->SetIsAnimated(false);
+
+			// -- animator
+			objects.back()->AddComponent(new AnimatorComponent(objects.back()));
+
+			// -- ice functionality				
+			objects.back()->AddComponent(new IceBlockComponent(objects.back(), Point2f{ 32.0f,32.0f }, gameGridObj));
+			objects.back()->GetComponent<IceBlockComponent>()->SetPosition(counter);
+			objects.back()->GetComponent<IceBlockComponent>()->SetSpeed(6.0f);
+
+			// -- egg functionality
+			objects.back()->AddComponent(new EggBlockComponent(objects.back(), gameGridObj, sceneRef));
+
+			// -- adding a state for animation to just function
+			objects.back()->AddComponent(new StateComponent(objects.back(), false));
+			objects.back()->GetComponent<StateComponent>()->SetState(State::IDLE);
+
+			// -- add a self destruct for future use
+			objects.back()->AddComponent(new DeleteSelfComponent(objects.back(), sceneRef));
+
+			// -- Giving the game grid the information
+			gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[counter].isObstacle = true;
+			gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[counter].isEggBlock = true;
+			gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[counter].object = objects.back();
+
+			gameGridObj->GetComponent<GameFieldGridComponent>()->addEggBlock(objects.back());
+
 			counter++;
 			break;
 		// enter
@@ -130,5 +164,10 @@ std::vector<dae::GameObject*> dae::LevelLoader::loadLevel(Scene & sceneRef, Game
 		sceneRef.Add(objects[i]);		
 	}
 	inputStream.close(); 
+
+	// call needed functions for start of level
+	// call the eggs
+	gameGridObj->GetComponent<GameFieldGridComponent>()->ShowEggBlocks();
+
 	return objects;
 }

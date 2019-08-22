@@ -158,6 +158,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="DiamondBlockComponent.h" />
+    <ClInclude Include="EggBlockComponent.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameCommand.h" />
     <ClInclude Include="GameFieldGridComponent.h" />
@@ -170,6 +171,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DiamondBlockComponent.cpp" />
+    <ClCompile Include="EggBlockComponent.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameCommand.cpp" />
     <ClCompile Include="GameFieldGridComponent.cpp" />
