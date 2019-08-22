@@ -16,6 +16,7 @@ dae::AnimatorComponent::~AnimatorComponent()
 
 void dae::AnimatorComponent::Update(const float & deltaTime)
 {
+	if (!m_pParent->GetComponent<TextureComponent>()->GetIsAnimated()) return;
 	// get the current state from the parent
 	State placeholderState = m_pParent->GetComponent<StateComponent>()->GetState();
 

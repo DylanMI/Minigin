@@ -29,6 +29,7 @@ namespace dae
 		void SetTexture(const std::shared_ptr<Texture2D>& texture);
 
 		void SetIsAnimated(bool IsAnimated);
+		bool GetIsAnimated();
 		void SetAnimatedSourceRect(SDL_Rect srcrect);
 
 		void SetWidthAndHeight(int width, int height);

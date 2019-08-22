@@ -56,6 +56,11 @@ void dae::TextureComponent::SetIsAnimated(bool IsAnimated)
 	m_isAnimated = IsAnimated;
 }
 
+bool dae::TextureComponent::GetIsAnimated()
+{
+	return m_isAnimated;
+}
+
 void dae::TextureComponent::SetAnimatedSourceRect(SDL_Rect srcrect)
 {
 	m_SourceRect = srcrect;
