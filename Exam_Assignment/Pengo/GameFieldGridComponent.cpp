@@ -44,6 +44,22 @@ void dae::GameFieldGridComponent::Render() const
 {
 }
 
+void dae::GameFieldGridComponent::RemoveData(GameObject * object)
+{
+	for (int i{}; i < m_GridInfo.size(); i++)
+	{
+		if (m_GridInfo[i].object == nullptr) continue;
+		if (object->GetTransform().GetPosition() == m_GridInfo[i].object->GetTransform().GetPosition())
+		{
+			m_GridInfo[i].object = nullptr;
+			m_GridInfo[i].isDiamondBlock = false;
+			m_GridInfo[i].isObstacle = false;
+			m_GridInfo[i].isSnoBee = false;
+			m_GridInfo[i].isEggBlock = false;
+		}
+	}
+}
+
 void dae::GameFieldGridComponent::addEggBlock(GameObject * eggBlock)
 {
 	m_eggBlocks.push_back(eggBlock);

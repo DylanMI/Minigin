@@ -27,6 +27,8 @@ namespace dae
 		void Update(const float& deltaTime) override;
 		void Render() const override;
 	
+		void RemoveData(GameObject* object);
+
 		void addEggBlock(GameObject* eggBlock);
 		void ShowEggBlocks();
 		int GetAmmEggsLeft();
