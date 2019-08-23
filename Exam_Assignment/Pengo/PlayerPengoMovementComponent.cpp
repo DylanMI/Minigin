@@ -189,7 +189,7 @@ void dae::PlayerPengoMovementComponent::Move(direction direction)
 
 void dae::PlayerPengoMovementComponent::Interact()
 {
-	if (m_lastBumpedIntoIdx == -1 || m_canInteract == false) return;
+	if (m_canInteract == false) return;
 	// get the current position
 	int currIdx = mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getCurrGridIndex(Rectf{ m_currPos.x, m_currPos.y, m_WidthAndHeight.x, m_WidthAndHeight.y });
 
@@ -202,8 +202,19 @@ void dae::PlayerPengoMovementComponent::Interact()
 	switch (currentState)
 	{
 	case State::FACING_UP:
-		// instant fail checks
-		if (currIdx - ammPointsW < 0) return;
+		// check if you are at the wall
+		if (currIdx - ammPointsW < 0) 
+		{
+			// tell the top row to stun sno bees
+			for (int i{}; i < ammPointsW; i++)
+			{
+				if (mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[i].isSnoBee)
+				{
+					mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[i].object->GetComponent<StateComponent>()->SetState(State::STRUGGLING);
+				}
+			}
+		
+		}
 		
 		// check if the interacted block is the block we tried to push previously
 		if (currIdx - ammPointsW == m_lastBumpedIntoIdx)

@@ -27,6 +27,7 @@ namespace dae
 		// movement variables
 		Point2f m_WidthAndHeight;
 		float m_Speed;
+		float m_prevSpeed;
 		Point2f m_currPos;
 
 		int m_prevIdx;
@@ -34,6 +35,11 @@ namespace dae
 		bool m_IsDigging;
 
 		GameObject* m_CatchedByThis;
+
+		// struggling vars
+		const float m_struggletime = 2.0f;
+		float m_struggleTimer;
+
 
 		// used for lerping
 		Point2f m_start;

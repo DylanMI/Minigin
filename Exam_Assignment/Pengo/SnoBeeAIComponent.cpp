@@ -7,6 +7,7 @@ dae::SnoBeeAIComponent::SnoBeeAIComponent(GameObject * parent, Point2f WidthAndH
 	,m_Speed(Speed)
 	,m_WidthAndHeight(WidthAndHeight)
 {
+	m_prevSpeed = m_Speed;
 }
 
 dae::SnoBeeAIComponent::~SnoBeeAIComponent()
@@ -18,7 +19,6 @@ void dae::SnoBeeAIComponent::Update(const float & deltaTime)
 {
 
 	State randState = State::IDLE;
-
 	if (m_isTraveling && m_pParent->GetComponent<StateComponent>()->GetState() != State::CAUGHTBYBLOCK)
 	{
 		LerpPos(deltaTime);
@@ -26,8 +26,24 @@ void dae::SnoBeeAIComponent::Update(const float & deltaTime)
 
 	m_pParent->SetPosition(m_currPos);
 
+	// sno bee is struggling
+	if (m_pParent->GetComponent<StateComponent>()->GetState() == State::STRUGGLING)
+	{
+		m_struggleTimer += deltaTime;
+		m_Speed = 0.0f;
+
+		if (m_struggleTimer > m_struggletime)
+		{
+			m_pParent->GetComponent<StateComponent>()->SetState(State::IDLE);
+			m_struggleTimer = 0.0f;
+			m_Speed = m_prevSpeed;
+
+		}
+	}
+
 	// get the current position
 	if (m_isTraveling) return;
+
 	m_prevIdx = mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getCurrGridIndex(Rectf{ m_currPos.x, m_currPos.y, m_WidthAndHeight.x, m_WidthAndHeight.y });
 
 	int ammPointsW = mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getAmmPointPerWidth();
@@ -43,11 +59,6 @@ void dae::SnoBeeAIComponent::Update(const float & deltaTime)
 		randState =  State(rand() % 4);
 		// then change the actual state
 		m_pParent->GetComponent<StateComponent>()->SetState(randState);
-
-		break;
-
-		// stunned and weak
-	case State::STRUGGLING:
 
 		break;
 
@@ -325,7 +336,6 @@ dae::Point2f dae::SnoBeeAIComponent::LerpPos(float DT)
 		T = 0;
 		m_isTraveling = false;
 		m_pParent->GetComponent<StateComponent>()->SetState(State::IDLE);
-
 		// fix the grid
 		mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[m_prevIdx].object = nullptr;
 		mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[m_prevIdx].isSnoBee = false;

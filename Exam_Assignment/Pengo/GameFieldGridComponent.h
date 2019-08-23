@@ -34,6 +34,8 @@ namespace dae
 		int GetAmmEggsLeft();
 		void HatchNextEgg();
 
+		void MakeBoundryWalls();
+
 		std::vector<GridInfo>& getInfoRef();
 		Scene& getSceneRef();
 		const int getCurrGridIndex(dae::Rectf dimensions);

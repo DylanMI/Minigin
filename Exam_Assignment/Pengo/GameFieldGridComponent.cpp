@@ -48,15 +48,6 @@ void dae::GameFieldGridComponent::RemoveData(GameObject * object)
 {
 	for (int i{}; i < m_GridInfo.size(); i++)
 	{
-		// recheck entire board, that no false data is left behind
-		//if (m_GridInfo[i].object == nullptr)
-		//{
-		//	m_GridInfo[i].isDiamondBlock = false;
-		//	m_GridInfo[i].isObstacle = false;
-		//	m_GridInfo[i].isSnoBee = false;
-		//	m_GridInfo[i].isEggBlock = false;
-		//}
-		//else if (object->GetTransform().GetPosition() == m_GridInfo[i].object->GetTransform().GetPosition())
 		if (object == m_GridInfo[i].object)
 		{
 			m_GridInfo[i].object = nullptr;
@@ -98,6 +89,17 @@ void dae::GameFieldGridComponent::HatchNextEgg()
 	m_GridInfo[currIdx].object = nullptr;
 	m_GridInfo[currIdx].isEggBlock = false;
 	m_GridInfo[currIdx].isObstacle = false;
+}
+
+void dae::GameFieldGridComponent::MakeBoundryWalls()
+{
+	// up wall
+
+	// down wall
+	
+	// left wall
+
+	// right wall
 }
 
 std::vector<dae::GridInfo>& dae::GameFieldGridComponent::getInfoRef()
