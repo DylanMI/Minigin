@@ -29,6 +29,8 @@ namespace dae
 		float m_Speed;
 		Point2f m_currPos;
 
+		int m_prevIdx;
+
 		bool m_IsDigging;
 
 		GameObject* m_CatchedByThis;
