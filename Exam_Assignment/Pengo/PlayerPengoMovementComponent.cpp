@@ -89,7 +89,9 @@ void dae::PlayerPengoMovementComponent::Move(direction direction)
 	case direction::RIGHT:
 		// change state to looking right
 		m_pParent->GetComponent<StateComponent>()->SetState(State::FACING_RIGHT);
-		
+		// you are bottom right
+		if (currIdx == mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef().size() - 1) return;
+
 		// check if there is an obstacle there
 		if (mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx + 1].isObstacle)
 		{
@@ -205,15 +207,7 @@ void dae::PlayerPengoMovementComponent::Interact()
 		// check if you are at the wall
 		if (currIdx - ammPointsW < 0) 
 		{
-			// tell the top row to stun sno bees
-			for (int i{}; i < ammPointsW; i++)
-			{
-				if (mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[i].isSnoBee)
-				{
-					mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[i].object->GetComponent<StateComponent>()->SetState(State::STRUGGLING);
-				}
-			}
-		
+			StunBees(direction::UP);
 		}
 		
 		// check if the interacted block is the block we tried to push previously
@@ -330,5 +324,41 @@ dae::Point2f dae::PlayerPengoMovementComponent::LerpPos(float DT)
 	{
 		m_currPos = lerp(m_start, m_destination, T);
 		return m_currPos;
+	}
+}
+
+void dae::PlayerPengoMovementComponent::StunBees(direction dir, int ammPointsW, int ammPointsH)
+{
+	switch (dir)
+	{
+	case dae::LEFT:
+		break;
+	case dae::RIGHT:
+		break;
+	case dae::UP:
+		// tell the top row to stun sno bees
+		for (int i{}; i < ammPointsW; i++)
+		{
+			if (mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[i].isSnoBee)
+			{
+				mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[i].object->GetComponent<StateComponent>()->SetState(State::STRUGGLING);
+			}
+		}
+		break;
+	case dae::DOWN:
+		// tell the bottom row to stun sno bees
+		for (int i{}; i < ammPointsW; i++)
+		{
+			int offset = (ammPointsW * ammPointsH) - ammPointsW - 1;
+			if (mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[offset + i].isSnoBee)
+			{
+				mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[offset + i].object->GetComponent<StateComponent>()->SetState(State::STRUGGLING);
+			}
+		}
+		break;
+	case dae::NONE:
+		break;
+	default:
+		break;
 	}
 }

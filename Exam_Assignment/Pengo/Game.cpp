@@ -38,7 +38,7 @@ void Game::LoadGame()
 
 		// adding the gameFieldGrid
 		auto mp_gameFieldGridObject = new dae::GameObject();
-		mp_gameFieldGridObject->AddComponent(new dae::GameFieldGridComponent(mp_gameFieldGridObject, { 96,34,464,464 }, 13, 13, m_scene));
+		mp_gameFieldGridObject->AddComponent(new dae::GameFieldGridComponent(mp_gameFieldGridObject, { 34,27,464,464 }, 13, 13, m_scene));
 		m_scene.Add(mp_gameFieldGridObject);
 		
 		// event system

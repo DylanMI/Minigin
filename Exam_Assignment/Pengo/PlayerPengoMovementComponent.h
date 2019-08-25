@@ -54,6 +54,8 @@ namespace dae
 
 		// functions
 		Point2f LerpPos(float DT);
+
+		void StunBees(direction dir, int ammPointsW, int ammPointsH);
 	};
 
 }

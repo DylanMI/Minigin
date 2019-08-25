@@ -30,6 +30,8 @@ dae::GameFieldGridComponent::GameFieldGridComponent(GameObject * parent, dae::Re
 		}
 		
 	}
+
+	MakeBoundryWalls();
 }
 
 dae::GameFieldGridComponent::~GameFieldGridComponent()
@@ -94,12 +96,93 @@ void dae::GameFieldGridComponent::HatchNextEgg()
 void dae::GameFieldGridComponent::MakeBoundryWalls()
 {
 	// up wall
+	// -- make object, top left
+	GameObject* topWall = new GameObject();
+	
+	// put it correctly
+	topWall->SetPosition(Point2f{ m_GridInfo[0].coordinate.x - 32, m_GridInfo[0].coordinate.y - 16});
+
+	// -- give it a texture
+	topWall->AddComponent(new TextureComponent(topWall));
+	topWall->GetComponent<TextureComponent>()->SetTexture("WallBlue.png");
+	topWall->GetComponent<TextureComponent>()->SetWidthAndHeight(m_GridInfo[m_ammPointsPerWidth - 1].coordinate.x - m_GridInfo[0].coordinate.x + 64, 16);
+	topWall->GetComponent<TextureComponent>()->SetIsAnimated(false);
+	m_walls.push_back(topWall);
 
 	// down wall
+	// -- make object, left bottom
+	GameObject* botWall = new GameObject();
+	// put it correctly
+	botWall->SetPosition(Point2f{ m_GridInfo[0].coordinate.x - 32, m_GridInfo[m_ammPointsPerHeight * m_ammPointsPerWidth - 1].coordinate.y + 32 });
+
+	// -- give it a texture
+	botWall->AddComponent(new TextureComponent(botWall));
+	botWall->GetComponent<TextureComponent>()->SetTexture("WallBlue.png");
+	botWall->GetComponent<TextureComponent>()->SetWidthAndHeight(m_GridInfo[m_ammPointsPerWidth - 1].coordinate.x - m_GridInfo[0].coordinate.x + 64, 16);
+	botWall->GetComponent<TextureComponent>()->SetIsAnimated(false);
+	m_walls.push_back(botWall);
 	
 	// left wall
+	// -- make object, left bottom
+	GameObject* leftWall = new GameObject();
 
-	// right wall
+	// put it correctly
+	leftWall->SetPosition(Point2f{ m_GridInfo[0].coordinate.x - 16, m_GridInfo[0].coordinate.y - 16 });
+
+	// -- give it a texture
+	leftWall->AddComponent(new TextureComponent(leftWall));
+	leftWall->GetComponent<TextureComponent>()->SetTexture("WallBlue.png");
+	leftWall->GetComponent<TextureComponent>()->SetWidthAndHeight(16 , m_GridInfo[m_ammPointsPerHeight * m_ammPointsPerWidth - 1].coordinate.y - m_GridInfo[0].coordinate.y + 64);
+	leftWall->GetComponent<TextureComponent>()->SetIsAnimated(false);
+	m_walls.push_back(leftWall);
+
+	// right wall	
+	// -- make object, right bottom
+	GameObject* rightWall = new GameObject();
+
+	// put it correctly
+	rightWall->SetPosition(Point2f{ m_GridInfo[m_ammPointsPerWidth - 1].coordinate.x + 18, m_GridInfo[0].coordinate.y - 16 });
+
+	// -- give it a texture
+	rightWall->AddComponent(new TextureComponent(rightWall));
+	rightWall->GetComponent<TextureComponent>()->SetTexture("WallBlue.png");
+	rightWall->GetComponent<TextureComponent>()->SetWidthAndHeight(16, m_GridInfo[m_ammPointsPerHeight * m_ammPointsPerWidth - 1].coordinate.y - m_GridInfo[0].coordinate.y + 64);
+	rightWall->GetComponent<TextureComponent>()->SetIsAnimated(false);
+	m_walls.push_back(rightWall);
+	
+	for (int i{}; i < m_walls.size(); i++)
+	{
+		m_SceneRef.Add(m_walls[i]);
+	}
+}
+
+void dae::GameFieldGridComponent::ActivateWall(direction direct)
+{
+	switch (direct)
+	{
+		// 3
+	case dae::LEFT:
+		m_walls[3]->GetComponent<WallComponent>()->Activate();
+		break;
+		// 4
+	case dae::RIGHT:
+		m_walls[4]->GetComponent<WallComponent>()->Activate();
+		break;
+		//1
+	case dae::UP:
+		m_walls[1]->GetComponent<WallComponent>()->Activate();
+		break;
+		//2
+	case dae::DOWN:
+		m_walls[2]->GetComponent<WallComponent>()->Activate();
+		break;
+	case dae::NONE:
+		throw;
+		break;
+	default:
+		throw;
+		break;
+	}
 }
 
 std::vector<dae::GridInfo>& dae::GameFieldGridComponent::getInfoRef()
@@ -119,6 +202,16 @@ const int dae::GameFieldGridComponent::getCurrGridIndex(dae::Rectf dimensions)
 	{
 		if (IsPointInSquare(m_GridInfo[i].coordinate, dimensions)) return i;
 	}
+
+	// recheck with a slight offset, could be precisely on a border
+	center.x += 5;
+	center.y += 5;
+	for (int i{}, s = int(m_GridInfo.size()); i < s; i++)
+	{
+		if (IsPointInSquare(m_GridInfo[i].coordinate, dimensions)) return i;
+	}
+
+	// if even that fails, return -1 
 	return -1; 
 }
 

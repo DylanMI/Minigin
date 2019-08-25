@@ -1,6 +1,7 @@
 #pragma once
 #include "BaseComponent.h"
 #include "GameObject.h"
+#include "PlayerPengoMovementComponent.h"
 
 namespace dae
 {
@@ -35,7 +36,8 @@ namespace dae
 		void HatchNextEgg();
 
 		void MakeBoundryWalls();
-
+		void ActivateWall(direction direct);
+		
 		std::vector<GridInfo>& getInfoRef();
 		Scene& getSceneRef();
 		const int getCurrGridIndex(dae::Rectf dimensions);
@@ -51,6 +53,8 @@ namespace dae
 
 		// will be defined by level loader
 		std::vector<GameObject*> m_eggBlocks;
+
+		std::vector<GameObject*> m_walls;
 
 		// will be calculated
 		Point2f m_distanceBtwPoints;

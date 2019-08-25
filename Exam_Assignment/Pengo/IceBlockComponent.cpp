@@ -490,9 +490,6 @@ void dae::IceBlockComponent::StartBreaking(float speedOfBreak)
 	// start selfDestruct
 	m_pParent->GetComponent<DeleteSelfComponent>()->StartSelfDestruct(speedOfBreak);
 
-	
-
-
 }
 
 bool dae::IceBlockComponent::GetIsSliding()

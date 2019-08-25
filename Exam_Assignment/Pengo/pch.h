@@ -79,7 +79,7 @@
 #include "IceBlockComponent.h"
 #include "DiamondBlockComponent.h"
 #include "EggBlockComponent.h"
-
+#include "WallComponent.h"
 
 // game mainfiles
 #include "GameCommand.h"
