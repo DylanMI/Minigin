@@ -52,7 +52,7 @@ void Game::LoadGame()
 		Messenger::GetInstance().Subscribe(gameObserver, Event::EVENT_PENGODIED);
 
 		// loading the level
-		LevelLoader::GetInstance().loadLevel(m_scene,mp_gameFieldGridObject,"../Data/Map.txt");
+		LevelLoader::GetInstance().LoadLevel(m_scene,mp_gameFieldGridObject,"../Data/Map.txt");
 			
 		// adding the player 
 		auto mp_PlayerPengo = new dae::GameObject();
@@ -93,6 +93,15 @@ void Game::LoadGame()
 		mp_FPSObj->AddComponent(new FPSComponent(mp_FPSObj));
 
 		m_scene.Add(mp_FPSObj);
+
+		// adding score
+		auto mp_ScoreCounter = new dae::GameObject();
+		mp_ScoreCounter->AddComponent(new TextRendererComponent("SCORE: 0", font, mp_ScoreCounter));
+		// adding ScoreChecker Component
+		mp_ScoreCounter->AddComponent(new UIScoreComponent(mp_ScoreCounter, gameObserver));
+		mp_ScoreCounter->GetComponent<TextRendererComponent>()->SetPosition(400, 0);
+		m_scene.Add(mp_ScoreCounter);
+
 
 
 

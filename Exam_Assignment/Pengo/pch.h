@@ -39,8 +39,6 @@
 #include "CollisionCheckerComponent.h"
 #include "StateComponent.h"
 #include "DeleteSelfComponent.h"
-#include "LifeComponent.h"
-#include "ScoreComponent.h"
 
 // services
 #include "ServiceLocator.h"
@@ -80,6 +78,8 @@
 #include "DiamondBlockComponent.h"
 #include "EggBlockComponent.h"
 #include "WallComponent.h"
+#include "UIScoreComponent.h"
+
 
 // game mainfiles
 #include "GameCommand.h"

@@ -2,7 +2,7 @@
 #include "LevelLoader.h"
 
 using namespace dae;
-std::vector<dae::GameObject*> dae::LevelLoader::loadLevel(Scene & sceneRef, GameObject* gameGridObj, std::string path)
+std::vector<dae::GameObject*> dae::LevelLoader::LoadLevel(Scene & sceneRef, GameObject* gameGridObj, std::string path)
 {
 	int counter{};
 	std::vector<dae::GameObject*> objects;

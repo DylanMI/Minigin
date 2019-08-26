@@ -168,6 +168,7 @@
     <ClInclude Include="pch.h" />
     <ClInclude Include="PlayerPengoMovementComponent.h" />
     <ClInclude Include="SnoBeeAIComponent.h" />
+    <ClInclude Include="UIScoreComponent.h" />
     <ClInclude Include="WallComponent.h" />
   </ItemGroup>
   <ItemGroup>
@@ -188,6 +189,7 @@
     <ClCompile Include="Pengo.cpp" />
     <ClCompile Include="PlayerPengoMovementComponent.cpp" />
     <ClCompile Include="SnoBeeAIComponent.cpp" />
+    <ClCompile Include="UIScoreComponent.cpp" />
     <ClCompile Include="WallComponent.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

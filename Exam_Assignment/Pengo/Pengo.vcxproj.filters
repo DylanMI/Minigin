@@ -49,6 +49,9 @@
     <ClInclude Include="WallComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
+    <ClInclude Include="UIScoreComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -88,6 +91,9 @@
       <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="WallComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="UIScoreComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
   </ItemGroup>

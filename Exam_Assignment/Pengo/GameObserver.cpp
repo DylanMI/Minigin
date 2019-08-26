@@ -27,7 +27,7 @@ void dae::GameObserver::Notify(Event eventType, int extraInfo)
 		break;
 	case Event::EVENT_ENEMYDIED:
 		// award points according to extraInfo
-
+		m_score += extraInfo;
 		// tell the next egg to hatch
 		if (mp_gameGridObj->GetComponent<GameFieldGridComponent>()->GetAmmEggsLeft() > 0)
 		{
@@ -59,7 +59,7 @@ void dae::GameObserver::Notify(Event eventType, int extraInfo)
 		
 		// award points, and lock this event untill reset
 		m_isDiamondEventLocked = true;
-
+		m_score += 10000;
 		break;
 	case Event::EVENT_ENDGAME:
 
