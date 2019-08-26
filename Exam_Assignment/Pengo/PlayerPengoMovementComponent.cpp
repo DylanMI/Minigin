@@ -361,7 +361,7 @@ void dae::PlayerPengoMovementComponent::StunBees(direction dir, int ammPointsW, 
 		// tell the left row to stun sno bees
 		for (int i{}; i < ammPointsW; i++)
 		{
-			int offset = i * ammPointsW - 1;
+			int offset = i * ammPointsW;
 			if (i == 0) offset = 0;
 
 			if (mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[offset].isSnoBee)
@@ -372,7 +372,15 @@ void dae::PlayerPengoMovementComponent::StunBees(direction dir, int ammPointsW, 
 		break;
 	case dae::RIGHT:
 		mp_gameGridObj->GetComponent<GameFieldGridComponent>()->ActivateWall(direction::RIGHT);
+		for (int i{}; i < ammPointsW; i++)
+		{
+			int offset = (ammPointsW - 1) + (ammPointsW * i);
 
+			if (mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[offset].isSnoBee)
+			{
+				mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[offset].object->GetComponent<StateComponent>()->SetState(State::STRUGGLING);
+			}
+		}
 		break;
 	case dae::UP:
 		mp_gameGridObj->GetComponent<GameFieldGridComponent>()->ActivateWall(direction::UP);
