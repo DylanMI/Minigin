@@ -204,17 +204,19 @@ void dae::PlayerPengoMovementComponent::Interact()
 	switch (currentState)
 	{
 	case State::FACING_UP:
+		// failsafe
+		if (currIdx == -1) return;
 		// check if you are at the wall
-		if (currIdx - ammPointsW < 0) 
+		if (currIdx - ammPointsW < 0)
 		{
-			StunBees(direction::UP);
+			StunBees(direction::UP, ammPointsW, ammPointsH);
 		}
-		
+
 		// check if the interacted block is the block we tried to push previously
 		if (currIdx - ammPointsW == m_lastBumpedIntoIdx)
 		{
 			// try to push it
-			if (! mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[m_lastBumpedIntoIdx].object->GetComponent<IceBlockComponent>()->StartGliding(direction::UP))
+			if (!mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[m_lastBumpedIntoIdx].object->GetComponent<IceBlockComponent>()->StartGliding(direction::UP))
 			{
 				// break it
 				// tell the block to break
@@ -224,14 +226,19 @@ void dae::PlayerPengoMovementComponent::Interact()
 				mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx - ammPointsW].object = nullptr;
 
 			}
-	
+
 			m_lastBumpedIntoIdx = -1;
 		}
 
 		break;
 	case State::FACING_DOWN:
-		// instant fail checks
-		if (currIdx + ammPointsW >= mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef().size()) return;
+		// failsafe
+		if (currIdx == -1) return;
+		// check if you are at a wall
+		if (currIdx + ammPointsW >= mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef().size())
+		{
+			StunBees(direction::DOWN, ammPointsW, ammPointsH);
+		}
 		
 		// check if the interacted block is the block we tried to push previously
 		if (currIdx + ammPointsW == m_lastBumpedIntoIdx)
@@ -252,9 +259,14 @@ void dae::PlayerPengoMovementComponent::Interact()
 
 		break;
 	case State::FACING_LEFT:
-		// instant fail checks
-		if (currIdx == 0) return;
-		if (currIdx % ammPointsW == 0) return;
+		// failsafe
+		if (currIdx == -1) return;
+		// check if you are at a wall
+		if (currIdx == 0 || currIdx % ammPointsW == 0)
+		{
+			StunBees(direction::LEFT, ammPointsW, ammPointsH);
+			return;
+		}
 		// check if the interacted block is the block we tried to push previously
 		if (currIdx - 1 == m_lastBumpedIntoIdx)
 		{
@@ -274,8 +286,13 @@ void dae::PlayerPengoMovementComponent::Interact()
 		
 		break;
 	case State::FACING_RIGHT:
-		// instant fail checks
-		if (currIdx % ammPointsW == ammPointsW - 1) return;
+		// failsafe
+		if (currIdx == -1) return;
+		// check if you are at a wall
+		if (currIdx % ammPointsW == ammPointsW - 1)
+		{
+			StunBees(direction::RIGHT, ammPointsW, ammPointsH);
+		}
 		// check if the interacted block is the block we tried to push previously
 		if (currIdx + 1 == m_lastBumpedIntoIdx)
 		{
@@ -332,10 +349,25 @@ void dae::PlayerPengoMovementComponent::StunBees(direction dir, int ammPointsW, 
 	switch (dir)
 	{
 	case dae::LEFT:
+		mp_gameGridObj->GetComponent<GameFieldGridComponent>()->ActivateWall(direction::LEFT);
+		// tell the left row to stun sno bees
+		for (int i{}; i < ammPointsW; i++)
+		{
+			int offset = i * ammPointsW - 1;
+			if (i == 0) offset = 0;
+
+			if (mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[offset].isSnoBee)
+			{
+				mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[offset].object->GetComponent<StateComponent>()->SetState(State::STRUGGLING);
+			}
+		}
 		break;
 	case dae::RIGHT:
+		mp_gameGridObj->GetComponent<GameFieldGridComponent>()->ActivateWall(direction::RIGHT);
+
 		break;
 	case dae::UP:
+		mp_gameGridObj->GetComponent<GameFieldGridComponent>()->ActivateWall(direction::UP);
 		// tell the top row to stun sno bees
 		for (int i{}; i < ammPointsW; i++)
 		{
@@ -346,6 +378,7 @@ void dae::PlayerPengoMovementComponent::StunBees(direction dir, int ammPointsW, 
 		}
 		break;
 	case dae::DOWN:
+		mp_gameGridObj->GetComponent<GameFieldGridComponent>()->ActivateWall(direction::DOWN);
 		// tell the bottom row to stun sno bees
 		for (int i{}; i < ammPointsW; i++)
 		{

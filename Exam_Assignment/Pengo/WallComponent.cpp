@@ -3,8 +3,8 @@
 
 dae::WallComponent::WallComponent(GameObject * parent)
 	:BaseComponent(parent)
-	, m_redTime(0.0f)
-	, m_redTimer(2.0f)
+	, m_redTime(2.0f)
+	, m_redTimer(0.0f)
 	, m_isRed(false)
 {
 
@@ -26,6 +26,7 @@ void dae::WallComponent::Update(const float & deltaTime)
 			m_isRed = false;
 			// set the texture back
 			m_pParent->GetComponent<TextureComponent>()->SetTexture("WallBlue.png");
+			m_redTimer = 0.0f;
 		}
 	}
 }

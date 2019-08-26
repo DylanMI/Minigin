@@ -84,6 +84,9 @@ void dae::SnoBeeAIComponent::Update(const float & deltaTime)
 		// check if there is an obstacle there, then set the state accordingly
 		if (mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[m_prevIdx - 1].isObstacle)
 		{
+			// check if the block is moving
+			if (mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[m_prevIdx - 1].object->GetComponent<IceBlockComponent>()->GetIsSliding()) return;
+
 			// move but set the Diggingbool
 			m_start = m_currPos;
 			m_destination = mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[m_prevIdx - 1].coordinate;
@@ -131,6 +134,9 @@ void dae::SnoBeeAIComponent::Update(const float & deltaTime)
 		// check if there is an obstacle there, then set the state accordingly
 		if (mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[m_prevIdx + 1].isObstacle)
 		{
+			// check if the block is moving
+			if (mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[m_prevIdx + 1].object->GetComponent<IceBlockComponent>()->GetIsSliding()) return;
+
 			// move but set the Diggingbool
 			m_start = m_currPos;
 			m_destination = mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[m_prevIdx + 1].coordinate;
@@ -182,6 +188,9 @@ void dae::SnoBeeAIComponent::Update(const float & deltaTime)
 		// check if there is an obstacle there, then set the state accordingly
 		if (mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[m_prevIdx - ammPointsW].isObstacle)
 		{
+			// check if the block is moving
+			if (mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[m_prevIdx - ammPointsW].object->GetComponent<IceBlockComponent>()->GetIsSliding()) return;
+
 			// move but set the Diggingbool
 			m_start = m_currPos;
 			m_destination = mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[m_prevIdx - ammPointsW].coordinate;
@@ -226,6 +235,9 @@ void dae::SnoBeeAIComponent::Update(const float & deltaTime)
 		// check if there is an obstacle there, then set the state accordingly
 		if (mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[m_prevIdx + ammPointsW].isObstacle)
 		{
+			// check if the block is moving
+			if (mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[m_prevIdx + ammPointsW].object->GetComponent<IceBlockComponent>()->GetIsSliding()) return;
+
 			// move but set the Diggingbool
 			m_start = m_currPos;
 			m_destination = mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[m_prevIdx + ammPointsW].coordinate;
@@ -285,6 +297,10 @@ void dae::SnoBeeAIComponent::SetPosition(int idxPos)
 
 void dae::SnoBeeAIComponent::GetCatched(GameObject * Catcher)
 {
+	// failsafe
+	if (m_CatchedByThis == Catcher) return;
+	
+
 	m_isTraveling = false;
 	mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[m_prevIdx].isSnoBee = false;
 

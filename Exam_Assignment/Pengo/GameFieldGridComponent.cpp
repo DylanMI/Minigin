@@ -99,6 +99,9 @@ void dae::GameFieldGridComponent::MakeBoundryWalls()
 	// -- make object, top left
 	GameObject* topWall = new GameObject();
 	
+	// -- give it the wall component
+	topWall->AddComponent(new WallComponent(topWall));
+
 	// put it correctly
 	topWall->SetPosition(Point2f{ m_GridInfo[0].coordinate.x - 32, m_GridInfo[0].coordinate.y - 16});
 
@@ -112,6 +115,10 @@ void dae::GameFieldGridComponent::MakeBoundryWalls()
 	// down wall
 	// -- make object, left bottom
 	GameObject* botWall = new GameObject();
+	
+	// -- give it the wall component
+	botWall->AddComponent(new WallComponent(botWall));
+	
 	// put it correctly
 	botWall->SetPosition(Point2f{ m_GridInfo[0].coordinate.x - 32, m_GridInfo[m_ammPointsPerHeight * m_ammPointsPerWidth - 1].coordinate.y + 32 });
 
@@ -126,6 +133,9 @@ void dae::GameFieldGridComponent::MakeBoundryWalls()
 	// -- make object, left bottom
 	GameObject* leftWall = new GameObject();
 
+	// -- give it the wall component
+	leftWall->AddComponent(new WallComponent(leftWall));
+
 	// put it correctly
 	leftWall->SetPosition(Point2f{ m_GridInfo[0].coordinate.x - 16, m_GridInfo[0].coordinate.y - 16 });
 
@@ -139,9 +149,12 @@ void dae::GameFieldGridComponent::MakeBoundryWalls()
 	// right wall	
 	// -- make object, right bottom
 	GameObject* rightWall = new GameObject();
+	
+	// -- give it the wall component
+	rightWall->AddComponent(new WallComponent(rightWall));
 
 	// put it correctly
-	rightWall->SetPosition(Point2f{ m_GridInfo[m_ammPointsPerWidth - 1].coordinate.x + 18, m_GridInfo[0].coordinate.y - 16 });
+	rightWall->SetPosition(Point2f{ m_GridInfo[m_ammPointsPerWidth - 1].coordinate.x + 32, m_GridInfo[0].coordinate.y - 16 });
 
 	// -- give it a texture
 	rightWall->AddComponent(new TextureComponent(rightWall));
@@ -162,19 +175,19 @@ void dae::GameFieldGridComponent::ActivateWall(direction direct)
 	{
 		// 3
 	case dae::LEFT:
-		m_walls[3]->GetComponent<WallComponent>()->Activate();
+		m_walls[2]->GetComponent<WallComponent>()->Activate();
 		break;
 		// 4
 	case dae::RIGHT:
-		m_walls[4]->GetComponent<WallComponent>()->Activate();
+		m_walls[3]->GetComponent<WallComponent>()->Activate();
 		break;
 		//1
 	case dae::UP:
-		m_walls[1]->GetComponent<WallComponent>()->Activate();
+		m_walls[0]->GetComponent<WallComponent>()->Activate();
 		break;
 		//2
 	case dae::DOWN:
-		m_walls[2]->GetComponent<WallComponent>()->Activate();
+		m_walls[1]->GetComponent<WallComponent>()->Activate();
 		break;
 	case dae::NONE:
 		throw;
@@ -204,8 +217,8 @@ const int dae::GameFieldGridComponent::getCurrGridIndex(dae::Rectf dimensions)
 	}
 
 	// recheck with a slight offset, could be precisely on a border
-	center.x += 5;
-	center.y += 5;
+	center.x += 0.5f;
+	center.y += 0.5f;
 	for (int i{}, s = int(m_GridInfo.size()); i < s; i++)
 	{
 		if (IsPointInSquare(m_GridInfo[i].coordinate, dimensions)) return i;
