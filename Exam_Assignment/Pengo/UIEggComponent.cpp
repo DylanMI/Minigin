@@ -6,7 +6,7 @@ dae::UIEggComponent::UIEggComponent(GameObject * parent, GameObserver * GameObse
 	, m_GameObserver(GameObserver)
 	, m_prevEggs (0)
 {
-	m_prevEggs = m_GameObserver->GetEggCount();
+
 }
 
 void dae::UIEggComponent::Update(const float & deltaTime)
