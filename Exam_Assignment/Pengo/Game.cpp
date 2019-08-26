@@ -87,9 +87,10 @@ void Game::LoadGame()
 		
 		// adding UI
 		//adding FPS counter
-		auto font = ResourceManager::GetInstance().LoadFont("Lingua.otf", 36);
+		auto font = ResourceManager::GetInstance().LoadFont("Lingua.otf", 20);
 		auto mp_FPSObj = new dae::GameObject();
 		mp_FPSObj->AddComponent(new TextRendererComponent("xxx", font, mp_FPSObj));
+		mp_FPSObj->GetComponent<TextRendererComponent>()->SetPosition(570, 460);
 		mp_FPSObj->AddComponent(new FPSComponent(mp_FPSObj));
 
 		m_scene.Add(mp_FPSObj);
@@ -99,10 +100,24 @@ void Game::LoadGame()
 		mp_ScoreCounter->AddComponent(new TextRendererComponent("SCORE: 0", font, mp_ScoreCounter));
 		// adding ScoreChecker Component
 		mp_ScoreCounter->AddComponent(new UIScoreComponent(mp_ScoreCounter, gameObserver));
-		mp_ScoreCounter->GetComponent<TextRendererComponent>()->SetPosition(400, 0);
+		mp_ScoreCounter->GetComponent<TextRendererComponent>()->SetPosition(500, 0);
 		m_scene.Add(mp_ScoreCounter);
 
-
+		// adding lives
+		auto mp_liveCounter = new dae::GameObject();
+		mp_liveCounter->AddComponent(new TextRendererComponent("LIVES: 0", font, mp_liveCounter));
+		// adding ScoreChecker Component
+		mp_liveCounter->AddComponent(new UILiveComponent(mp_liveCounter, gameObserver));
+		mp_liveCounter->GetComponent<TextRendererComponent>()->SetPosition(500, 50);
+		m_scene.Add(mp_liveCounter);
+		
+		// adding eggcounts
+		auto mp_eggCounter = new dae::GameObject();
+		mp_eggCounter->AddComponent(new TextRendererComponent("EGGS: 0", font, mp_eggCounter));
+		// adding ScoreChecker Component
+		mp_eggCounter->AddComponent(new UIEggComponent(mp_eggCounter, gameObserver));
+		mp_eggCounter->GetComponent<TextRendererComponent>()->SetPosition(500, 100);
+		m_scene.Add(mp_eggCounter);
 
 
 	}

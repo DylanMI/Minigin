@@ -82,6 +82,11 @@ int dae::GameObserver::GetLives()
 	return m_lives;
 }
 
+int dae::GameObserver::GetEggCount()
+{
+	return m_eggCount;
+}
+
 int dae::GameObserver::GetAmmSnoBeeAlive()
 {
 	return m_ammSnoBeeAlive;

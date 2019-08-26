@@ -78,8 +78,11 @@
 #include "DiamondBlockComponent.h"
 #include "EggBlockComponent.h"
 #include "WallComponent.h"
-#include "UIScoreComponent.h"
 
+// UI components
+#include "UIScoreComponent.h"
+#include "UILiveComponent.h"
+#include "UIEggComponent.h"
 
 // game mainfiles
 #include "GameCommand.h"

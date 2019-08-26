@@ -13,6 +13,7 @@ namespace dae
 
 		int GetScore();
 		int GetLives();
+		int GetEggCount();
 
 		int GetAmmSnoBeeAlive();
 

@@ -52,6 +52,12 @@
     <ClInclude Include="UIScoreComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
+    <ClInclude Include="UILiveComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="UIEggComponent.h">
+      <Filter>GameFiles</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -96,5 +102,9 @@
     <ClCompile Include="UIScoreComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
+    <ClCompile Include="UILiveComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="UIEggComponent.cpp" />
   </ItemGroup>
 </Project>

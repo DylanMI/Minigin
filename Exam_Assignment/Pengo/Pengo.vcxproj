@@ -168,6 +168,8 @@
     <ClInclude Include="pch.h" />
     <ClInclude Include="PlayerPengoMovementComponent.h" />
     <ClInclude Include="SnoBeeAIComponent.h" />
+    <ClInclude Include="UIEggComponent.h" />
+    <ClInclude Include="UILiveComponent.h" />
     <ClInclude Include="UIScoreComponent.h" />
     <ClInclude Include="WallComponent.h" />
   </ItemGroup>
@@ -189,6 +191,8 @@
     <ClCompile Include="Pengo.cpp" />
     <ClCompile Include="PlayerPengoMovementComponent.cpp" />
     <ClCompile Include="SnoBeeAIComponent.cpp" />
+    <ClCompile Include="UIEggComponent.cpp" />
+    <ClCompile Include="UILiveComponent.cpp" />
     <ClCompile Include="UIScoreComponent.cpp" />
     <ClCompile Include="WallComponent.cpp" />
   </ItemGroup>
