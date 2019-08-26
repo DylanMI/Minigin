@@ -82,13 +82,17 @@ void dae::SnoBeeAIComponent::Update(const float & deltaTime)
 		}
 
 		// check if there is an obstacle there, then set the state accordingly
-		if (mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[m_prevIdx - 1].isObstacle)
+		if (mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[m_prevIdx - 1].isObstacle && mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[m_prevIdx - 1].object != nullptr)
 		{
 			// check if the block is moving
 			if (mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[m_prevIdx - 1].object->GetComponent<IceBlockComponent>()->GetIsSliding()) return;
 
-			// check if the block is a diamond
-			if (mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[m_prevIdx - 1].isDiamondBlock) return;
+			// check if the block is a diamond or an egg block
+			if (mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[m_prevIdx - 1].isDiamondBlock || mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[m_prevIdx - 1].isEggBlock)
+			{
+				m_pParent->GetComponent<StateComponent>()->SetState(State::IDLE);
+				return;
+			}
 
 			// move but set the Diggingbool
 			m_start = m_currPos;
@@ -135,12 +139,16 @@ void dae::SnoBeeAIComponent::Update(const float & deltaTime)
 
 
 		// check if there is an obstacle there, then set the state accordingly
-		if (mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[m_prevIdx + 1].isObstacle)
+		if (mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[m_prevIdx + 1].isObstacle && mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[m_prevIdx + 1].object != nullptr)
 		{
 			// check if the block is moving
 			if (mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[m_prevIdx + 1].object->GetComponent<IceBlockComponent>()->GetIsSliding()) return;
-			// check if the block is a diamond
-			if (mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[m_prevIdx + 1].isDiamondBlock) return;
+			// check if the block is a diamond or an egg
+			if (mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[m_prevIdx + 1].isDiamondBlock || mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[m_prevIdx + 1].isEggBlock)
+			{
+				m_pParent->GetComponent<StateComponent>()->SetState(State::IDLE);
+				return;
+			}
 			// move but set the Diggingbool
 			m_start = m_currPos;
 			m_destination = mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[m_prevIdx + 1].coordinate;
@@ -190,12 +198,16 @@ void dae::SnoBeeAIComponent::Update(const float & deltaTime)
 
 
 		// check if there is an obstacle there, then set the state accordingly
-		if (mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[m_prevIdx - ammPointsW].isObstacle)
+		if (mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[m_prevIdx - ammPointsW].isObstacle && mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[m_prevIdx - ammPointsW].object != nullptr)
 		{
 			// check if the block is moving
 			if (mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[m_prevIdx - ammPointsW].object->GetComponent<IceBlockComponent>()->GetIsSliding()) return;
-			// check if the block is a diamond
-			if (mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[m_prevIdx - ammPointsW].isDiamondBlock) return;
+			// check if the block is a diamond or an egg block
+			if (mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[m_prevIdx - ammPointsW].isDiamondBlock || mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[m_prevIdx - ammPointsW].isEggBlock)
+			{
+				m_pParent->GetComponent<StateComponent>()->SetState(State::IDLE);
+				return;
+			}
 			// move but set the Diggingbool
 			m_start = m_currPos;
 			m_destination = mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[m_prevIdx - ammPointsW].coordinate;
@@ -238,12 +250,16 @@ void dae::SnoBeeAIComponent::Update(const float & deltaTime)
 		}
 
 		// check if there is an obstacle there, then set the state accordingly
-		if (mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[m_prevIdx + ammPointsW].isObstacle)
+		if (mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[m_prevIdx + ammPointsW].isObstacle && mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[m_prevIdx + ammPointsW].object != nullptr)
 		{
 			// check if the block is moving
 			if (mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[m_prevIdx + ammPointsW].object->GetComponent<IceBlockComponent>()->GetIsSliding()) return;
-			// check if the block is a diamond
-			if (mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[m_prevIdx +ammPointsW].isDiamondBlock) return;
+			// check if the block is a diamond or an egg block
+			if (mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[m_prevIdx + ammPointsW].isDiamondBlock || mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[m_prevIdx + ammPointsW].isEggBlock)
+			{
+				m_pParent->GetComponent<StateComponent>()->SetState(State::IDLE);
+				return;
+			}
 			// move but set the Diggingbool
 			m_start = m_currPos;
 			m_destination = mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[m_prevIdx + ammPointsW].coordinate;
@@ -270,7 +286,6 @@ void dae::SnoBeeAIComponent::Update(const float & deltaTime)
 
 		// Once you have moved, fix the gameGrid info
 		mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[m_prevIdx + ammPointsW].isSnoBee = true;
-
 		mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[m_prevIdx + ammPointsW].object = m_pParent;
 
 		break;
@@ -306,9 +321,29 @@ void dae::SnoBeeAIComponent::GetCatched(GameObject * Catcher)
 	// failsafe
 	if (m_CatchedByThis == Catcher) return;
 	
+	int ammPointsW = mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getAmmPointPerWidth();
+	int ammPointsH = mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getAmmPointPerHeight();
 
 	m_isTraveling = false;
 	mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[m_prevIdx].isSnoBee = false;
+
+	switch (m_pParent->GetComponent<StateComponent>()->GetState())
+	{
+	case State::FACING_LEFT:
+		mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[m_prevIdx - 1].isSnoBee = false;
+		break;
+	case State::FACING_RIGHT:
+		mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[m_prevIdx + 1].isSnoBee = false;
+		break;
+	case State::FACING_UP:
+		mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[m_prevIdx - ammPointsW].isSnoBee = false;
+		break;
+	case State::FACING_DOWN:
+		mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[m_prevIdx + ammPointsW].isSnoBee = false;
+		break;
+	default:
+		break;
+	}
 
 	m_CatchedByThis = Catcher;
 	m_pParent->GetComponent<StateComponent>()->SetState(State::CAUGHTBYBLOCK);
