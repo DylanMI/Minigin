@@ -87,6 +87,9 @@ void dae::SnoBeeAIComponent::Update(const float & deltaTime)
 			// check if the block is moving
 			if (mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[m_prevIdx - 1].object->GetComponent<IceBlockComponent>()->GetIsSliding()) return;
 
+			// check if the block is a diamond
+			if (mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[m_prevIdx - 1].isDiamondBlock) return;
+
 			// move but set the Diggingbool
 			m_start = m_currPos;
 			m_destination = mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[m_prevIdx - 1].coordinate;
@@ -136,7 +139,8 @@ void dae::SnoBeeAIComponent::Update(const float & deltaTime)
 		{
 			// check if the block is moving
 			if (mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[m_prevIdx + 1].object->GetComponent<IceBlockComponent>()->GetIsSliding()) return;
-
+			// check if the block is a diamond
+			if (mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[m_prevIdx + 1].isDiamondBlock) return;
 			// move but set the Diggingbool
 			m_start = m_currPos;
 			m_destination = mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[m_prevIdx + 1].coordinate;
@@ -190,7 +194,8 @@ void dae::SnoBeeAIComponent::Update(const float & deltaTime)
 		{
 			// check if the block is moving
 			if (mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[m_prevIdx - ammPointsW].object->GetComponent<IceBlockComponent>()->GetIsSliding()) return;
-
+			// check if the block is a diamond
+			if (mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[m_prevIdx - ammPointsW].isDiamondBlock) return;
 			// move but set the Diggingbool
 			m_start = m_currPos;
 			m_destination = mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[m_prevIdx - ammPointsW].coordinate;
@@ -237,7 +242,8 @@ void dae::SnoBeeAIComponent::Update(const float & deltaTime)
 		{
 			// check if the block is moving
 			if (mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[m_prevIdx + ammPointsW].object->GetComponent<IceBlockComponent>()->GetIsSliding()) return;
-
+			// check if the block is a diamond
+			if (mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[m_prevIdx +ammPointsW].isDiamondBlock) return;
 			// move but set the Diggingbool
 			m_start = m_currPos;
 			m_destination = mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[m_prevIdx + ammPointsW].coordinate;

@@ -218,6 +218,8 @@ void dae::PlayerPengoMovementComponent::Interact()
 			// try to push it
 			if (!mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[m_lastBumpedIntoIdx].object->GetComponent<IceBlockComponent>()->StartGliding(direction::UP))
 			{
+				// check if its a diamond, if so then break
+				if (mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx - ammPointsW].isDiamondBlock) break;
 				// break it
 				// tell the block to break
 				mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx - ammPointsW].object->GetComponent<IceBlockComponent>()->StartBreaking(m_Speed / 2.0f);
@@ -246,6 +248,8 @@ void dae::PlayerPengoMovementComponent::Interact()
 			// try to push it
 			if (! mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[m_lastBumpedIntoIdx].object->GetComponent<IceBlockComponent>()->StartGliding(direction::DOWN))
 			{
+				// check if its a diamond, if so then break
+				if (mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx + ammPointsW].isDiamondBlock) break;
 				// break it
 				// tell the block to break
 				mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx + ammPointsW].object->GetComponent<IceBlockComponent>()->StartBreaking(m_Speed / 2.0f);
@@ -273,6 +277,8 @@ void dae::PlayerPengoMovementComponent::Interact()
 			// try to push it
 			if (! mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[m_lastBumpedIntoIdx].object->GetComponent<IceBlockComponent>()->StartGliding(direction::LEFT))
 			{
+				// check if its a diamond, if so then break
+				if (mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx - 1].isDiamondBlock) break;
 				// break it
 				// tell the block to break
 				mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx - 1].object->GetComponent<IceBlockComponent>()->StartBreaking(m_Speed / 2.0f);
@@ -299,6 +305,8 @@ void dae::PlayerPengoMovementComponent::Interact()
 			// try to push it
 			if (!mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[m_lastBumpedIntoIdx].object->GetComponent<IceBlockComponent>()->StartGliding(direction::RIGHT))
 			{
+				// check if its a diamond, if so then break
+				if (mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx + 1].isDiamondBlock) break;
 				// break it
 				// tell the block to break
 				mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx + 1].object->GetComponent<IceBlockComponent>()->StartBreaking(m_Speed / 2.0f);
