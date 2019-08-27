@@ -11,15 +11,16 @@ namespace dae
 		void Add(SceneObject* object);
 		void Remove(SceneObject* object);
 
+		void ClearAll();
+
 		void Update(const float& deltaTime);
 		void Render() const;
 
-
-
+		Scene();
 		~Scene();
 		Scene(const Scene& other) = delete;
 		Scene(Scene&& other) = delete;
-		Scene& operator=(const Scene& other) = delete;
+		Scene& operator=(const Scene& other);
 		Scene& operator=(Scene&& other) = delete;
 
 	private: 

@@ -5,6 +5,7 @@
 #include <algorithm>
 unsigned int dae::Scene::idCounter = 0;
 
+dae::Scene::Scene() : mName("UNDEFINED SCENE") {}
 dae::Scene::Scene(const std::string& name) : mName(name) {}
 
 void dae::Scene::Add(SceneObject* object)
@@ -20,6 +21,16 @@ void dae::Scene::Remove(SceneObject * object)
 	}
 	delete object;
 	mObjects.erase(std::remove(mObjects.begin(), mObjects.end(), object), mObjects.end());
+}
+
+void dae::Scene::ClearAll()
+{
+	for (int i{}; i < mObjects.size(); i++)
+	{
+		delete mObjects[i];
+	}
+	mObjects.resize(0);
+
 }
 
 void dae::Scene::Update(const float& deltaTime)
