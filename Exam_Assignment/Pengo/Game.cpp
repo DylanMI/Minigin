@@ -46,6 +46,7 @@ void Game::LoadGame()
 		Messenger::GetInstance().Subscribe(gameObserver, Event::EVENT_DIAMONDSCHAIN);
 		Messenger::GetInstance().Subscribe(gameObserver, Event::EVENT_EGGHATCHED);
 		Messenger::GetInstance().Subscribe(gameObserver, Event::EVENT_EGGSPAWNED);
+		Messenger::GetInstance().Subscribe(gameObserver, Event::EVENT_EGGDESTROYED);
 		Messenger::GetInstance().Subscribe(gameObserver, Event::EVENT_ENDGAME);
 		Messenger::GetInstance().Subscribe(gameObserver, Event::EVENT_ENEMYDIED);
 		Messenger::GetInstance().Subscribe(gameObserver, Event::EVENT_ENEMYSPAWNED);

@@ -220,6 +220,15 @@ void dae::PlayerPengoMovementComponent::Interact()
 			{
 				// check if its a diamond, if so then break
 				if (mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx - ammPointsW].isDiamondBlock) break;
+				
+				// check if its an egg, if so inform the gamegrid and also add points
+				if (mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx - ammPointsW].isEggBlock)
+				{
+					mp_gameGridObj->GetComponent<GameFieldGridComponent>()->RemoveEgg(mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx - ammPointsW].object);
+					Messenger::GetInstance().Notify(Event::EVENT_ENEMYDIED, 600);
+					Messenger::GetInstance().Notify(Event::EVENT_EGGDESTROYED, 0);
+				}
+				
 				// break it
 				// tell the block to break
 				mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx - ammPointsW].object->GetComponent<IceBlockComponent>()->StartBreaking(m_Speed / 2.0f);
@@ -250,6 +259,15 @@ void dae::PlayerPengoMovementComponent::Interact()
 			{
 				// check if its a diamond, if so then break
 				if (mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx + ammPointsW].isDiamondBlock) break;
+				
+				// check if its an egg, if so inform the gamegrid and also add points
+				if (mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx + ammPointsW].isEggBlock)
+				{
+					mp_gameGridObj->GetComponent<GameFieldGridComponent>()->RemoveEgg(mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx + ammPointsW].object);
+					Messenger::GetInstance().Notify(Event::EVENT_ENEMYDIED, 600);
+					Messenger::GetInstance().Notify(Event::EVENT_EGGDESTROYED, 0);
+				}
+				
 				// break it
 				// tell the block to break
 				mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx + ammPointsW].object->GetComponent<IceBlockComponent>()->StartBreaking(m_Speed / 2.0f);
@@ -279,6 +297,14 @@ void dae::PlayerPengoMovementComponent::Interact()
 			{
 				// check if its a diamond, if so then break
 				if (mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx - 1].isDiamondBlock) break;
+				// check if its an egg, if so inform the gamegrid and also add points
+				if (mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx - 1].isEggBlock)
+				{
+					mp_gameGridObj->GetComponent<GameFieldGridComponent>()->RemoveEgg(mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx - 1].object);
+					Messenger::GetInstance().Notify(Event::EVENT_ENEMYDIED, 600);
+					Messenger::GetInstance().Notify(Event::EVENT_EGGDESTROYED, 0);
+				}
+				
 				// break it
 				// tell the block to break
 				mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx - 1].object->GetComponent<IceBlockComponent>()->StartBreaking(m_Speed / 2.0f);
@@ -307,6 +333,15 @@ void dae::PlayerPengoMovementComponent::Interact()
 			{
 				// check if its a diamond, if so then break
 				if (mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx + 1].isDiamondBlock) break;
+				
+				// check if its an egg, if so inform the gamegrid and also add points
+				if (mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx + 1].isEggBlock)
+				{
+					mp_gameGridObj->GetComponent<GameFieldGridComponent>()->RemoveEgg(mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx + 1].object);
+					Messenger::GetInstance().Notify(Event::EVENT_ENEMYDIED, 600);
+					Messenger::GetInstance().Notify(Event::EVENT_EGGDESTROYED, 0);
+				}
+
 				// break it
 				// tell the block to break
 				mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx + 1].object->GetComponent<IceBlockComponent>()->StartBreaking(m_Speed / 2.0f);

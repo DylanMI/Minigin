@@ -93,6 +93,11 @@ void dae::GameFieldGridComponent::HatchNextEgg()
 	m_GridInfo[currIdx].isObstacle = false;
 }
 
+void dae::GameFieldGridComponent::RemoveEgg(GameObject * eggInQuestion)
+{
+	m_eggBlocks.erase(std::remove(m_eggBlocks.begin(), m_eggBlocks.end(), eggInQuestion), m_eggBlocks.end());
+}
+
 void dae::GameFieldGridComponent::MakeBoundryWalls()
 {
 	// up wall

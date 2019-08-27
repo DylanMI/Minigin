@@ -34,6 +34,7 @@ namespace dae
 		void ShowEggBlocks();
 		int GetAmmEggsLeft();
 		void HatchNextEgg();
+		void RemoveEgg(GameObject* eggInQuestion);
 
 		void MakeBoundryWalls();
 		void ActivateWall(direction direct);

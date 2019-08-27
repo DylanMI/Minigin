@@ -51,7 +51,11 @@ void dae::GameObserver::Notify(Event eventType, int extraInfo)
 		m_eggCount++;
 
 		break;
+	case Event::EVENT_EGGDESTROYED:
+		// for itself
+		m_eggCount--;
 
+		break;
 	case Event::EVENT_DIAMONDSCHAIN:
 		// check if it occured yet
 		if (m_isDiamondEventLocked) return;
@@ -59,7 +63,7 @@ void dae::GameObserver::Notify(Event eventType, int extraInfo)
 		
 		// award points, and lock this event untill reset
 		m_isDiamondEventLocked = true;
-		m_score += 10000;
+		m_score += 2000;
 		break;
 	case Event::EVENT_ENDGAME:
 
