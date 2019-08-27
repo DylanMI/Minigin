@@ -83,6 +83,8 @@
 #include "UIScoreComponent.h"
 #include "UILiveComponent.h"
 #include "UIEggComponent.h"
+#include "UIMainMenu.h"
+
 
 // game mainfiles
 #include "GameCommand.h"

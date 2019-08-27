@@ -87,3 +87,58 @@ void dae::InteractCommand::Execute(float deltatime)
 {
 	m_object->GetComponent<PlayerPengoMovementComponent>()->Interact();
 }
+
+dae::StartSoloCommand::StartSoloCommand(GameObject * object)
+	: m_object(object)
+{
+}
+
+dae::StartSoloCommand::~StartSoloCommand()
+{
+}
+
+void dae::StartSoloCommand::Execute(float deltatime)
+{
+	m_object->GetComponent<UIMainMenu>()->StartSolo();
+}
+
+dae::StartCOOPCommand::StartCOOPCommand(GameObject * object)
+	: m_object(object)
+{
+}
+
+dae::StartCOOPCommand::~StartCOOPCommand()
+{
+}
+
+void dae::StartCOOPCommand::Execute(float deltatime)
+{
+	m_object->GetComponent<UIMainMenu>()->StartCoOp();
+}
+
+dae::StartVSCommand::StartVSCommand(GameObject * object)
+	: m_object(object)
+{
+}
+
+dae::StartVSCommand::~StartVSCommand()
+{
+}
+
+void dae::StartVSCommand::Execute(float deltatime)
+{
+	m_object->GetComponent<UIMainMenu>()->StartVS();
+}
+
+dae::QuitCommand::QuitCommand(GameObject * object)
+	: m_object(object)
+{
+}
+
+dae::QuitCommand::~QuitCommand()
+{
+}
+
+void dae::QuitCommand::Execute(float deltatime)
+{
+}

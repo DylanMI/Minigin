@@ -170,6 +170,7 @@
     <ClInclude Include="SnoBeeAIComponent.h" />
     <ClInclude Include="UIEggComponent.h" />
     <ClInclude Include="UILiveComponent.h" />
+    <ClInclude Include="UIMainMenu.h" />
     <ClInclude Include="UIScoreComponent.h" />
     <ClInclude Include="WallComponent.h" />
   </ItemGroup>
@@ -193,6 +194,7 @@
     <ClCompile Include="SnoBeeAIComponent.cpp" />
     <ClCompile Include="UIEggComponent.cpp" />
     <ClCompile Include="UILiveComponent.cpp" />
+    <ClCompile Include="UIMainMenu.cpp" />
     <ClCompile Include="UIScoreComponent.cpp" />
     <ClCompile Include="WallComponent.cpp" />
   </ItemGroup>

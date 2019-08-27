@@ -82,6 +82,20 @@ void dae::GameObserver::Notify(Event eventType, int extraInfo)
 		
 		break;
 
+	case Event::EVENT_STARTSINGLEPLAYER:
+		m_parentScene.ClearAll();
+		m_parentScene.SetLevelIdx(1);
+		break;
+
+	case Event::EVENT_STARTCOOP:
+		m_parentScene.ClearAll();
+		m_parentScene.SetLevelIdx(3);
+		break;
+
+	case Event::EVENT_STARTVS:
+		m_parentScene.ClearAll();
+		m_parentScene.SetLevelIdx(5);
+		break;
 
 	default:
 		break;

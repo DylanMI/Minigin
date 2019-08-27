@@ -59,12 +59,34 @@ void Game::LoadGame(int identifier)
 {
 	using namespace dae;
 	{
+		auto menuObject_A = new dae::GameObject();
+		auto menuObject_B = new dae::GameObject();
+		auto menuObject_Y = new dae::GameObject();
+		auto font = ResourceManager::GetInstance().LoadFont("Lingua.otf", 20);
 		mp_gameFieldGridObject = new dae::GameObject();
 		gameObserver->AssignGrid(mp_gameFieldGridObject);
 		switch (identifier)
 		{
 			// 0 == Menu
 		case 0:
+			
+			menuObject_A->AddComponent(new UIMainMenu(menuObject_A));
+			menuObject_A->AddComponent(new TextRendererComponent("A for singleplayer",font, menuObject_A));
+			menuObject_A->GetComponent<TextRendererComponent>()->SetPosition(200, 100);
+			menuObject_B->AddComponent(new TextRendererComponent("B for CO OP", font, menuObject_A));
+			menuObject_B->GetComponent<TextRendererComponent>()->SetPosition(200, 150);
+			menuObject_Y->AddComponent(new TextRendererComponent("Y for Versus", font, menuObject_Y));
+			menuObject_Y->GetComponent<TextRendererComponent>()->SetPosition(200, 200);
+			m_scene.Add(menuObject_A);
+			m_scene.Add(menuObject_B);
+			m_scene.Add(menuObject_Y);
+
+			InputManager::GetInstance().ChangeCommand(ControllerButton::ButtonA, 0, new StartSoloCommand(menuObject_A));
+			InputManager::GetInstance().ChangeCommand(ControllerButton::ButtonB, 0, new StartCOOPCommand(menuObject_B));
+			InputManager::GetInstance().ChangeCommand(ControllerButton::ButtonY, 0, new StartVSCommand(menuObject_Y));
+
+			// don't need it
+			delete mp_gameFieldGridObject;
 			break;
 			// 1 == first level singleplayer
 		case 1:
@@ -105,7 +127,6 @@ void Game::LoadGame(int identifier)
 			break;
 			// 6 == second level VS
 		case 6:
-
 			mp_gameFieldGridObject->AddComponent(new dae::GameFieldGridComponent(mp_gameFieldGridObject, { 34,27,464,464 }, 13, 13, m_scene));
 			m_scene.Add(mp_gameFieldGridObject);
 
@@ -115,10 +136,13 @@ void Game::LoadGame(int identifier)
 		}
 		if (identifier == 0) return;
 
-
+		// don't need it
+		delete menuObject_A;
+		delete menuObject_B;
+		delete menuObject_Y;
+		
 		// adding UI
 		//adding FPS counter
-		auto font = ResourceManager::GetInstance().LoadFont("Lingua.otf", 20);
 		auto mp_FPSObj = new dae::GameObject();
 		mp_FPSObj->AddComponent(new TextRendererComponent("xxx", font, mp_FPSObj));
 		mp_FPSObj->GetComponent<TextRendererComponent>()->SetPosition(570, 460);
@@ -168,7 +192,7 @@ void Game::Run()
 	LoadSystems();
 	
 	// load the menu
-	LoadGame(3);
+	LoadGame(0);
 
 	m_scene.SetLevelIdx(-1);
 

@@ -77,4 +77,47 @@ namespace dae
 
 #pragma endregion
 
+#pragma region MainMenu
+	class StartSoloCommand : public Command
+	{
+	public:
+		StartSoloCommand(GameObject* object);
+		virtual ~StartSoloCommand() override;
+		void Execute(float deltatime) override;
+	private:
+		GameObject* m_object;
+	};
+
+	class StartCOOPCommand : public Command
+	{
+	public:
+		StartCOOPCommand(GameObject* object);
+		virtual ~StartCOOPCommand() override;
+		void Execute(float deltatime) override;
+	private:
+		GameObject* m_object;
+	};
+
+	class StartVSCommand : public Command
+	{
+	public:
+		StartVSCommand(GameObject* object);
+		virtual ~StartVSCommand() override;
+		void Execute(float deltatime) override;
+	private:
+		GameObject* m_object;
+	};
+
+
+	class QuitCommand : public Command
+	{
+	public:
+		QuitCommand(GameObject* object);
+		virtual ~QuitCommand() override;
+		void Execute(float deltatime) override;
+	private:
+		GameObject* m_object;
+	};
+#pragma endregion
+
 } 
