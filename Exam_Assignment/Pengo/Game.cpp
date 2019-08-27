@@ -83,6 +83,8 @@ void Game::LoadGame(int identifier)
 		case 3:
 			mp_gameFieldGridObject->AddComponent(new dae::GameFieldGridComponent(mp_gameFieldGridObject, { 34,27,464,464 }, 13, 13, m_scene));
 			m_scene.Add(mp_gameFieldGridObject);
+			// loading the level
+			LevelLoader::GetInstance().LoadLevel(m_scene, mp_gameFieldGridObject, gameObserver, "../Data/Map3.txt");
 			
 			break;
 			// 4 == second level co op
@@ -161,7 +163,7 @@ void Game::Run()
 	LoadSystems();
 	
 	// load the menu
-	LoadGame(1);
+	LoadGame(3);
 
 	m_scene.SetLevelIdx(-1);
 
