@@ -30,12 +30,32 @@ void Game::Initialize()
 
 
 }
+void Game::LoadSystems()
+{
+	using namespace dae;
+	{
+
+		gameObserver = new GameObserver(nullptr,m_scene);
+
+		// events
+		Messenger::GetInstance().Subscribe(gameObserver, Event::EVENT_DIAMONDSCHAIN);
+		Messenger::GetInstance().Subscribe(gameObserver, Event::EVENT_EGGHATCHED);
+		Messenger::GetInstance().Subscribe(gameObserver, Event::EVENT_EGGSPAWNED);
+		Messenger::GetInstance().Subscribe(gameObserver, Event::EVENT_EGGDESTROYED);
+		Messenger::GetInstance().Subscribe(gameObserver, Event::EVENT_ENDGAME);
+		Messenger::GetInstance().Subscribe(gameObserver, Event::EVENT_ENEMYDIED);
+		Messenger::GetInstance().Subscribe(gameObserver, Event::EVENT_ENEMYSPAWNED);
+		Messenger::GetInstance().Subscribe(gameObserver, Event::EVENT_PENGODIED);
+	}
+
+}
 
 void Game::LoadGame(int identifier)
 {
 	using namespace dae;
 	{
-
+		mp_gameFieldGridObject = new dae::GameObject();
+		gameObserver->AssignGrid(mp_gameFieldGridObject);
 		switch (identifier)
 		{
 			// 0 == Menu
@@ -127,25 +147,7 @@ void Game::LoadGame(int identifier)
 	}
 }
 
-void Game::LoadSystems()
-{
-	using namespace dae;
-	{
-		mp_gameFieldGridObject = new dae::GameObject();
-		gameObserver = new GameObserver(mp_gameFieldGridObject);
 
-		// events
-		Messenger::GetInstance().Subscribe(gameObserver, Event::EVENT_DIAMONDSCHAIN);
-		Messenger::GetInstance().Subscribe(gameObserver, Event::EVENT_EGGHATCHED);
-		Messenger::GetInstance().Subscribe(gameObserver, Event::EVENT_EGGSPAWNED);
-		Messenger::GetInstance().Subscribe(gameObserver, Event::EVENT_EGGDESTROYED);
-		Messenger::GetInstance().Subscribe(gameObserver, Event::EVENT_ENDGAME);
-		Messenger::GetInstance().Subscribe(gameObserver, Event::EVENT_ENEMYDIED);
-		Messenger::GetInstance().Subscribe(gameObserver, Event::EVENT_ENEMYSPAWNED);
-		Messenger::GetInstance().Subscribe(gameObserver, Event::EVENT_PENGODIED);
-	}
-
-}
 
 void Game::Run()
 {
@@ -161,6 +163,7 @@ void Game::Run()
 	// load the menu
 	LoadGame(1);
 
+	m_scene.SetLevelIdx(-1);
 
 	// update loop
 	{
@@ -176,10 +179,17 @@ void Game::Run()
 		{
 			auto currentTime = std::chrono::high_resolution_clock::now();
 			float deltaTime = std::chrono::duration<float>(currentTime - lastTime).count();
-
+			
 			doContinue = input.ProcessInput(deltaTime);
 			sceneManager.Update(deltaTime);
 			renderer.Render();
+
+			// level switching
+			if (m_scene.GetLevelIdx() != -1)
+			{
+				LoadGame(m_scene.GetLevelIdx());
+				m_scene.SetLevelIdx(-1);
+			}
 
 			lastTime = currentTime;
 			t += std::chrono::milliseconds(msPerFrame);
@@ -195,4 +205,6 @@ void Game::Run()
 void Game::Cleanup()
 {
 	delete gameObserver;
+	m_scene.ClearAll();
+
 }

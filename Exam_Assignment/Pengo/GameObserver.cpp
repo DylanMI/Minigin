@@ -1,13 +1,14 @@
 #include "pch.h"
 #include "GameObserver.h"
 
-dae::GameObserver::GameObserver(GameObject * gameGridObj)
+dae::GameObserver::GameObserver(GameObject * gameGridObj, Scene& parentScene)
 	: m_lives { 3 }
-	, m_score { 0 }
-	, m_ammSnoBeeAlive { 0 }
-	, m_eggCount { 0 }
+	, m_score { m_Standardscore }
+	, m_ammSnoBeeAlive { m_StandardammSnoBeeAlive }
+	, m_eggCount { m_StandardeggCount }
 	, m_isDiamondEventLocked {false}
 	, mp_gameGridObj{gameGridObj}
+	, m_parentScene{ parentScene }
 {
 	
 }
@@ -67,6 +68,18 @@ void dae::GameObserver::Notify(Event eventType, int extraInfo)
 		break;
 	case Event::EVENT_ENDGAME:
 
+		// clear scene
+		m_parentScene.ClearAll();
+
+		// tell the parentscene what to tell the game to load next
+		m_parentScene.SetLevelIdx(2);
+
+		// reset yourself
+		m_eggCount = m_StandardeggCount;
+		m_lives = m_Standardlives;
+		m_score = m_Standardscore;
+		m_ammSnoBeeAlive = m_StandardammSnoBeeAlive;
+		
 		break;
 
 
@@ -90,6 +103,12 @@ int dae::GameObserver::GetEggCount()
 {
 	return m_eggCount;
 }
+
+void dae::GameObserver::AssignGrid(GameObject * gameGridObj)
+{
+	mp_gameGridObj = gameGridObj;
+}
+
 
 int dae::GameObserver::GetAmmSnoBeeAlive()
 {

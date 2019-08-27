@@ -13,6 +13,9 @@ namespace dae
 
 		void ClearAll();
 
+		void SetLevelIdx(int newIdx);
+		int GetLevelIdx();
+
 		void Update(const float& deltaTime);
 		void Render() const;
 
@@ -20,7 +23,7 @@ namespace dae
 		~Scene();
 		Scene(const Scene& other) = delete;
 		Scene(Scene&& other) = delete;
-		Scene& operator=(const Scene& other);
+		Scene& operator=(const Scene& other) = delete;
 		Scene& operator=(Scene&& other) = delete;
 
 	private: 
@@ -28,6 +31,8 @@ namespace dae
 
 		std::string mName{};
 		std::vector<SceneObject*> mObjects{};
+
+		int m_loadLevelIdx{};
 
 		static unsigned int idCounter; 
 	};

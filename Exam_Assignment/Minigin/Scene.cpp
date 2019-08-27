@@ -29,8 +29,18 @@ void dae::Scene::ClearAll()
 	{
 		delete mObjects[i];
 	}
-	mObjects.resize(0);
+	mObjects.clear();
 
+}
+
+void dae::Scene::SetLevelIdx(int newIdx)
+{
+	m_loadLevelIdx = newIdx;
+}
+
+int dae::Scene::GetLevelIdx()
+{
+	return m_loadLevelIdx;
 }
 
 void dae::Scene::Update(const float& deltaTime)
