@@ -40,20 +40,17 @@ void dae::PlayerPengoMovementComponent::Update(const float & deltaTime)
 	int currIdx = mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getCurrGridIndex(Rectf{ m_currPos.x, m_currPos.y, m_WidthAndHeight.x, m_WidthAndHeight.y });
 	if (currIdx == -1) return;
 
-	// dying
+	// check if it isn't a false reading
 	if (mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx].isSnoBee)
 	{
-		Messenger::GetInstance().Notify(Event::EVENT_PENGODIED, 0);
+		if (mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx].object == nullptr) return;
+	}
 
-		// check if you have no lifes left
-		if (mp_GameObserver->GetLives() <= 0)
-		{
-			// if so then restart then fire endgame event and go back to menu
-			Messenger::GetInstance().Notify(Event::EVENT_ENDGAME, 0);
+	// dying if the sno bee is not struggling
+	if (mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx].isSnoBee &&mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx].object->GetComponent<StateComponent>()->GetState() != State::STRUGGLING)
+	{
 
-			return;
-		}
-		// if not then try to set yourself somewhere unocuppied nearby start pos
+		// try to set yourself somewhere unocuppied nearby start pos
 		bool posFound = false;
 		int counter = 0;
 		while (!posFound)
@@ -67,6 +64,12 @@ void dae::PlayerPengoMovementComponent::Update(const float & deltaTime)
 		m_currPos = mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[m_startIdx + counter].coordinate;
 		m_start = m_currPos;
 		m_destination = m_currPos;
+		Messenger::GetInstance().Notify(Event::EVENT_PENGODIED, 0);
+	}
+	// else you kill it
+	else if (mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx].isSnoBee &&mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx].object->GetComponent<StateComponent>()->GetState() == State::STRUGGLING)
+	{
+		mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx].object->GetComponent<SnoBeeAIComponent>()->Die(200);
 	}
 }
 

@@ -62,6 +62,7 @@ void Game::LoadGame(int identifier)
 		auto menuObject_A = new dae::GameObject();
 		auto menuObject_B = new dae::GameObject();
 		auto menuObject_Y = new dae::GameObject();
+		auto menuObject_X = new dae::GameObject();
 		auto font = ResourceManager::GetInstance().LoadFont("Lingua.otf", 20);
 		mp_gameFieldGridObject = new dae::GameObject();
 		gameObserver->AssignGrid(mp_gameFieldGridObject);
@@ -77,14 +78,17 @@ void Game::LoadGame(int identifier)
 			menuObject_B->GetComponent<TextRendererComponent>()->SetPosition(200, 150);
 			menuObject_Y->AddComponent(new TextRendererComponent("Y for Versus", font, menuObject_Y));
 			menuObject_Y->GetComponent<TextRendererComponent>()->SetPosition(200, 200);
+			menuObject_X->AddComponent(new TextRendererComponent("X To Quit, can also be used ingame", font, menuObject_Y));
+			menuObject_X->GetComponent<TextRendererComponent>()->SetPosition(200, 250);
 			m_scene.Add(menuObject_A);
 			m_scene.Add(menuObject_B);
 			m_scene.Add(menuObject_Y);
+			m_scene.Add(menuObject_X);
 
 			InputManager::GetInstance().ChangeCommand(ControllerButton::ButtonA, 0, new StartSoloCommand(menuObject_A));
 			InputManager::GetInstance().ChangeCommand(ControllerButton::ButtonB, 0, new StartCOOPCommand(menuObject_B));
 			InputManager::GetInstance().ChangeCommand(ControllerButton::ButtonY, 0, new StartVSCommand(menuObject_Y));
-
+			InputManager::GetInstance().ChangeCommand(ControllerButton::ButtonX, 0, new QuitCommand(menuObject_X));
 			// don't need it
 			delete mp_gameFieldGridObject;
 			break;
@@ -211,7 +215,9 @@ void Game::Run()
 			auto currentTime = std::chrono::high_resolution_clock::now();
 			float deltaTime = std::chrono::duration<float>(currentTime - lastTime).count();
 			
-			doContinue = input.ProcessInput(deltaTime);
+			doContinue = !gameObserver->GetCloseGame();
+
+			input.ProcessInput(deltaTime);
 			sceneManager.Update(deltaTime);
 			renderer.Render();
 

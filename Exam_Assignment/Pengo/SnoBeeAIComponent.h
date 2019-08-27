@@ -19,7 +19,7 @@ namespace dae
 		void SetPosition(int idxPos);
 		void GetCatched(GameObject* Catcher);
 
-
+		void Die(int ScoreForDeath);
 	private:
 
 		GameObject* mp_gameGridObj;
@@ -48,7 +48,7 @@ namespace dae
 		float T;
 
 		// functions
-		void Die(int ScoreForDeath);
+
 		
 		Point2f LerpPos(float DT);
 	};

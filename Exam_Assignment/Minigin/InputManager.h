@@ -39,7 +39,9 @@ namespace dae
 		bool ProcessInput(float deltatime);
 		bool IsPressed(ControllerButton button) const;
 		void ChangeCommand(ControllerButton button,int controller, Command* newcommand);
+		void ClearCommand(ControllerButton button, int controller);
 		void ChangeKeyboardCommand(char character, Command* newCommand);
+		
 	private:
 		XINPUT_STATE currentState{};
 		static const int m_MAXammControllers = 4;

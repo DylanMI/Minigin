@@ -9,6 +9,7 @@ dae::GameObserver::GameObserver(GameObject * gameGridObj, Scene& parentScene)
 	, m_isDiamondEventLocked {false}
 	, mp_gameGridObj{gameGridObj}
 	, m_parentScene{ parentScene }
+	, m_CloseGame{ false}
 {
 	
 }
@@ -25,6 +26,11 @@ void dae::GameObserver::Notify(Event eventType, int extraInfo)
 	case Event::EVENT_PENGODIED:
 		// reduce lifes
 		m_lives--;
+
+		if (m_lives <= 0)
+		{
+			Messenger::GetInstance().Notify(Event::EVENT_ENDGAME, -1);
+		}
 		break;
 	case Event::EVENT_ENEMYDIED:
 		// award points according to extraInfo
@@ -38,6 +44,11 @@ void dae::GameObserver::Notify(Event eventType, int extraInfo)
 		}
 		// keep a sno bee tally
 		m_ammSnoBeeAlive--;
+
+		if (m_ammSnoBeeAlive == 0 && m_eggCount == 0)
+		{
+			Messenger::GetInstance().Notify(Event::EVENT_ENDGAME, 1);
+		}
 
 		break;
 	case Event::EVENT_ENEMYSPAWNED:
@@ -71,8 +82,42 @@ void dae::GameObserver::Notify(Event eventType, int extraInfo)
 		// clear scene
 		m_parentScene.ClearAll();
 
-		// tell the parentscene what to tell the game to load next
-		m_parentScene.SetLevelIdx(2);
+		switch (extraInfo)
+		{
+		// go to next level
+		case 1:
+			if(m_currLevel == 1) m_parentScene.SetLevelIdx(2);
+			if (m_currLevel == 2) m_parentScene.SetLevelIdx(0);
+			if (m_currLevel == 3) m_parentScene.SetLevelIdx(4);
+			if (m_currLevel == 4) m_parentScene.SetLevelIdx(0);
+			if (m_currLevel == 5) m_parentScene.SetLevelIdx(6);
+			if (m_currLevel == 6) m_parentScene.SetLevelIdx(0);
+			m_currLevel = m_parentScene.GetLevelIdx();
+			break;
+
+		// quit to menu
+		case -1:
+			if (m_currLevel = 0) m_CloseGame = true;
+			InputManager::GetInstance().ClearCommand(dae::ControllerButton::DpadL, 0);
+			InputManager::GetInstance().ClearCommand(dae::ControllerButton::DpadR, 0);
+			InputManager::GetInstance().ClearCommand(dae::ControllerButton::DpadU, 0);
+			InputManager::GetInstance().ClearCommand(dae::ControllerButton::DpadD, 0);
+			InputManager::GetInstance().ClearCommand(dae::ControllerButton::ButtonA, 0);
+
+			InputManager::GetInstance().ClearCommand(dae::ControllerButton::DpadL, 1);
+			InputManager::GetInstance().ClearCommand(dae::ControllerButton::DpadR, 1);
+			InputManager::GetInstance().ClearCommand(dae::ControllerButton::DpadU, 1);
+			InputManager::GetInstance().ClearCommand(dae::ControllerButton::DpadD, 1);
+			InputManager::GetInstance().ClearCommand(dae::ControllerButton::ButtonA, 1);
+
+			m_parentScene.SetLevelIdx(0);
+			m_currLevel = 0;
+			break;
+		default:
+			break;
+		}
+
+
 
 		// reset yourself
 		m_eggCount = m_StandardeggCount;
@@ -85,16 +130,19 @@ void dae::GameObserver::Notify(Event eventType, int extraInfo)
 	case Event::EVENT_STARTSINGLEPLAYER:
 		m_parentScene.ClearAll();
 		m_parentScene.SetLevelIdx(1);
+		m_currLevel = 1;
 		break;
 
 	case Event::EVENT_STARTCOOP:
 		m_parentScene.ClearAll();
 		m_parentScene.SetLevelIdx(3);
+		m_currLevel = 3;
 		break;
 
 	case Event::EVENT_STARTVS:
 		m_parentScene.ClearAll();
 		m_parentScene.SetLevelIdx(5);
+		m_currLevel = 5;
 		break;
 
 	default:
@@ -127,4 +175,9 @@ void dae::GameObserver::AssignGrid(GameObject * gameGridObj)
 int dae::GameObserver::GetAmmSnoBeeAlive()
 {
 	return m_ammSnoBeeAlive;
+}
+
+bool dae::GameObserver::GetCloseGame()
+{
+	return m_CloseGame;
 }

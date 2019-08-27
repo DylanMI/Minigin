@@ -16,26 +16,29 @@ void dae::UIMainMenu::Render() const
 
 void dae::UIMainMenu::StartSolo()
 {
-	InputManager::GetInstance().ChangeCommand(ControllerButton::ButtonB, 0, nullptr);
-	InputManager::GetInstance().ChangeCommand(ControllerButton::ButtonY, 0, nullptr);
+	InputManager::GetInstance().ClearCommand(ControllerButton::ButtonA, 0);
+	InputManager::GetInstance().ClearCommand(ControllerButton::ButtonB, 0);
+	InputManager::GetInstance().ClearCommand(ControllerButton::ButtonY, 0);
 	Messenger::GetInstance().Notify(EVENT_STARTSINGLEPLAYER,0);
 }
 
 void dae::UIMainMenu::StartCoOp()
 {
-	InputManager::GetInstance().ChangeCommand(ControllerButton::ButtonB, 0, nullptr);
-	InputManager::GetInstance().ChangeCommand(ControllerButton::ButtonY, 0, nullptr);
+	InputManager::GetInstance().ClearCommand(ControllerButton::ButtonA, 0);
+	InputManager::GetInstance().ClearCommand(ControllerButton::ButtonB, 0);
+	InputManager::GetInstance().ClearCommand(ControllerButton::ButtonY, 0);
 	Messenger::GetInstance().Notify(EVENT_STARTCOOP,0);
 }
 
 void dae::UIMainMenu::StartVS()
 {
-	InputManager::GetInstance().ChangeCommand(ControllerButton::ButtonB, 0, nullptr);
-	InputManager::GetInstance().ChangeCommand(ControllerButton::ButtonY, 0, nullptr);
+	InputManager::GetInstance().ClearCommand(ControllerButton::ButtonA, 0);
+	InputManager::GetInstance().ClearCommand(ControllerButton::ButtonB, 0);
+	InputManager::GetInstance().ClearCommand(ControllerButton::ButtonY, 0);
 	Messenger::GetInstance().Notify(EVENT_STARTVS,0);
 }
 
 void dae::UIMainMenu::Quit()
 {
-	Messenger::GetInstance().Notify(EVENT_ENDGAME,0);
+	Messenger::GetInstance().Notify(EVENT_ENDGAME,-1);
 }

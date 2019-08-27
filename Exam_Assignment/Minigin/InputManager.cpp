@@ -162,6 +162,47 @@ void dae::InputManager::ChangeCommand(ControllerButton button, int controller, C
 	}
 }
 
+void dae::InputManager::ClearCommand(ControllerButton button, int controller)
+{
+	switch (button)
+	{
+	case dae::ControllerButton::ButtonA:
+		delete aBtnCommand[controller];
+		aBtnCommand[controller] = nullptr;
+		break;
+	case dae::ControllerButton::ButtonB:
+		delete bBtnCommand[controller];
+		bBtnCommand[controller] = nullptr;
+		break;
+	case dae::ControllerButton::ButtonX:
+		delete xBtnCommand[controller];
+		xBtnCommand[controller] = nullptr;
+		break;
+	case dae::ControllerButton::ButtonY:
+		delete yBtnCommand[controller];
+		yBtnCommand[controller] = nullptr;
+		break;
+	case dae::ControllerButton::DpadL:
+		delete padlBtnCommand[controller];
+		padlBtnCommand[controller] = nullptr;
+		break;
+	case dae::ControllerButton::DpadR:
+		delete padrBtnCommand[controller];
+		padrBtnCommand[controller] = nullptr;
+		break;
+	case dae::ControllerButton::DpadU:
+		delete paduBtnCommand[controller];
+		paduBtnCommand[controller] = nullptr;
+		break;
+	case dae::ControllerButton::DpadD:
+		delete paddBtnCommand[controller];
+		paddBtnCommand[controller] = nullptr;
+		break;
+	default:
+		break;
+	}
+}
+
 void dae::InputManager::ChangeKeyboardCommand(char character, Command * newCommand)
 {
 	if (int(character) > m_MAXKeyboardAsciiSize) return;

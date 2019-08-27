@@ -291,6 +291,12 @@ void dae::SnoBeeAIComponent::Update(const float & deltaTime)
 		break;
 
 	case State::CAUGHTBYBLOCK:
+		// if the catcher is a nullptr or something like that, its probably destroyed somehow, die with it
+		if (m_CatchedByThis == nullptr)
+		{
+			m_pParent->GetComponent<StateComponent>()->SetState(State::DYING);
+			Die(400);
+		}
 		// set the object position to the catchers position
 		m_pParent->SetPosition(Point2f{ m_CatchedByThis->GetTransform().GetPosition().x ,m_CatchedByThis->GetTransform().GetPosition().y });
 		// if the catcher ever stops sliding, then die

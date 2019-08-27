@@ -141,4 +141,5 @@ dae::QuitCommand::~QuitCommand()
 
 void dae::QuitCommand::Execute(float deltatime)
 {
+	m_object->GetComponent<UIMainMenu>()->Quit();
 }

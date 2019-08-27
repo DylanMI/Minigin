@@ -19,11 +19,15 @@ namespace dae
 
 		int GetAmmSnoBeeAlive();
 
+		bool GetCloseGame();
+
 	private:
 		int m_score;
 		int m_lives;
 		int m_ammSnoBeeAlive;
 		int m_eggCount;
+
+		int m_currLevel;
 
 		const int m_Standardscore{ 0 };
 		const int m_Standardlives{ 3 };
@@ -31,6 +35,7 @@ namespace dae
 		const int m_StandardeggCount{ 0 };
 
 		bool m_isDiamondEventLocked;
+		bool m_CloseGame;
 
 		GameObject* mp_gameGridObj;
 		Scene& m_parentScene;
