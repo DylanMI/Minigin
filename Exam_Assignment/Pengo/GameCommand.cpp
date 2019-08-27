@@ -143,3 +143,73 @@ void dae::QuitCommand::Execute(float deltatime)
 {
 	m_object->GetComponent<UIMainMenu>()->Quit();
 }
+
+dae::MoveLeftCommandSnoPlayer::MoveLeftCommandSnoPlayer(GameObject * object)
+	: m_object(object)
+{
+}
+
+dae::MoveLeftCommandSnoPlayer::~MoveLeftCommandSnoPlayer()
+{
+}
+
+void dae::MoveLeftCommandSnoPlayer::Execute(float deltatime)
+{
+	m_object->GetComponent<PlayerSnoMovementComponent>()->Move(direction::LEFT);
+}
+
+dae::MoveRightCommandSnoPlayer::MoveRightCommandSnoPlayer(GameObject * object)
+	: m_object(object)
+{
+}
+
+dae::MoveRightCommandSnoPlayer::~MoveRightCommandSnoPlayer()
+{
+}
+
+void dae::MoveRightCommandSnoPlayer::Execute(float deltatime)
+{
+	m_object->GetComponent<PlayerSnoMovementComponent>()->Move(direction::RIGHT);
+}
+
+dae::MoveUpCommandSnoPlayer::MoveUpCommandSnoPlayer(GameObject * object)
+	: m_object(object)
+{
+}
+
+dae::MoveUpCommandSnoPlayer::~MoveUpCommandSnoPlayer()
+{
+}
+
+void dae::MoveUpCommandSnoPlayer::Execute(float deltatime)
+{
+	m_object->GetComponent<PlayerSnoMovementComponent>()->Move(direction::UP);
+}
+
+dae::MoveDownCommandSnoPlayer::MoveDownCommandSnoPlayer(GameObject * object)
+	: m_object(object)
+{
+}
+
+dae::MoveDownCommandSnoPlayer::~MoveDownCommandSnoPlayer()
+{
+}
+
+void dae::MoveDownCommandSnoPlayer::Execute(float deltatime)
+{
+	m_object->GetComponent<PlayerSnoMovementComponent>()->Move(direction::DOWN);
+}
+
+dae::InteractSnoCommand::InteractSnoCommand(GameObject * object)
+	: m_object(object)
+{
+}
+
+dae::InteractSnoCommand::~InteractSnoCommand()
+{
+}
+
+void dae::InteractSnoCommand::Execute(float deltatime)
+{
+	m_object->GetComponent<PlayerSnoMovementComponent>()->Interact();
+}

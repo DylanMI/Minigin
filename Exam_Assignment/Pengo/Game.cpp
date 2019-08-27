@@ -98,7 +98,7 @@ void Game::LoadGame(int identifier)
 			m_scene.Add(mp_gameFieldGridObject);
 			
 			// loading the level
-			LevelLoader::GetInstance().LoadLevel(m_scene, mp_gameFieldGridObject, gameObserver, "../Data/Map.txt");
+			LevelLoader::GetInstance().LoadLevel(m_scene, mp_gameFieldGridObject, gameObserver, "../Data/Map1.txt");
 
 			break;
 			// 2 == second level singleplayer
@@ -122,17 +122,22 @@ void Game::LoadGame(int identifier)
 		case 4:
 			mp_gameFieldGridObject->AddComponent(new dae::GameFieldGridComponent(mp_gameFieldGridObject, { 34,27,464,464 }, 13, 13, m_scene));
 			m_scene.Add(mp_gameFieldGridObject);
-
+			// loading the level
+			LevelLoader::GetInstance().LoadLevel(m_scene, mp_gameFieldGridObject, gameObserver, "../Data/Map4.txt");
 			break;
 			// 5 == first level VS
 		case 5:
 			mp_gameFieldGridObject->AddComponent(new dae::GameFieldGridComponent(mp_gameFieldGridObject, { 34,27,464,464 }, 13, 13, m_scene));
 			m_scene.Add(mp_gameFieldGridObject);
+			// loading the level
+			LevelLoader::GetInstance().LoadLevel(m_scene, mp_gameFieldGridObject, gameObserver, "../Data/Map5.txt");
 			break;
 			// 6 == second level VS
 		case 6:
 			mp_gameFieldGridObject->AddComponent(new dae::GameFieldGridComponent(mp_gameFieldGridObject, { 34,27,464,464 }, 13, 13, m_scene));
 			m_scene.Add(mp_gameFieldGridObject);
+			// loading the level
+			LevelLoader::GetInstance().LoadLevel(m_scene, mp_gameFieldGridObject, gameObserver, "../Data/Map6.txt");
 
 			break;
 		default:
@@ -215,7 +220,7 @@ void Game::Run()
 			auto currentTime = std::chrono::high_resolution_clock::now();
 			float deltaTime = std::chrono::duration<float>(currentTime - lastTime).count();
 			
-			doContinue = !gameObserver->GetCloseGame();
+			
 
 			input.ProcessInput(deltaTime);
 			sceneManager.Update(deltaTime);
@@ -232,6 +237,7 @@ void Game::Run()
 			t += std::chrono::milliseconds(msPerFrame);
 			std::this_thread::sleep_until(t);
 
+			doContinue = gameObserver->GetRunGame();
 		}
 	}
 

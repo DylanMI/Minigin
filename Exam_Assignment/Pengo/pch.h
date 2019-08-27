@@ -73,6 +73,7 @@
 // game components
 #include "GameFieldGridComponent.h"
 #include "PlayerPengoMovementComponent.h"
+#include "PlayerSnoMovementComponent.h"
 #include "SnoBeeAIComponent.h"
 #include "IceBlockComponent.h"
 #include "DiamondBlockComponent.h"

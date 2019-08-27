@@ -61,6 +61,46 @@ namespace dae
 		GameObject* m_object;
 	};
 
+	class MoveLeftCommandSnoPlayer : public Command
+	{
+	public:
+		MoveLeftCommandSnoPlayer(GameObject* object);
+		virtual ~MoveLeftCommandSnoPlayer() override;
+		void Execute(float deltatime) override;
+	private:
+		GameObject* m_object;
+	};
+
+	class MoveRightCommandSnoPlayer : public Command
+	{
+	public:
+		MoveRightCommandSnoPlayer(GameObject* object);
+		virtual ~MoveRightCommandSnoPlayer() override;
+		void Execute(float deltatime) override;
+	private:
+		GameObject* m_object;
+	};
+
+	class MoveUpCommandSnoPlayer : public Command
+	{
+	public:
+		MoveUpCommandSnoPlayer(GameObject* object);
+		virtual ~MoveUpCommandSnoPlayer() override;
+		void Execute(float deltatime) override;
+	private:
+		GameObject* m_object;
+	};
+
+	class MoveDownCommandSnoPlayer : public Command
+	{
+	public:
+		MoveDownCommandSnoPlayer(GameObject* object);
+		virtual ~MoveDownCommandSnoPlayer() override;
+		void Execute(float deltatime) override;
+	private:
+		GameObject* m_object;
+	};
+
 #pragma endregion
 
 #pragma region PlayerInteractions
@@ -70,6 +110,16 @@ namespace dae
 	public:
 		InteractCommand(GameObject* object);
 		virtual ~InteractCommand() override;
+		void Execute(float deltatime) override;
+	private:
+		GameObject* m_object;
+	};
+
+	class InteractSnoCommand : public Command
+	{
+	public:
+		InteractSnoCommand(GameObject* object);
+		virtual ~InteractSnoCommand() override;
 		void Execute(float deltatime) override;
 	private:
 		GameObject* m_object;

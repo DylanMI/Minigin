@@ -61,6 +61,9 @@
     <ClInclude Include="UIEggComponent.h">
       <Filter>Components</Filter>
     </ClInclude>
+    <ClInclude Include="PlayerSnoMovementComponent.h">
+      <Filter>Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp">
@@ -112,6 +115,9 @@
       <Filter>Components</Filter>
     </ClCompile>
     <ClCompile Include="UIEggComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerSnoMovementComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>
   </ItemGroup>

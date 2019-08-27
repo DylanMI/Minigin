@@ -210,4 +210,12 @@ void dae::InputManager::ChangeKeyboardCommand(char character, Command * newComma
 	keyboardCommands[int(character)].command = newCommand;
 }
 
+void dae::InputManager::ClearKeyboardCommand(char character)
+{
+	if (int(character) > m_MAXKeyboardAsciiSize) return;
+
+	delete keyboardCommands[int(character)].command;
+	keyboardCommands[int(character)].command = nullptr;
+}
+
 

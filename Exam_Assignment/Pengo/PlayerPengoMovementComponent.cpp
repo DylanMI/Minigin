@@ -67,9 +67,18 @@ void dae::PlayerPengoMovementComponent::Update(const float & deltaTime)
 		Messenger::GetInstance().Notify(Event::EVENT_PENGODIED, 0);
 	}
 	// else you kill it
-	else if (mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx].isSnoBee &&mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx].object->GetComponent<StateComponent>()->GetState() == State::STRUGGLING)
+	else if (mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx].isSnoBee 
+		&& mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx].object->GetComponent<StateComponent>()->GetState() == State::STRUGGLING
+		&& !mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx].object->GetComponent<StateComponent>()->GetIsPlayer())
 	{
 		mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx].object->GetComponent<SnoBeeAIComponent>()->Die(200);
+	}
+	else if (mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx].isSnoBee
+		&& mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx].object->GetComponent<StateComponent>()->GetState() == State::STRUGGLING
+		&& mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx].object->GetComponent<StateComponent>()->GetIsPlayer())
+	{
+		mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx].object->GetComponent<PlayerSnoMovementComponent>()->Die(200);
+
 	}
 }
 
@@ -263,8 +272,7 @@ void dae::PlayerPengoMovementComponent::Interact()
 				if (mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx - ammPointsW].isEggBlock)
 				{
 					mp_gameGridObj->GetComponent<GameFieldGridComponent>()->RemoveEgg(mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx - ammPointsW].object);
-					Messenger::GetInstance().Notify(Event::EVENT_ENEMYDIED, 600);
-					Messenger::GetInstance().Notify(Event::EVENT_EGGDESTROYED, 0);
+					Messenger::GetInstance().Notify(Event::EVENT_EGGDESTROYED, 600);
 				}
 				
 				// break it

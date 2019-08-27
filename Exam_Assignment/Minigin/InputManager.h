@@ -41,7 +41,7 @@ namespace dae
 		void ChangeCommand(ControllerButton button,int controller, Command* newcommand);
 		void ClearCommand(ControllerButton button, int controller);
 		void ChangeKeyboardCommand(char character, Command* newCommand);
-		
+		void ClearKeyboardCommand(char character);
 	private:
 		XINPUT_STATE currentState{};
 		static const int m_MAXammControllers = 4;

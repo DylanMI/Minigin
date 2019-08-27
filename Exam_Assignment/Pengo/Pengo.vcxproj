@@ -167,6 +167,7 @@
     <ClInclude Include="LevelLoader.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="PlayerPengoMovementComponent.h" />
+    <ClInclude Include="PlayerSnoMovementComponent.h" />
     <ClInclude Include="SnoBeeAIComponent.h" />
     <ClInclude Include="UIEggComponent.h" />
     <ClInclude Include="UILiveComponent.h" />
@@ -191,6 +192,7 @@
     </ClCompile>
     <ClCompile Include="Pengo.cpp" />
     <ClCompile Include="PlayerPengoMovementComponent.cpp" />
+    <ClCompile Include="PlayerSnoMovementComponent.cpp" />
     <ClCompile Include="SnoBeeAIComponent.cpp" />
     <ClCompile Include="UIEggComponent.cpp" />
     <ClCompile Include="UILiveComponent.cpp" />

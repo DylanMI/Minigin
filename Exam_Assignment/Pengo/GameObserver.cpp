@@ -9,7 +9,7 @@ dae::GameObserver::GameObserver(GameObject * gameGridObj, Scene& parentScene)
 	, m_isDiamondEventLocked {false}
 	, mp_gameGridObj{gameGridObj}
 	, m_parentScene{ parentScene }
-	, m_CloseGame{ false}
+	, m_RunGame{ true }
 {
 	
 }
@@ -35,20 +35,27 @@ void dae::GameObserver::Notify(Event eventType, int extraInfo)
 	case Event::EVENT_ENEMYDIED:
 		// award points according to extraInfo
 		m_score += extraInfo;
+		
+		// keep a sno bee tally
+		m_ammSnoBeeAlive--;
+
 		// tell the next egg to hatch
 		if (mp_gameGridObj->GetComponent<GameFieldGridComponent>()->GetAmmEggsLeft() > 0)
 		{
 			mp_gameGridObj->GetComponent<GameFieldGridComponent>()->HatchNextEgg();
 			// keep an egg tally
 			m_eggCount--;
+
+			m_ammSnoBeeAlive++;
+
 		}
-		// keep a sno bee tally
-		m_ammSnoBeeAlive--;
 
 		if (m_ammSnoBeeAlive == 0 && m_eggCount == 0)
 		{
 			Messenger::GetInstance().Notify(Event::EVENT_ENDGAME, 1);
+			return;
 		}
+
 
 		break;
 	case Event::EVENT_ENEMYSPAWNED:
@@ -65,6 +72,7 @@ void dae::GameObserver::Notify(Event eventType, int extraInfo)
 		break;
 	case Event::EVENT_EGGDESTROYED:
 		// for itself
+		m_score += extraInfo;
 		m_eggCount--;
 
 		break;
@@ -97,7 +105,21 @@ void dae::GameObserver::Notify(Event eventType, int extraInfo)
 
 		// quit to menu
 		case -1:
-			if (m_currLevel = 0) m_CloseGame = true;
+			if (m_currLevel == 0) 
+			{
+				m_currLevel = 0;
+				m_parentScene.SetLevelIdx(0);
+
+				// a very nasty buffer, to prevent instant closing of the game
+				// teachers if you see this i am sorry ;-;
+				m_accidentBuffer++;
+				if (m_accidentBuffer > 10)
+				{					
+					m_RunGame = false;
+				}
+				return;
+			}
+			m_accidentBuffer = 0;
 			InputManager::GetInstance().ClearCommand(dae::ControllerButton::DpadL, 0);
 			InputManager::GetInstance().ClearCommand(dae::ControllerButton::DpadR, 0);
 			InputManager::GetInstance().ClearCommand(dae::ControllerButton::DpadU, 0);
@@ -109,6 +131,19 @@ void dae::GameObserver::Notify(Event eventType, int extraInfo)
 			InputManager::GetInstance().ClearCommand(dae::ControllerButton::DpadU, 1);
 			InputManager::GetInstance().ClearCommand(dae::ControllerButton::DpadD, 1);
 			InputManager::GetInstance().ClearCommand(dae::ControllerButton::ButtonA, 1);
+
+			
+			InputManager::GetInstance().ClearKeyboardCommand('W');
+			InputManager::GetInstance().ClearKeyboardCommand('A');
+			InputManager::GetInstance().ClearKeyboardCommand('S');
+			InputManager::GetInstance().ClearKeyboardCommand('D');
+			InputManager::GetInstance().ClearKeyboardCommand('E');
+
+			InputManager::GetInstance().ClearKeyboardCommand('i');
+			InputManager::GetInstance().ClearKeyboardCommand('J');
+			InputManager::GetInstance().ClearKeyboardCommand('K');
+			InputManager::GetInstance().ClearKeyboardCommand('L');
+			InputManager::GetInstance().ClearKeyboardCommand('O');
 
 			m_parentScene.SetLevelIdx(0);
 			m_currLevel = 0;
@@ -177,7 +212,7 @@ int dae::GameObserver::GetAmmSnoBeeAlive()
 	return m_ammSnoBeeAlive;
 }
 
-bool dae::GameObserver::GetCloseGame()
+bool dae::GameObserver::GetRunGame()
 {
-	return m_CloseGame;
+	return m_RunGame;
 }

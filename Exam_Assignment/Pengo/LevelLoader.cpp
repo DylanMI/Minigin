@@ -21,9 +21,10 @@ std::vector<dae::GameObject*> dae::LevelLoader::LoadLevel(Scene & sceneRef, Game
 		// Sno Bee
 		case 'S':
 			// add a sno bee enemy
-			
-			// give components
 			objects.push_back(new GameObject);
+			Messenger::GetInstance().Notify(Event::EVENT_ENEMYSPAWNED, 0);
+			// give components
+			
 			// -- texture
 			objects.back()->AddComponent(new TextureComponent(objects.back()));
 			objects.back()->GetComponent<TextureComponent>()->SetIsAnimated(true);
@@ -229,7 +230,49 @@ std::vector<dae::GameObject*> dae::LevelLoader::LoadLevel(Scene & sceneRef, Game
 			break;
 
 			//player Two snoBee
-		// enter
+		
+		case '3':
+			// adding the player 
+			Messenger::GetInstance().Notify(Event::EVENT_ENEMYSPAWNED, 0);
+			objects.push_back(new GameObject);
+			// -- adding the movement comp
+			objects.back()->AddComponent(new dae::PlayerSnoMovementComponent(objects.back(), { 16,16 }, 3, gameGridObj, gameObserver));
+			objects.back()->GetComponent<PlayerSnoMovementComponent>()->SetPosition(counter);
+			objects.back()->GetComponent<PlayerSnoMovementComponent>()->SetStartIdx(counter);
+
+			// -- adding the state component
+			objects.back()->AddComponent(new StateComponent(objects.back(), true));
+
+			// -- adding the texture comp
+			objects.back()->AddComponent(new dae::TextureComponent(objects.back()));
+			objects.back()->GetComponent<dae::TextureComponent>()->SetIsAnimated(true);
+
+			// -- adding the animator
+			objects.back()->AddComponent(new dae::AnimatorComponent(objects.back()));
+			objects.back()->GetComponent<AnimatorComponent>()->SetSpeed(0.5f);
+			objects.back()->GetComponent<AnimatorComponent>()->AddAnimation(State::FACING_LEFT, dae::ResourceManager::GetInstance().LoadTexture("GreenBeeWalkLeft.png"), 16, 16, 2);
+			objects.back()->GetComponent<AnimatorComponent>()->AddAnimation(State::FACING_RIGHT, dae::ResourceManager::GetInstance().LoadTexture("GreenBeeWalkRight.png"), 16, 16, 2);
+			objects.back()->GetComponent<AnimatorComponent>()->AddAnimation(State::FACING_DOWN, dae::ResourceManager::GetInstance().LoadTexture("GreenBeeWalkDown.png"), 16, 16, 2);
+			objects.back()->GetComponent<AnimatorComponent>()->AddAnimation(State::FACING_UP, dae::ResourceManager::GetInstance().LoadTexture("GreenBeeWalkUp.png"), 16, 16, 2);
+
+			objects.back()->GetComponent<AnimatorComponent>()->AddAnimation(State::STRUGGLING, dae::ResourceManager::GetInstance().LoadTexture("GreenBeeStruggle.png"), 16, 16, 2);
+
+			// adding the inputs [Controller]
+			InputManager::GetInstance().ChangeCommand(dae::ControllerButton::DpadL, 1, new MoveLeftCommandSnoPlayer(objects.back()));
+			InputManager::GetInstance().ChangeCommand(dae::ControllerButton::DpadR, 1, new MoveRightCommandSnoPlayer(objects.back()));
+			InputManager::GetInstance().ChangeCommand(dae::ControllerButton::DpadU, 1, new MoveUpCommandSnoPlayer(objects.back()));
+			InputManager::GetInstance().ChangeCommand(dae::ControllerButton::DpadD, 1, new MoveDownCommandSnoPlayer(objects.back()));
+			InputManager::GetInstance().ChangeCommand(dae::ControllerButton::ButtonA, 1, new InteractSnoCommand(objects.back()));
+
+			// adding the inputs [Keyboard]
+			InputManager::GetInstance().ChangeKeyboardCommand('I', new MoveUpCommandSnoPlayer(objects.back()));
+			InputManager::GetInstance().ChangeKeyboardCommand('J', new MoveLeftCommandSnoPlayer(objects.back()));
+			InputManager::GetInstance().ChangeKeyboardCommand('K', new MoveDownCommandSnoPlayer(objects.back()));
+			InputManager::GetInstance().ChangeKeyboardCommand('L', new MoveRightCommandSnoPlayer(objects.back()));
+			InputManager::GetInstance().ChangeKeyboardCommand('O', new InteractSnoCommand(objects.back()));
+			counter++;
+			break;
+			// enter
 		case 13:
 			// do nothing, enter is for readability for the level editor person
 
