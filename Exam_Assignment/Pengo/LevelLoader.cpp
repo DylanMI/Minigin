@@ -172,13 +172,20 @@ std::vector<dae::GameObject*> dae::LevelLoader::LoadLevel(Scene & sceneRef, Game
 			objects.back()->GetComponent<AnimatorComponent>()->AddAnimation(State::FACING_DOWN, dae::ResourceManager::GetInstance().LoadTexture("RedPengoWalkDown.png"), 16, 16, 2);
 			objects.back()->GetComponent<AnimatorComponent>()->AddAnimation(State::FACING_UP, dae::ResourceManager::GetInstance().LoadTexture("RedPengoWalkUp.png"), 16, 16, 2);
 
-			// adding the inputs
+			// adding the inputs [Controller]
 			InputManager::GetInstance().ChangeCommand(dae::ControllerButton::DpadL, 1, new MoveLeftCommandPlayer(objects.back()));
 			InputManager::GetInstance().ChangeCommand(dae::ControllerButton::DpadR, 1, new MoveRightCommandPlayer(objects.back()));
 			InputManager::GetInstance().ChangeCommand(dae::ControllerButton::DpadU, 1, new MoveUpCommandPlayer(objects.back()));
 			InputManager::GetInstance().ChangeCommand(dae::ControllerButton::DpadD, 1, new MoveDownCommandPlayer(objects.back()));
 			InputManager::GetInstance().ChangeCommand(dae::ControllerButton::ButtonA, 1, new InteractCommand(objects.back()));
 
+			// adding the inputs [Keyboard]
+			InputManager::GetInstance().ChangeKeyboardCommand('W', new MoveUpCommandPlayer(objects.back()));
+			InputManager::GetInstance().ChangeKeyboardCommand('A', new MoveLeftCommandPlayer(objects.back()));
+			InputManager::GetInstance().ChangeKeyboardCommand('S', new MoveDownCommandPlayer(objects.back()));
+			InputManager::GetInstance().ChangeKeyboardCommand('D', new MoveRightCommandPlayer(objects.back()));
+			InputManager::GetInstance().ChangeKeyboardCommand('E', new InteractCommand(objects.back()));
+			
 			counter++;
 			break;
 			//player Two pengo
@@ -205,13 +212,19 @@ std::vector<dae::GameObject*> dae::LevelLoader::LoadLevel(Scene & sceneRef, Game
 			objects.back()->GetComponent<AnimatorComponent>()->AddAnimation(State::FACING_DOWN, dae::ResourceManager::GetInstance().LoadTexture("RedPengoWalkDown.png"), 16, 16, 2);
 			objects.back()->GetComponent<AnimatorComponent>()->AddAnimation(State::FACING_UP, dae::ResourceManager::GetInstance().LoadTexture("RedPengoWalkUp.png"), 16, 16, 2);
 
-			// adding the inputs
+			// adding the inputs [Controller]
 			InputManager::GetInstance().ChangeCommand(dae::ControllerButton::DpadL, 2, new MoveLeftCommandPlayer(objects.back()));
 			InputManager::GetInstance().ChangeCommand(dae::ControllerButton::DpadR, 2, new MoveRightCommandPlayer(objects.back()));
 			InputManager::GetInstance().ChangeCommand(dae::ControllerButton::DpadU, 2, new MoveUpCommandPlayer(objects.back()));
 			InputManager::GetInstance().ChangeCommand(dae::ControllerButton::DpadD, 2, new MoveDownCommandPlayer(objects.back()));
 			InputManager::GetInstance().ChangeCommand(dae::ControllerButton::ButtonA, 2, new InteractCommand(objects.back()));
 
+			// adding the inputs [Keyboard]
+			InputManager::GetInstance().ChangeKeyboardCommand('I', new MoveUpCommandPlayer(objects.back()));
+			InputManager::GetInstance().ChangeKeyboardCommand('J', new MoveLeftCommandPlayer(objects.back()));
+			InputManager::GetInstance().ChangeKeyboardCommand('K', new MoveDownCommandPlayer(objects.back()));
+			InputManager::GetInstance().ChangeKeyboardCommand('L', new MoveRightCommandPlayer(objects.back()));
+			InputManager::GetInstance().ChangeKeyboardCommand('O', new InteractCommand(objects.back()));
 			counter++;
 			break;
 
