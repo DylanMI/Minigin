@@ -46,6 +46,11 @@ void Game::LoadSystems()
 		Messenger::GetInstance().Subscribe(gameObserver, Event::EVENT_ENEMYDIED);
 		Messenger::GetInstance().Subscribe(gameObserver, Event::EVENT_ENEMYSPAWNED);
 		Messenger::GetInstance().Subscribe(gameObserver, Event::EVENT_PENGODIED);
+
+		Messenger::GetInstance().Subscribe(gameObserver, Event::EVENT_STARTSINGLEPLAYER);
+		Messenger::GetInstance().Subscribe(gameObserver, Event::EVENT_STARTCOOP);
+		Messenger::GetInstance().Subscribe(gameObserver, Event::EVENT_STARTVS);
+
 	}
 
 }

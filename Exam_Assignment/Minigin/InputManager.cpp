@@ -26,10 +26,10 @@ bool dae::InputManager::ProcessInput(float deltatime)
 {
 
 	// handle Controllers
-	for (int i{}; i < m_MAXammControllers; i++)
+	for (int i{0}; i < m_MAXammControllers; i++)
 	{
 		ZeroMemory(&currentState, sizeof(XINPUT_STATE));
-		XInputGetState(0, &currentState);
+		XInputGetState(i, &currentState);
 		
 		if (IsPressed(ControllerButton::ButtonA))
 		{
