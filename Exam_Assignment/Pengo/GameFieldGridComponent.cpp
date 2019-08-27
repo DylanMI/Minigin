@@ -76,7 +76,7 @@ void dae::GameFieldGridComponent::ShowEggBlocks()
 
 int dae::GameFieldGridComponent::GetAmmEggsLeft()
 {
-	return m_eggBlocks.size();
+	return int(m_eggBlocks.size());
 }
 
 void dae::GameFieldGridComponent::HatchNextEgg()
@@ -113,7 +113,7 @@ void dae::GameFieldGridComponent::MakeBoundryWalls()
 	// -- give it a texture
 	topWall->AddComponent(new TextureComponent(topWall));
 	topWall->GetComponent<TextureComponent>()->SetTexture("WallBlue.png");
-	topWall->GetComponent<TextureComponent>()->SetWidthAndHeight(m_GridInfo[m_ammPointsPerWidth - 1].coordinate.x - m_GridInfo[0].coordinate.x + 64, 16);
+	topWall->GetComponent<TextureComponent>()->SetWidthAndHeight(int(m_GridInfo[m_ammPointsPerWidth - 1].coordinate.x - m_GridInfo[0].coordinate.x + 64), 16);
 	topWall->GetComponent<TextureComponent>()->SetIsAnimated(false);
 	m_walls.push_back(topWall);
 
@@ -130,7 +130,7 @@ void dae::GameFieldGridComponent::MakeBoundryWalls()
 	// -- give it a texture
 	botWall->AddComponent(new TextureComponent(botWall));
 	botWall->GetComponent<TextureComponent>()->SetTexture("WallBlue.png");
-	botWall->GetComponent<TextureComponent>()->SetWidthAndHeight(m_GridInfo[m_ammPointsPerWidth - 1].coordinate.x - m_GridInfo[0].coordinate.x + 64, 16);
+	botWall->GetComponent<TextureComponent>()->SetWidthAndHeight(int(m_GridInfo[m_ammPointsPerWidth - 1].coordinate.x - m_GridInfo[0].coordinate.x + 64), 16);
 	botWall->GetComponent<TextureComponent>()->SetIsAnimated(false);
 	m_walls.push_back(botWall);
 	
@@ -147,7 +147,7 @@ void dae::GameFieldGridComponent::MakeBoundryWalls()
 	// -- give it a texture
 	leftWall->AddComponent(new TextureComponent(leftWall));
 	leftWall->GetComponent<TextureComponent>()->SetTexture("WallBlue.png");
-	leftWall->GetComponent<TextureComponent>()->SetWidthAndHeight(16 , m_GridInfo[m_ammPointsPerHeight * m_ammPointsPerWidth - 1].coordinate.y - m_GridInfo[0].coordinate.y + 64);
+	leftWall->GetComponent<TextureComponent>()->SetWidthAndHeight(16 , int(m_GridInfo[m_ammPointsPerHeight * m_ammPointsPerWidth - 1].coordinate.y - m_GridInfo[0].coordinate.y + 64));
 	leftWall->GetComponent<TextureComponent>()->SetIsAnimated(false);
 	m_walls.push_back(leftWall);
 
@@ -164,7 +164,7 @@ void dae::GameFieldGridComponent::MakeBoundryWalls()
 	// -- give it a texture
 	rightWall->AddComponent(new TextureComponent(rightWall));
 	rightWall->GetComponent<TextureComponent>()->SetTexture("WallBlue.png");
-	rightWall->GetComponent<TextureComponent>()->SetWidthAndHeight(16, m_GridInfo[m_ammPointsPerHeight * m_ammPointsPerWidth - 1].coordinate.y - m_GridInfo[0].coordinate.y + 64);
+	rightWall->GetComponent<TextureComponent>()->SetWidthAndHeight(16, int(m_GridInfo[m_ammPointsPerHeight * m_ammPointsPerWidth - 1].coordinate.y - m_GridInfo[0].coordinate.y + 64));
 	rightWall->GetComponent<TextureComponent>()->SetIsAnimated(false);
 	m_walls.push_back(rightWall);
 	
