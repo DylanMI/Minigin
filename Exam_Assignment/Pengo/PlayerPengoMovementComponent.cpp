@@ -88,6 +88,7 @@ void dae::PlayerPengoMovementComponent::Render() const
 
 void dae::PlayerPengoMovementComponent::Move(direction direction)
 {
+	if (this == nullptr) return;
 	if (m_isTraveling) return;
 
 	// get the current position

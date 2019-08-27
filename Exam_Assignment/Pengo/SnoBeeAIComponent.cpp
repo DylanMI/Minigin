@@ -325,6 +325,7 @@ void dae::SnoBeeAIComponent::SetPosition(int idxPos)
 void dae::SnoBeeAIComponent::GetCatched(GameObject * Catcher)
 {
 	// failsafe
+	if (this == nullptr) return;
 	if (m_CatchedByThis == Catcher) return;
 	
 	int ammPointsW = mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getAmmPointPerWidth();

@@ -27,7 +27,7 @@ void dae::DiamondBlockComponent::Update(const float & deltaTime)
 
 	// horizontal
 	// check if you are at a horizontal border, or out of bounds with your next check
-	if (! currIdx % ammPointsW == 0 && ! currIdx % ammPointsW == ammPointsW - 1)
+	if (currIdx % ammPointsW != 0 && currIdx % ammPointsW != ammPointsW - 1)
 	{
 		// check if its actually there
 			if

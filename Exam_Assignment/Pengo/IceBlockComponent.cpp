@@ -66,10 +66,19 @@ void dae::IceBlockComponent::Update(const float & deltaTime)
 				return;
 			}
 			// continue gliding, but catch the sno bee
-			else if (infoLeft.isSnoBee)
+			else if (infoLeft.isSnoBee && !infoLeft.object->GetComponent<StateComponent>()->GetIsPlayer())
 			{
 				infoLeft.object->GetComponent<SnoBeeAIComponent>()->GetCatched(m_pParent);
 				
+				// set the traveling vars
+				m_start = m_currPos;
+				m_destination = mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx - 1].coordinate;
+				m_isTraveling = true;
+			}
+			else if (infoLeft.isSnoBee && infoLeft.object->GetComponent<StateComponent>()->GetIsPlayer())
+			{
+				infoLeft.object->GetComponent<PlayerSnoMovementComponent>()->GetCatched(m_pParent);
+
 				// set the traveling vars
 				m_start = m_currPos;
 				m_destination = mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx - 1].coordinate;
@@ -135,7 +144,7 @@ void dae::IceBlockComponent::Update(const float & deltaTime)
 				return;
 			}		
 			// continue gliding, but catch the sno bee
-			else if (infoRight.isSnoBee)
+			else if (infoRight.isSnoBee && !infoRight.object->GetComponent<StateComponent>()->GetIsPlayer())
 			{
 				infoRight.object->GetComponent<SnoBeeAIComponent>()->GetCatched(m_pParent);
 
@@ -144,6 +153,16 @@ void dae::IceBlockComponent::Update(const float & deltaTime)
 				m_destination = mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx + 1].coordinate;
 				m_isTraveling = true;
 			}
+			else if (infoRight.isSnoBee && infoRight.object->GetComponent<StateComponent>()->GetIsPlayer())
+			{
+				infoRight.object->GetComponent<PlayerSnoMovementComponent>()->GetCatched(m_pParent);
+
+				// set the traveling vars
+				m_start = m_currPos;
+				m_destination = mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx + 1].coordinate;
+				m_isTraveling = true;
+			}
+
 			// else continue gliding
 			else
 			{
@@ -196,9 +215,18 @@ void dae::IceBlockComponent::Update(const float & deltaTime)
 				return;
 			}
 			// continue gliding, but catch the sno bee
-			else if (infoAbove.isSnoBee)
+			else if (infoAbove.isSnoBee && !infoAbove.object->GetComponent<StateComponent>()->GetIsPlayer())
 			{
 				infoAbove.object->GetComponent<SnoBeeAIComponent>()->GetCatched(m_pParent);
+
+				// set the traveling vars
+				m_start = m_currPos;
+				m_destination = mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx - ammPointsW].coordinate;
+				m_isTraveling = true;
+			}
+			else if (infoAbove.isSnoBee && infoAbove.object->GetComponent<StateComponent>()->GetIsPlayer())
+			{
+				infoAbove.object->GetComponent<PlayerSnoMovementComponent>()->GetCatched(m_pParent);
 
 				// set the traveling vars
 				m_start = m_currPos;
@@ -254,9 +282,18 @@ void dae::IceBlockComponent::Update(const float & deltaTime)
 				return;
 			}
 			// continue gliding, but catch the sno bee
-			else if (infoBelow.isSnoBee)
+			else if (infoBelow.isSnoBee && !infoBelow.object->GetComponent<StateComponent>()->GetIsPlayer())
 			{
 				infoBelow.object->GetComponent<SnoBeeAIComponent>()->GetCatched(m_pParent);
+
+				// set the traveling vars
+				m_start = m_currPos;
+				m_destination = mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx + ammPointsW].coordinate;
+				m_isTraveling = true;
+			}
+			else if (infoBelow.isSnoBee && infoBelow.object->GetComponent<StateComponent>()->GetIsPlayer())
+			{
+				infoBelow.object->GetComponent<PlayerSnoMovementComponent>()->GetCatched(m_pParent);
 
 				// set the traveling vars
 				m_start = m_currPos;
@@ -340,6 +377,12 @@ bool dae::IceBlockComponent::StartGliding(direction glidingDirection)
 	{
 	case direction::LEFT:
 		if (currIdx == 0 || currIdx % ammPointsW == 0) return false;
+		
+		// check if you can take a sno bee withcha
+		if (mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx - 1].isSnoBee)
+		{
+			mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx - 1].object->GetComponent<SnoBeeAIComponent>()->GetCatched(m_pParent);
+		}
 		IdxLeft = currIdx - 1;
 		GridInfo infoLeft = mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[IdxLeft];
 		if (infoLeft.isObstacle) return false;
@@ -366,9 +409,19 @@ bool dae::IceBlockComponent::StartGliding(direction glidingDirection)
 			mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx].isEggBlock = false;
 			mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx - 1].isEggBlock = true;
 		}
+
+
+		
+
 		break;
 	case direction::RIGHT:
 		if (currIdx % ammPointsW == ammPointsW - 1) return false;
+		
+		// check if you can take a sno bee withcha
+		if (mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx + 1].isSnoBee)
+		{
+			mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx + 1].object->GetComponent<SnoBeeAIComponent>()->GetCatched(m_pParent);
+		}
 		IdxRight = currIdx + 1;
 		GridInfo infoRight = mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[IdxRight];
 		if (infoRight.isObstacle) return false;
@@ -395,9 +448,18 @@ bool dae::IceBlockComponent::StartGliding(direction glidingDirection)
 			mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx].isEggBlock = false;
 			mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx + 1].isEggBlock = true;
 		}
+
+
 		break;
 	case direction::UP:
 		if (currIdx - ammPointsW < 0) return false;
+		
+		// check if you can take a sno bee withcha
+		if (mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx - ammPointsW].isSnoBee)
+		{
+			mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx - ammPointsW].object->GetComponent<SnoBeeAIComponent>()->GetCatched(m_pParent);
+		}
+
 		IdxAbove = currIdx - ammPointsW;
 		GridInfo infoAbove = mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[IdxAbove];
 		if (infoAbove.isObstacle) return false;
@@ -424,9 +486,17 @@ bool dae::IceBlockComponent::StartGliding(direction glidingDirection)
 			mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx].isEggBlock = false;
 			mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx - ammPointsW].isEggBlock = true;
 		}
+
 		break;
 	case direction::DOWN:
 		if (currIdx + ammPointsW >= mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef().size()) return false;
+		
+		// check if you can take a sno bee withcha
+		if (mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx + ammPointsW].isSnoBee)
+		{
+			mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx + ammPointsW].object->GetComponent<SnoBeeAIComponent>()->GetCatched(m_pParent);
+		}
+		
 		IdxBelow = currIdx + ammPointsW;
 		GridInfo infoBelow = mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[IdxBelow];
 		if (infoBelow.isObstacle) return false;
@@ -453,6 +523,7 @@ bool dae::IceBlockComponent::StartGliding(direction glidingDirection)
 			mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx].isEggBlock = false;
 			mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[currIdx + ammPointsW].isEggBlock = true;
 		}
+
 
 		break;
 

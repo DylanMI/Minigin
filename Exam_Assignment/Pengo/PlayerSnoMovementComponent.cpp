@@ -21,6 +21,31 @@ void dae::PlayerSnoMovementComponent::Update(const float & deltaTime)
 {
 	m_pParent->SetPosition(m_currPos);
 
+	if (m_pParent->GetComponent<StateComponent>()->GetState() == State::CAUGHTBYBLOCK)
+	{
+		// if the catcher is a nullptr or something like that, its probably destroyed somehow, die with it
+		if (m_CatchedByThis == nullptr)
+		{
+			m_pParent->GetComponent<StateComponent>()->SetState(State::DYING);
+			Die(400);
+		}
+		// set the object position to the catchers position
+		m_pParent->SetPosition(Point2f{ m_CatchedByThis->GetTransform().GetPosition().x ,m_CatchedByThis->GetTransform().GetPosition().y });
+		// if the catcher ever stops sliding, then die
+		if (!m_CatchedByThis->GetComponent<IceBlockComponent>()->GetIsSliding())
+		{
+			m_pParent->GetComponent<StateComponent>()->SetState(State::DYING);
+			Die(400);
+		}
+		return;
+	}
+
+	// travelling
+	if (m_isTraveling && m_pParent->GetComponent<StateComponent>()->GetState() != State::STRUGGLING)
+	{
+		LerpPos(deltaTime);
+	}
+
 	// interact cooldowm
 	if (m_canInteract == false)
 	{
@@ -40,21 +65,17 @@ void dae::PlayerSnoMovementComponent::Update(const float & deltaTime)
 
 		if (m_struggleTimer > m_struggletime)
 		{
-			m_pParent->GetComponent<StateComponent>()->SetState(State::IDLE);
 			m_struggleTimer = 0.0f;
 			m_Speed = m_prevSpeed;
 
 		}
 	}
 
-	// travelling
-	if (m_isTraveling && m_pParent->GetComponent<StateComponent>()->GetState() != State::STRUGGLING)
-	{
-		LerpPos(deltaTime);
-	}
 
-	int currIdx = mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getCurrGridIndex(Rectf{ m_currPos.x, m_currPos.y, m_WidthAndHeight.x, m_WidthAndHeight.y });
-	if (currIdx == -1) return;
+
+	if(m_isTraveling) return;
+	int m_prevIdx = mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getCurrGridIndex(Rectf{ m_currPos.x, m_currPos.y, m_WidthAndHeight.x, m_WidthAndHeight.y });
+	if (m_prevIdx == -1) return;
 }
 
 void dae::PlayerSnoMovementComponent::Render() const
@@ -69,7 +90,7 @@ void dae::PlayerSnoMovementComponent::Move(direction direction)
 	if (m_pParent->GetComponent<StateComponent>()->GetState() == State::STRUGGLING) return;
 
 	// get the current position
-	int m_prevIdx = mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getCurrGridIndex(Rectf{ m_currPos.x, m_currPos.y, m_WidthAndHeight.x, m_WidthAndHeight.y });
+	m_prevIdx = mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getCurrGridIndex(Rectf{ m_currPos.x, m_currPos.y, m_WidthAndHeight.x, m_WidthAndHeight.y });
 	int ammPointsW = mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getAmmPointPerWidth();
 	int ammPointsH = mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getAmmPointPerHeight();
 
@@ -113,7 +134,6 @@ void dae::PlayerSnoMovementComponent::Move(direction direction)
 		// Once you have moved, fix the gameGrid info
 
 		mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[m_prevIdx - 1].isSnoBee = true;
-
 		mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[m_prevIdx - 1].object = m_pParent;
 		break;
 	case direction::RIGHT:
@@ -169,6 +189,7 @@ void dae::PlayerSnoMovementComponent::Move(direction direction)
 		{
 			m_isTraveling = false;
 			m_destination = m_currPos;
+			return;
 		}
 		// check if there is an obstacle there
 		else if (mp_gameGridObj->GetComponent<GameFieldGridComponent>()->getInfoRef()[m_prevIdx - ammPointsW].isObstacle)
