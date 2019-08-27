@@ -11,12 +11,13 @@ public:
 	~Game() = default;
 
 	void Initialize();
-	void LoadGame();
+	void LoadGame(int identifier);
+	void LoadSystems();
 	void Cleanup();
 	void Run();
 
 
 private:
 	dae::GameObserver* gameObserver;
-
+	dae::GameObject* mp_gameFieldGridObject;
 };

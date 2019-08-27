@@ -15,7 +15,7 @@ namespace dae
 	class PlayerPengoMovementComponent : public BaseComponent
 	{
 	public:
-		explicit PlayerPengoMovementComponent(GameObject* parent, Point2f WidthAndHeight, float Speed, GameObject * gameGridObj);
+		explicit PlayerPengoMovementComponent(GameObject* parent, Point2f WidthAndHeight, float Speed, GameObject * gameGridObj, GameObserver * gameObserver);
 		virtual ~PlayerPengoMovementComponent();
 		PlayerPengoMovementComponent(const PlayerPengoMovementComponent& other) = delete;
 		PlayerPengoMovementComponent(PlayerPengoMovementComponent&& other) = delete;
@@ -29,15 +29,18 @@ namespace dae
 		void Interact();
 		
 		void SetPosition(int idxPos);
-
+		void SetStartIdx(int idxPos);
 	private:
 
 		GameObject* mp_gameGridObj;
+		GameObserver* mp_GameObserver;
 
 		// movement variables
 		Point2f m_WidthAndHeight;
 		float m_Speed;
 		Point2f m_currPos;
+		
+		int m_startIdx;
 		
 		// used for interacting
 		int m_lastBumpedIntoIdx = -1;

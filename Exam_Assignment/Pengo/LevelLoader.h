@@ -10,7 +10,7 @@ namespace dae
 		LevelLoader() = default;
 		~LevelLoader() = default;
 
-		std::vector<GameObject*> LoadLevel(Scene& sceneRef,GameObject* gameGridObj, std::string path);		
+		std::vector<GameObject*> LoadLevel(Scene& sceneRef,GameObject* gameGridObj, GameObserver* gameObserver, std::string path);		
 	};
 
 }

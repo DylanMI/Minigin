@@ -23,7 +23,7 @@ void dae::GameObserver::Notify(Event eventType, int extraInfo)
 	{
 	case Event::EVENT_PENGODIED:
 		// reduce lifes
-
+		m_lives--;
 		break;
 	case Event::EVENT_ENEMYDIED:
 		// award points according to extraInfo

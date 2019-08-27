@@ -2,7 +2,7 @@
 #include "LevelLoader.h"
 
 using namespace dae;
-std::vector<dae::GameObject*> dae::LevelLoader::LoadLevel(Scene & sceneRef, GameObject* gameGridObj, std::string path)
+std::vector<dae::GameObject*> dae::LevelLoader::LoadLevel(Scene & sceneRef, GameObject* gameGridObj, GameObserver* gameObserver, std::string path)
 {
 	int counter{};
 	std::vector<dae::GameObject*> objects;
@@ -147,6 +147,75 @@ std::vector<dae::GameObject*> dae::LevelLoader::LoadLevel(Scene & sceneRef, Game
 
 			counter++;
 			break;
+
+			//player one pengo
+		case '1':
+			// adding the player 
+			objects.push_back(new GameObject);
+			// -- adding the movement comp
+			objects.back()->AddComponent(new dae::PlayerPengoMovementComponent(objects.back(), { 16,16 }, 3, gameGridObj, gameObserver));
+			objects.back()->GetComponent<PlayerPengoMovementComponent>()->SetPosition(counter);
+			objects.back()->GetComponent<PlayerPengoMovementComponent>()->SetStartIdx(counter);
+
+			// -- adding the state component
+			objects.back()->AddComponent(new StateComponent(objects.back(), true));
+
+			// -- adding the texture comp
+			objects.back()->AddComponent(new dae::TextureComponent(objects.back()));
+			objects.back()->GetComponent<dae::TextureComponent>()->SetIsAnimated(true);
+
+			// -- adding the animator
+			objects.back()->AddComponent(new dae::AnimatorComponent(objects.back()));
+			objects.back()->GetComponent<AnimatorComponent>()->SetSpeed(0.5f);
+			objects.back()->GetComponent<AnimatorComponent>()->AddAnimation(State::FACING_LEFT, dae::ResourceManager::GetInstance().LoadTexture("RedPengoWalkLeft.png"), 16, 16, 2);
+			objects.back()->GetComponent<AnimatorComponent>()->AddAnimation(State::FACING_RIGHT, dae::ResourceManager::GetInstance().LoadTexture("RedPengoWalkRight.png"), 16, 16, 2);
+			objects.back()->GetComponent<AnimatorComponent>()->AddAnimation(State::FACING_DOWN, dae::ResourceManager::GetInstance().LoadTexture("RedPengoWalkDown.png"), 16, 16, 2);
+			objects.back()->GetComponent<AnimatorComponent>()->AddAnimation(State::FACING_UP, dae::ResourceManager::GetInstance().LoadTexture("RedPengoWalkUp.png"), 16, 16, 2);
+
+			// adding the inputs
+			InputManager::GetInstance().ChangeCommand(dae::ControllerButton::DpadL, 1, new MoveLeftCommandPlayer(objects.back()));
+			InputManager::GetInstance().ChangeCommand(dae::ControllerButton::DpadR, 1, new MoveRightCommandPlayer(objects.back()));
+			InputManager::GetInstance().ChangeCommand(dae::ControllerButton::DpadU, 1, new MoveUpCommandPlayer(objects.back()));
+			InputManager::GetInstance().ChangeCommand(dae::ControllerButton::DpadD, 1, new MoveDownCommandPlayer(objects.back()));
+			InputManager::GetInstance().ChangeCommand(dae::ControllerButton::ButtonA, 1, new InteractCommand(objects.back()));
+
+			counter++;
+			break;
+			//player Two pengo
+		case '2':
+			// adding the player 
+			objects.push_back(new GameObject);
+			// -- adding the movement comp
+			objects.back()->AddComponent(new dae::PlayerPengoMovementComponent(objects.back(), { 16,16 }, 3, gameGridObj, gameObserver));
+			objects.back()->GetComponent<PlayerPengoMovementComponent>()->SetPosition(counter);
+			objects.back()->GetComponent<PlayerPengoMovementComponent>()->SetStartIdx(counter);
+
+			// -- adding the state component
+			objects.back()->AddComponent(new StateComponent(objects.back(), true));
+
+			// -- adding the texture comp
+			objects.back()->AddComponent(new dae::TextureComponent(objects.back()));
+			objects.back()->GetComponent<dae::TextureComponent>()->SetIsAnimated(true);
+
+			// -- adding the animator
+			objects.back()->AddComponent(new dae::AnimatorComponent(objects.back()));
+			objects.back()->GetComponent<AnimatorComponent>()->SetSpeed(0.5f);
+			objects.back()->GetComponent<AnimatorComponent>()->AddAnimation(State::FACING_LEFT, dae::ResourceManager::GetInstance().LoadTexture("RedPengoWalkLeft.png"), 16, 16, 2);
+			objects.back()->GetComponent<AnimatorComponent>()->AddAnimation(State::FACING_RIGHT, dae::ResourceManager::GetInstance().LoadTexture("RedPengoWalkRight.png"), 16, 16, 2);
+			objects.back()->GetComponent<AnimatorComponent>()->AddAnimation(State::FACING_DOWN, dae::ResourceManager::GetInstance().LoadTexture("RedPengoWalkDown.png"), 16, 16, 2);
+			objects.back()->GetComponent<AnimatorComponent>()->AddAnimation(State::FACING_UP, dae::ResourceManager::GetInstance().LoadTexture("RedPengoWalkUp.png"), 16, 16, 2);
+
+			// adding the inputs
+			InputManager::GetInstance().ChangeCommand(dae::ControllerButton::DpadL, 2, new MoveLeftCommandPlayer(objects.back()));
+			InputManager::GetInstance().ChangeCommand(dae::ControllerButton::DpadR, 2, new MoveRightCommandPlayer(objects.back()));
+			InputManager::GetInstance().ChangeCommand(dae::ControllerButton::DpadU, 2, new MoveUpCommandPlayer(objects.back()));
+			InputManager::GetInstance().ChangeCommand(dae::ControllerButton::DpadD, 2, new MoveDownCommandPlayer(objects.back()));
+			InputManager::GetInstance().ChangeCommand(dae::ControllerButton::ButtonA, 2, new InteractCommand(objects.back()));
+
+			counter++;
+			break;
+
+			//player Two snoBee
 		// enter
 		case 13:
 			// do nothing, enter is for readability for the level editor person

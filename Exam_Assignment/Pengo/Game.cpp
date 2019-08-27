@@ -27,22 +27,14 @@ void Game::Initialize()
 
 }
 
-void Game::LoadGame()
+void Game::LoadSystems()
 {
 	using namespace dae;
 	{
-		// making the scene
-		auto& m_scene = SceneManager::GetInstance().CreateScene("Pengo");
-
-
-
-		// adding the gameFieldGrid
-		auto mp_gameFieldGridObject = new dae::GameObject();
-		mp_gameFieldGridObject->AddComponent(new dae::GameFieldGridComponent(mp_gameFieldGridObject, { 34,27,464,464 }, 13, 13, m_scene));
-		m_scene.Add(mp_gameFieldGridObject);
-		
-		// event system
+		mp_gameFieldGridObject = new dae::GameObject();
 		gameObserver = new GameObserver(mp_gameFieldGridObject);
+
+		// events
 		Messenger::GetInstance().Subscribe(gameObserver, Event::EVENT_DIAMONDSCHAIN);
 		Messenger::GetInstance().Subscribe(gameObserver, Event::EVENT_EGGHATCHED);
 		Messenger::GetInstance().Subscribe(gameObserver, Event::EVENT_EGGSPAWNED);
@@ -51,41 +43,70 @@ void Game::LoadGame()
 		Messenger::GetInstance().Subscribe(gameObserver, Event::EVENT_ENEMYDIED);
 		Messenger::GetInstance().Subscribe(gameObserver, Event::EVENT_ENEMYSPAWNED);
 		Messenger::GetInstance().Subscribe(gameObserver, Event::EVENT_PENGODIED);
+	}
 
-		// loading the level
-		LevelLoader::GetInstance().LoadLevel(m_scene,mp_gameFieldGridObject,"../Data/Map.txt");
+}
+
+void Game::LoadGame(int identifier)
+{
+	using namespace dae;
+	{
+		// making the scene
+		auto& m_scene = SceneManager::GetInstance().CreateScene("Pengo");
+
+		switch (identifier)
+		{
+			// 0 == Menu
+		case 0:
+			break;
+			// 1 == first level singleplayer
+		case 1:
+			mp_gameFieldGridObject->AddComponent(new dae::GameFieldGridComponent(mp_gameFieldGridObject, { 34,27,464,464 }, 13, 13, m_scene));
+			m_scene.Add(mp_gameFieldGridObject);
 			
-		// adding the player 
-		auto mp_PlayerPengo = new dae::GameObject();
-		
-		// -- adding the movement comp
-		mp_PlayerPengo->AddComponent(new dae::PlayerPengoMovementComponent(mp_PlayerPengo, { 16,16 }, 3, mp_gameFieldGridObject));
-		mp_PlayerPengo->GetComponent<PlayerPengoMovementComponent>()->SetPosition(0);
+			// loading the level
+			LevelLoader::GetInstance().LoadLevel(m_scene, mp_gameFieldGridObject, gameObserver, "../Data/Map.txt");
 
-		// -- adding the state component
-		mp_PlayerPengo->AddComponent(new StateComponent(mp_PlayerPengo,true));
+			break;
+			// 2 == second level singleplayer
+		case 2:
+			mp_gameFieldGridObject->AddComponent(new dae::GameFieldGridComponent(mp_gameFieldGridObject, { 34,27,464,464 }, 13, 13, m_scene));
+			m_scene.Add(mp_gameFieldGridObject);
 
-		// -- adding the texture comp
-		mp_PlayerPengo->AddComponent(new dae::TextureComponent(mp_PlayerPengo));
-		mp_PlayerPengo->GetComponent<dae::TextureComponent>()->SetIsAnimated(true);
-		
-		// -- adding the animator
-		mp_PlayerPengo->AddComponent(new dae::AnimatorComponent(mp_PlayerPengo));
-		mp_PlayerPengo->GetComponent<AnimatorComponent>()->SetSpeed(0.5f);
-		mp_PlayerPengo->GetComponent<AnimatorComponent>()->AddAnimation(State::FACING_LEFT, dae::ResourceManager::GetInstance().LoadTexture("RedPengoWalkLeft.png"), 16, 16, 2);
-		mp_PlayerPengo->GetComponent<AnimatorComponent>()->AddAnimation(State::FACING_RIGHT, dae::ResourceManager::GetInstance().LoadTexture("RedPengoWalkRight.png"), 16, 16, 2);
-		mp_PlayerPengo->GetComponent<AnimatorComponent>()->AddAnimation(State::FACING_DOWN, dae::ResourceManager::GetInstance().LoadTexture("RedPengoWalkDown.png"), 16, 16, 2);
-		mp_PlayerPengo->GetComponent<AnimatorComponent>()->AddAnimation(State::FACING_UP, dae::ResourceManager::GetInstance().LoadTexture("RedPengoWalkUp.png"), 16, 16, 2);
-		
-		m_scene.Add(mp_PlayerPengo);
-		
-		// adding the inputs
-		InputManager::GetInstance().ChangeCommand(dae::ControllerButton::DpadL, 1, new MoveLeftCommandPlayer(mp_PlayerPengo));
-		InputManager::GetInstance().ChangeCommand(dae::ControllerButton::DpadR, 1, new MoveRightCommandPlayer(mp_PlayerPengo));
-		InputManager::GetInstance().ChangeCommand(dae::ControllerButton::DpadU, 1, new MoveUpCommandPlayer(mp_PlayerPengo));
-		InputManager::GetInstance().ChangeCommand(dae::ControllerButton::DpadD, 1, new MoveDownCommandPlayer(mp_PlayerPengo));
-		InputManager::GetInstance().ChangeCommand(dae::ControllerButton::ButtonA, 1, new InteractCommand(mp_PlayerPengo));
-		
+			// loading the level
+			LevelLoader::GetInstance().LoadLevel(m_scene, mp_gameFieldGridObject, gameObserver, "../Data/Map2.txt");
+
+			break;
+			// 3 == first level co op
+		case 3:
+			mp_gameFieldGridObject->AddComponent(new dae::GameFieldGridComponent(mp_gameFieldGridObject, { 34,27,464,464 }, 13, 13, m_scene));
+			m_scene.Add(mp_gameFieldGridObject);
+			
+			break;
+			// 4 == second level co op
+		case 4:
+			mp_gameFieldGridObject->AddComponent(new dae::GameFieldGridComponent(mp_gameFieldGridObject, { 34,27,464,464 }, 13, 13, m_scene));
+			m_scene.Add(mp_gameFieldGridObject);
+
+			break;
+			// 5 == first level VS
+		case 5:
+			mp_gameFieldGridObject->AddComponent(new dae::GameFieldGridComponent(mp_gameFieldGridObject, { 34,27,464,464 }, 13, 13, m_scene));
+			m_scene.Add(mp_gameFieldGridObject);
+			break;
+			// 6 == second level VS
+		case 6:
+
+			mp_gameFieldGridObject->AddComponent(new dae::GameFieldGridComponent(mp_gameFieldGridObject, { 34,27,464,464 }, 13, 13, m_scene));
+			m_scene.Add(mp_gameFieldGridObject);
+
+			break;
+		default:
+			break;
+		}
+		if (identifier == 0) return;
+
+
 		// adding UI
 		//adding FPS counter
 		auto font = ResourceManager::GetInstance().LoadFont("Lingua.otf", 20);
@@ -124,6 +145,8 @@ void Game::LoadGame()
 	}
 }
 
+
+
 void Game::Run()
 {
 	// initialize window
@@ -131,9 +154,13 @@ void Game::Run()
 
 	// tell the resource manager where he can find the game data
 	dae::ResourceManager::GetInstance().Init("../Data/");
+	
+	// Load the systems like events etc...
+	LoadSystems();
+	
+	// load the menu
+	LoadGame(1);
 
-	// load the entire game
-	LoadGame();
 
 	// update loop
 	{

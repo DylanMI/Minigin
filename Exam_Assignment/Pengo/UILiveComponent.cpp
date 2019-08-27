@@ -6,7 +6,7 @@ dae::UILiveComponent::UILiveComponent(GameObject * parent, GameObserver * GameOb
 	, m_GameObserver (GameObserver)
 	, m_prevLives (0)
 {
-	m_prevLives = m_GameObserver->GetLives();
+
 }
 
 void dae::UILiveComponent::Update(const float & deltaTime)
