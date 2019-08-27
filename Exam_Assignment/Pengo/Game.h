@@ -7,7 +7,7 @@ class Game
 	const int msPerFrame = 16; //16 for 60 fps, 33 for 30 fps
 	SDL_Window* window{};
 public:
-	Game() = default;
+	Game();
 	~Game() = default;
 
 	void Initialize();
@@ -20,4 +20,5 @@ public:
 private:
 	dae::GameObserver* gameObserver;
 	dae::GameObject* mp_gameFieldGridObject;
+	dae::Scene& m_scene;
 };

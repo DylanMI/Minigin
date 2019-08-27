@@ -1,6 +1,10 @@
 #include "pch.h"
 #include "Game.h"
+#include "Scene.h"
 
+Game::Game()
+	: m_scene(dae::SceneManager::GetInstance().CreateScene("GameScene"))
+{}
 
 void Game::Initialize()
 {
@@ -27,32 +31,10 @@ void Game::Initialize()
 
 }
 
-void Game::LoadSystems()
-{
-	using namespace dae;
-	{
-		mp_gameFieldGridObject = new dae::GameObject();
-		gameObserver = new GameObserver(mp_gameFieldGridObject);
-
-		// events
-		Messenger::GetInstance().Subscribe(gameObserver, Event::EVENT_DIAMONDSCHAIN);
-		Messenger::GetInstance().Subscribe(gameObserver, Event::EVENT_EGGHATCHED);
-		Messenger::GetInstance().Subscribe(gameObserver, Event::EVENT_EGGSPAWNED);
-		Messenger::GetInstance().Subscribe(gameObserver, Event::EVENT_EGGDESTROYED);
-		Messenger::GetInstance().Subscribe(gameObserver, Event::EVENT_ENDGAME);
-		Messenger::GetInstance().Subscribe(gameObserver, Event::EVENT_ENEMYDIED);
-		Messenger::GetInstance().Subscribe(gameObserver, Event::EVENT_ENEMYSPAWNED);
-		Messenger::GetInstance().Subscribe(gameObserver, Event::EVENT_PENGODIED);
-	}
-
-}
-
 void Game::LoadGame(int identifier)
 {
 	using namespace dae;
 	{
-		// making the scene
-		auto& m_scene = SceneManager::GetInstance().CreateScene("Pengo");
 
 		switch (identifier)
 		{
@@ -145,7 +127,25 @@ void Game::LoadGame(int identifier)
 	}
 }
 
+void Game::LoadSystems()
+{
+	using namespace dae;
+	{
+		mp_gameFieldGridObject = new dae::GameObject();
+		gameObserver = new GameObserver(mp_gameFieldGridObject);
 
+		// events
+		Messenger::GetInstance().Subscribe(gameObserver, Event::EVENT_DIAMONDSCHAIN);
+		Messenger::GetInstance().Subscribe(gameObserver, Event::EVENT_EGGHATCHED);
+		Messenger::GetInstance().Subscribe(gameObserver, Event::EVENT_EGGSPAWNED);
+		Messenger::GetInstance().Subscribe(gameObserver, Event::EVENT_EGGDESTROYED);
+		Messenger::GetInstance().Subscribe(gameObserver, Event::EVENT_ENDGAME);
+		Messenger::GetInstance().Subscribe(gameObserver, Event::EVENT_ENEMYDIED);
+		Messenger::GetInstance().Subscribe(gameObserver, Event::EVENT_ENEMYSPAWNED);
+		Messenger::GetInstance().Subscribe(gameObserver, Event::EVENT_PENGODIED);
+	}
+
+}
 
 void Game::Run()
 {
