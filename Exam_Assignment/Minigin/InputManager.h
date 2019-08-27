@@ -1,5 +1,6 @@
 #pragma once
 #include <XInput.h>
+#pragma comment(lib, "XInput.lib")
 #include "Singleton.h"
 #include "Command.h"
 
@@ -32,9 +33,11 @@ namespace dae
 		bool ProcessInput(float deltatime);
 		bool IsPressed(ControllerButton button) const;
 		void ChangeCommand(ControllerButton button,int controller, Command* newcommand);
+		void ChangeKeyboardCommand(char character, Command* newCommand);
 	private:
 		XINPUT_STATE currentState{};
 		static const int m_MAXammControllers = 4;
+		static const int m_MAXKeyboardAsciiSize = 127;
 		// command states
 		Command* aBtnCommand[m_MAXammControllers];
 		Command* bBtnCommand[m_MAXammControllers];
@@ -44,5 +47,8 @@ namespace dae
 		Command* padrBtnCommand[m_MAXammControllers];
 		Command* paduBtnCommand[m_MAXammControllers];
 		Command* paddBtnCommand[m_MAXammControllers];	
+
+		// keyboard commands
+		Command* keyboardCommands[m_MAXKeyboardAsciiSize];
 	};
 }

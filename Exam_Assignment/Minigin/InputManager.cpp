@@ -17,29 +17,20 @@ dae::InputManager::~InputManager()
 		delete paduBtnCommand[i];
 		delete paddBtnCommand[i];
 	}
+	for (int k{}; k < m_MAXKeyboardAsciiSize; k++)
+	{
+		delete keyboardCommands[k];
+	}
 }
 bool dae::InputManager::ProcessInput(float deltatime)
 {
+
+	// handle Controllers
 	for (int i{}; i < m_MAXammControllers; i++)
 	{
 		ZeroMemory(&currentState, sizeof(XINPUT_STATE));
 		XInputGetState(0, &currentState);
-		SDL_Event e;
-		while (SDL_PollEvent(&e))
-		{
-			if (e.type == SDL_QUIT)
-			{
-				return false;
-			}
-			if (e.type == SDL_KEYDOWN)
-			{
-
-			}
-			if (e.type == SDL_MOUSEBUTTONDOWN)
-			{
-
-			}
-		}
+		
 		if (IsPressed(ControllerButton::ButtonA))
 		{
 			if (aBtnCommand[i] != nullptr) aBtnCommand[i]->Execute(deltatime);
@@ -73,6 +64,26 @@ bool dae::InputManager::ProcessInput(float deltatime)
 			if (paddBtnCommand[i] != nullptr) paddBtnCommand[i]->Execute(deltatime);
 		}
 	}	
+
+	// handle keyboard
+	
+	SDL_Event ev;
+	while (SDL_PollEvent(&ev))
+	{
+		auto key = ev.key.keysym.sym;
+
+		switch (ev.type)
+		{
+		case SDL_QUIT:
+			return false;
+		
+		case SDL_KEYDOWN:
+			char character = *SDL_GetKeyName(key);
+			if (keyboardCommands[int(character)] != nullptr) keyboardCommands[int(character)]->Execute(deltatime);
+			break;
+		}
+	}
+
 	return true;
 }
 
@@ -131,6 +142,13 @@ void dae::InputManager::ChangeCommand(ControllerButton button, int controller, C
 	default:
 		break;
 	}
+}
+
+void dae::InputManager::ChangeKeyboardCommand(char character, Command * newCommand)
+{
+	if (int(character) > m_MAXKeyboardAsciiSize) return;
+
+	keyboardCommands[int(character)] = newCommand;
 }
 
 
