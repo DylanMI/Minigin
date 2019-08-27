@@ -19,7 +19,7 @@ dae::InputManager::~InputManager()
 	}
 	for (int k{}; k < m_MAXKeyboardAsciiSize; k++)
 	{
-		delete keyboardCommands[k];
+		delete keyboardCommands[k].command;
 	}
 }
 bool dae::InputManager::ProcessInput(float deltatime)
@@ -65,8 +65,8 @@ bool dae::InputManager::ProcessInput(float deltatime)
 		}
 	}	
 
-	// handle keyboard
-	
+	// handle keyboard events
+	char character;
 	SDL_Event ev;
 	while (SDL_PollEvent(&ev))
 	{
@@ -78,11 +78,29 @@ bool dae::InputManager::ProcessInput(float deltatime)
 			return false;
 		
 		case SDL_KEYDOWN:
-			char character = *SDL_GetKeyName(key);
-			if (keyboardCommands[int(character)] != nullptr) keyboardCommands[int(character)]->Execute(deltatime);
+			character = *SDL_GetKeyName(key);
+			if (int(character) > m_MAXKeyboardAsciiSize) return true;
+			keyboardCommands[int(character)].isPressed = true;
+			break;
+
+		case SDL_KEYUP:
+			character = *SDL_GetKeyName(key);
+			if (int(character) > m_MAXKeyboardAsciiSize) return true;
+			keyboardCommands[int(character)].isPressed = false;
 			break;
 		}
 	}
+
+	// handle the commands
+	for (int i{}; i < m_MAXKeyboardAsciiSize; i++)
+	{
+		if (keyboardCommands[i].command == nullptr) continue;
+		if (keyboardCommands[i].isPressed)
+		{
+			keyboardCommands[i].command->Execute(deltatime);
+		}
+	}
+
 
 	return true;
 }
@@ -148,7 +166,7 @@ void dae::InputManager::ChangeKeyboardCommand(char character, Command * newComma
 {
 	if (int(character) > m_MAXKeyboardAsciiSize) return;
 
-	keyboardCommands[int(character)] = newCommand;
+	keyboardCommands[int(character)].command = newCommand;
 }
 
 

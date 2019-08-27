@@ -26,6 +26,12 @@ namespace dae
 		Four
 	};
 
+	struct KeyCommand
+	{
+		bool isPressed = false;
+		Command* command = nullptr;
+	};
+
 	class InputManager final : public Singleton<InputManager>
 	{
 	public:
@@ -49,6 +55,6 @@ namespace dae
 		Command* paddBtnCommand[m_MAXammControllers];	
 
 		// keyboard commands
-		Command* keyboardCommands[m_MAXKeyboardAsciiSize];
+		KeyCommand keyboardCommands[m_MAXKeyboardAsciiSize];
 	};
 }
